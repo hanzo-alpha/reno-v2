@@ -15,10 +15,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bezhansalleh/filament-shield": "^3.3",
+        "codewithdennis/filament-theme-inspector": "^0.0.7",
         "filament/filament": "^3.2",
+        "jeffgreco13/filament-breezy": "^2.4",
         "laravel/framework": "^11.9",
         "laravel/pail": "^1.2",
         "laravel/tinker": "^2.9",
+        "teguh02/indonesia-territory-forms": "^1.1",
         "timokoerber/laravel-one-time-operations": "^1.4"
     },
     "require-dev": {
@@ -33,7 +37,8 @@
         "pestphp/pest": "^3.0.0",
         "pestphp/pest-plugin-faker": "^3.0.0",
         "pestphp/pest-plugin-laravel": "^3.0.0",
-        "pestphp/pest-plugin-livewire": "^3.0.0"
+        "pestphp/pest-plugin-livewire": "^3.0.0",
+        "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {
         "psr-4": {
@@ -83,6 +88,21 @@
             "@pint",
             "@pest",
             "@phpstan"
+        ],
+        "cache-app": [
+            "@php artisan optimize",
+            "@php artisan icons:cache",
+            "@php artisan filament:cache-components"
+        ],
+        "clearcache-app": [
+            "@php artisan optimize:clear",
+            "@php artisan filament:clear-cached-components"
+        ],
+        "clear-jobs": [
+            "@php artisan queue:flush",
+            "@php artisan queue:clear",
+            "@php artisan queue:prune-batches",
+            "@php artisan queue:prune-failed"
         ]
     },
     "extra": {
@@ -93,6 +113,7 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
+        "platform-check": false,
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,

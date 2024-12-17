@@ -1,118 +1,71 @@
-# Larament
+<img src="https://banners.beyondco.de/RENO.png?theme=dark&packageManager=composer+require&packageName=hanzo-alpha%2Fsimdata-sosial&pattern=brickWall&style=style_1&description=Rumah+Data+Terpadu+Dinas+Sosial&md=1&showWatermark=1&fontSize=100px&images=presentation-chart-bar">
 
-[![Pint](https://github.com/codewithdennis/larament/actions/workflows/pint.yml/badge.svg)](https://packagist.org/packages/codewithdennis/larament)
-[![PEST](https://github.com/codewithdennis/larament/actions/workflows/pest.yml/badge.svg)](https://packagist.org/packages/codewithdennis/larament)
-[![PHPStan](https://github.com/CodeWithDennis/larament/actions/workflows/phpstan.yml/badge.svg)](https://github.com/CodeWithDennis/larament/actions/workflows/phpstan.yml)
-[![Total Installs](https://img.shields.io/packagist/dt/codewithdennis/larament.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/larament)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/codewithdennis/larament.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/larament)
+<div align="center">
 
-![Larament](https://raw.githubusercontent.com/CodeWithDennis/larament/main/resources/images/larament.png)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/hanzo-alpha/simdata-sosial?style=flat-square)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/hanzo-alpha/simdata-sosial?style=flat-square)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/hanzo-alpha/simdata-sosial/total?style=flat-square)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/hanzo-alpha/simdata-sosial/run-tests.yml?event=push&style=flat-square)
+![GitHub Release](https://img.shields.io/github/v/release/hanzo-alpha/simdata-sosial?display_name=release&style=flat-square)
+![GitHub License](https://img.shields.io/github/license/hanzo-alpha/simdata-sosial?style=flat-square)
 
-**Larament** is a time-saving starter kit to quickly launch Laravel projects. It includes **FilamentPHP** pre-installed and configured, along with additional tools and features to streamline your development workflow.
+</div>
 
----
 
-## Table of Contents
+## Tentang RENO
 
-- [Features](#features)
-  - [Security and Testing](#security-and-testing)
-  - [Quality of Life](#quality-of-life)
-  - [Design](#design)
-- [Default User](#default-user)
-- [Included Packages](#included-packages)
-- [Installation](#installation)
-  - [CLI Installation](#cli-installation)
+Sistem Informasi Managemen Rumah Data Terpadu merupakan aplikasi kemiskinan untuk mendata keluarga atau penerima
+manfaat yang layak untuk mendapatkan bantuan dari pemerintah.
 
----
+## Install / Setup
 
-## Features
+1. Install menggunakan composer, diasumsikan anda sudah menginstall dan konfigurasi composer, lalu ketikkan :
+    ``` 
+    composer install
+    ```
 
-### Security and Testing
-![PESTPHP](https://raw.githubusercontent.com/CodeWithDennis/larament/main/resources/images/pest-php.png)
+2. Install asset menggunakan npm, buka terminal / windows terminal atau sejenisnya lalu ketikkan :
+    ````
+    npm install
+    ````
+3. Jalankan perintah berikut untuk migrasi database :
+   ````
+   php artisan migrate
+   ````
+4. Jalankan perintah berikut pada terminal kesayangan anda untuk mengimport data default :
+    ````
+   php artisan db:seed
+   ````
+5. Silahkan buka di web browser anda : ```http://localhost/admin``` atau ```https://your-local-domain.local```
+   jika anda menggunakan domain pada lokal development anda. Untuk login ke aplikasi bisa menggunakan akun berikut :
+    ````
+   email : sadmin@simdata-sosial.local
+   password : password
+   ````
+   Jika tidak berhasil masuk dengan akun diatas, silahkan buat user sendiri dengan perintah berikut :
+   ````
+   php artisan make:filament-user
+   ````
+   Lalu lanjutkan mengisi data user anda.
+6. Setelah itu ketik perintah berikut:
+    ````
+   php artisan shield:install
+    ````
+   Setelah berhasil ketik perintah berikut:
+    ````
+   php artisan shield:generate --all
+    ````
 
-- **PESTPHP**: Preconfigured with test cases for streamlined testing. ([Learn more](https://pestphp.com/docs/installation))
-- **Strict mode enabled** via [Should Be Strict](https://laravel-news.com/shouldbestrict):
-  - Prevents lazy loading (N+1 queries).
-  - Guards against discarding or accessing missing attributes.
-- **Production safeguards**: Prevents destructive commands in production. ([Learn more](https://laravel-news.com/prevent-destructive-commands-from-running-in-laravel-11))
-- **Architectural testing** with Archtest.
-- **Static analysis** using PHPStan.
-- **Debugging** with Laravel Debugbar.
+## Changelog
 
-### Quality of Life
-![Global Search Keybinding](https://raw.githubusercontent.com/CodeWithDennis/larament/main/resources/images/global-search-keybinding.jpg)
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-- Custom login page autofills email and password with seeded data for quicker testing.
-- Built-in password generator action on the user profile and user resource pages.
-- Enhanced global search includes email addresses for better discoverability.
-- Auto-translatable component labels.
-- `composer review`: A single command to run Pint, PHPStan, and PEST.
-- Helper functions available through a dedicated helper file.
-- Custom `php artisan make:filament-action` command for generating Filament actions.
+## Security Vulnerabilities
 
-### Design
-![User Global Search](https://raw.githubusercontent.com/CodeWithDennis/larament/main/resources/images/user-global-search.jpg)
+If you discover a security vulnerability within RENO, please send an e-mail to Hanzo Alpha
+via [hansen.makangiras@hotmail.com](mailto:hanzo.asashi.dev@gmail.com). All security vulnerabilities will be promptly
+addressed.
 
-- Filament Panel's primary color is preset to blue.
-- Single Page Application (SPA) mode enabled by default.
-- Global search keybinding set to `CTRL + K` or `CMD + K`.
-- A ready-to-use FilamentPHP custom theme, including a sidebar separator.
-- Enhanced profile page with a built-in password generator.
+## License
 
----
-
-## Default User
-
-A default user is seeded with the following credentials, pre-filled on the login page for quick access:
-
-```dotenv
-DEFAULT_USER_NAME="John Doe"
-DEFAULT_USER_EMAIL="admin@example.com"
-DEFAULT_USER_PASSWORD="password"
-```
-
-## Included Packages
-
-The following packages are pre-installed:
-
-- [timokoerber/laravel-one-time-operations](https://github.com/TimoKoerber/laravel-one-time-operations)
-- [barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)
-- [phpstan/phpstan](https://phpstan.org/user-guide/getting-started)
-- [pestphp/pest](https://pestphp.com/docs/installation)
-  - [pestphp/pest-plugin-faker](https://pestphp.com/docs/plugins#faker)
-  - [pestphp/pest-plugin-laravel](https://pestphp.com/docs/plugins#laravel)
-  - [pestphp/pest-plugin-livewire](https://pestphp.com/docs/plugins#livewire)
-
-## Installation
-### Using the Template
-- Create a repository using the Larament template.
-- Clone your repository to your local machine.
- Navigate to the project directory and run the following commands:
-```bash
-composer install
-npm install && npm run build
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan db:seed
-```
-
-### CLI Installation
-Alternatively, you can use the following command to create a new project with Larament:
-
-```bash
-composer create-project --prefer-dist CodeWithDennis/larament example-app
-```
-
-### Create a Terminal Alias
-For easier usage in future projects, create an alias in your terminal:
-
-```bash
-alias larament="composer create-project --prefer-dist CodeWithDennis/larament"
-```
-
-Now, you can create a new project with a simple command:
-
-```bash
-larament my-cool-app
-```
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
