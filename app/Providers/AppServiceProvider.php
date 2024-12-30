@@ -10,7 +10,9 @@ use Filament\Support\Concerns\Configurable;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\BaseFilter;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,9 +38,35 @@ class AppServiceProvider extends ServiceProvider
         DB::prohibitDestructiveCommands($this->app->isProduction());
     }
 
+    private function configureLocales(): void
+    {
+        setlocale(LC_ALL, 'IND');
+        config(['app.locale' => 'id']);
+        Carbon::setLocale('id');
+        Number::useLocale('id');
+    }
+
+    private function configureTesting(): void
+    {
+        if ('testing' === config('app.env')) {
+            $this->app->useDatabasePath(base_path('tests/database'));
+        }
+    }
+
+    private function configureFilamentColumns(): void
+    {
+        Column::configureUsing(function (Column $column): void {
+            $column
+                ->toggleable()
+                ->sortable()
+                ->searchable();
+        });
+    }
+
     private function configureModels(): void
     {
         Model::shouldBeStrict(! app()->isProduction());
+        Model::unguard();
     }
 
     public function boot(): void
@@ -46,5 +74,8 @@ class AppServiceProvider extends ServiceProvider
         $this->configureCommands();
         $this->configureModels();
         $this->translatableComponents();
+        $this->configureLocales();
+        $this->configureTesting();
+        $this->configureFilamentColumns();
     }
 }
