@@ -55,7 +55,7 @@ enum AlasanBpjsEnum: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::PINDAH => 'info',
@@ -74,5 +74,4 @@ enum AlasanBpjsEnum: string implements HasColor, HasIcon, HasLabel
             self::MAMPU => 'heroicon-o-check-circle',
         };
     }
-
 }

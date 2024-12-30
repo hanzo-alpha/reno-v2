@@ -69,7 +69,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 BreezyCore::make()
-                    ->avatarUploadComponent(fn($fileUpload) => $fileUpload->disableLabel())
+                    ->avatarUploadComponent(fn ($fileUpload) => $fileUpload->disableLabel())
                     ->enableTwoFactorAuthentication()
                     ->myProfile(
                         hasAvatars: true,
@@ -78,8 +78,8 @@ class AdminPanelProvider extends PanelProvider
                     ),
                 FilamentThemeInspectorPlugin::make()
                     ->toggle()
-                    ->disabled(fn() => !app()->hasDebugModeEnabled()),
-                FilamentShieldPlugin::make()
+                    ->disabled(fn () => ! app()->hasDebugModeEnabled()),
+                FilamentShieldPlugin::make(),
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

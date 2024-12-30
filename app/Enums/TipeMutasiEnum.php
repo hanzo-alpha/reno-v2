@@ -29,7 +29,7 @@ enum TipeMutasiEnum: int implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public static function getSingleColor($value): string|array|null
+    public static function getSingleColor($value): string | array | null
     {
         return match ($value) {
             self::PESERTA_BPJS => 'primary',
@@ -45,7 +45,7 @@ enum TipeMutasiEnum: int implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::PESERTA_BPJS => 'primary',

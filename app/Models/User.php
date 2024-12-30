@@ -18,8 +18,9 @@ use Teguh02\IndonesiaTerritoryForms\Models\SubDistrict;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
     use HasRoles;
+    use Notifiable;
     use TwoFactorAuthenticatable;
 
     /**
@@ -33,7 +34,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'password',
         'avatar_url',
         'is_admin',
-        'subdistrict_id'
+        'subdistrict_id',
     ];
 
     /**

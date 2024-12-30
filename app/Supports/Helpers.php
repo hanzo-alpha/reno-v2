@@ -18,23 +18,23 @@ class Helpers
     {
         $instansi = setting('app.alias_dinas', 'DINSOS');
         $judulNo = setting('rastra.judul_no', 'BAST');
-        $text = ('rastra' === $model) ? setting('rastra.judul_no', 'BAST-RASTRA') : setting('ppks.judul_no', 'BAST.B');
+        $text = ($model === 'rastra') ? setting('rastra.judul_no', 'BAST-RASTRA') : setting('ppks.judul_no', 'BAST.B');
         $pad = setting('app.pad') ?? '0';
         $sep = setting('app.separator') ?? $sep;
         $bulan = convertToRoman(now()->month);
         $tahun = now()->year;
-        $modelClass = ('rastra' === $model) ? BeritaAcara::class : PenyaluranBantuanPpks::class;
+        $modelClass = ($model === 'rastra') ? BeritaAcara::class : PenyaluranBantuanPpks::class;
         $max = $modelClass::max('id') + 1;
         $kodePpks = setting('ppks.no_ba') ?? Str::padLeft($max, 3, $pad);
         $kodePpks = $kodePpks . $sep . $text;
         $kodeAset = Str::padLeft($max, 4, $pad) . $sep . $text;
 
-        $kode = ('rastra' === $model) ? $kodeAset : $kodePpks;
+        $kode = ($model === 'rastra') ? $kodeAset : $kodePpks;
 
         return $kode . $sep . $instansi . $sep . $bulan . $sep . $tahun;
     }
 
-    public static function hitungNilaiResidu($nilai, $tahun = 5): float|int
+    public static function hitungNilaiResidu($nilai, $tahun = 5): float | int
     {
         $persen = $tahun * config('custom.depresiasi');
         $nilaiResidual = 100 - $persen;
@@ -51,14 +51,14 @@ class Helpers
         };
     }
 
-    public static function getAdminRoles(): array|Collection
+    public static function getAdminRoles(): array | Collection
     {
         return JenisBantuan::query()
             ->get()
-            ->map(fn($item) => 'admin_' . Str::lower($item->alias))->toArray();
+            ->map(fn ($item) => 'admin_' . Str::lower($item->alias))->toArray();
     }
 
-    public static function getAdminBantuan(): array|Collection
+    public static function getAdminBantuan(): array | Collection
     {
         $result = [];
         $jenisBantuan = JenisBantuan::query()->get();
@@ -97,13 +97,13 @@ class Helpers
         return 'SKU' . $separator . $kodeAset;
     }
 
-    public static function toPersen($jumlah, $total): int|string
+    public static function toPersen($jumlah, $total): int | string
     {
-        if ( ! isset($jumlah, $total)) {
+        if (! isset($jumlah, $total)) {
             return 0;
         }
 
-        if ( ! is_float($jumlah) || ! is_float($total)) {
+        if (! is_float($jumlah) || ! is_float($total)) {
             $jumlah = (float) $jumlah;
             $total = (float) $total;
         }
@@ -164,7 +164,7 @@ class Helpers
         return empty($angka) ? $emptyVal : $angka;
     }
 
-    public static function ribuan($num = 0, $decimal = 'auto 2'): array|string
+    public static function ribuan($num = 0, $decimal = 'auto 2'): array | string
     {
         if (empty($num)) {
             return '0';
@@ -183,7 +183,7 @@ class Helpers
         return $numFormat;
     }
 
-    public static function hitungPajak($nilai, $pajak): float|int
+    public static function hitungPajak($nilai, $pajak): float | int
     {
         $nilai ??= 0;
         $pajak ??= 0;

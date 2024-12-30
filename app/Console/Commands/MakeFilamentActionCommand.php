@@ -71,7 +71,7 @@ class MakeFilamentActionCommand extends Command
     {
         return Str::endsWith(Str::lower($name), 'action')
             ? Str::studly($name)
-            : Str::studly($name).'Action';
+            : Str::studly($name) . 'Action';
     }
 
     private function getActionType(): string
@@ -156,8 +156,8 @@ class MakeFilamentActionCommand extends Command
 
     private function getNamespace(string $path): string
     {
-        $relativePath = Str::after($path, app_path().'/');
+        $relativePath = Str::after($path, app_path() . '/');
 
-        return 'App\\'.Str::replace('/', '\\', dirname($relativePath));
+        return 'App\\' . Str::replace('/', '\\', dirname($relativePath));
     }
 }

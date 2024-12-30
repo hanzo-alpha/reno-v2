@@ -31,13 +31,14 @@ class Login extends BasePage
             ->required()
             ->autocomplete()
             ->autofocus()
-            ->default(fn() => app()->isLocal() ? config('app.default_user.email') : null)
+            ->default(fn () => app()->isLocal() ? config('app.default_user.email') : null)
             ->extraInputAttributes(['tabindex' => 1]);
     }
 
     protected function getCredentialsFromFormData(array $data): array
     {
         $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         return [
             $login_type => $data['login'],
             'password' => $data['password'],
