@@ -17,9 +17,9 @@ return [
         'logo' => null,
         'logo_dark' => null,
         'favicon' => null,
-        'font' => 'Poppins',
+        'font' => 'Lexend',
         'dark_mode' => true,
-        'logo_height' => '1.9rem',
+        'logo_height' => '1.6rem',
         'stat_prefix' => ' Kpm',
     ],
     'format_auto' => [

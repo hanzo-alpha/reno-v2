@@ -9,10 +9,14 @@ use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Jeffgreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
+use Laravolt\Indonesia\Models\Village;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 use Teguh02\IndonesiaTerritoryForms\Models\SubDistrict;
 
@@ -21,6 +25,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     use HasFactory, Notifiable;
     use HasRoles;
     use TwoFactorAuthenticatable;
+    use SoftDeletes;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +39,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'password',
         'avatar_url',
         'is_admin',
-        'subdistrict_id'
+        'jenis_bantuan_id',
+        'instansi_code'
     ];
 
     /**
@@ -60,6 +67,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         ];
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email', 'is_admin', 'instansi_code', 'jenis_bantuan_id']);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true; // str_ends_with($this->email, '@larament.test');
@@ -72,6 +85,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function instansi(): BelongsTo
     {
-        return $this->belongsTo(SubDistrict::class, 'subdistrict_id', 'id');
+        return $this->belongsTo(Village::class, 'code', 'id');
     }
 }

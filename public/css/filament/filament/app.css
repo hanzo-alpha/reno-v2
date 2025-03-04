@@ -106,7 +106,7 @@
     --tw-contain-style:
 }
 
-/*! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com*/
+/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/
 *, :after, :before {
     border-color: rgba(var(--gray-200), 1);
     border-style: solid;
@@ -2141,10 +2141,6 @@ select {
     margin-inline-end: 1rem
 }
 
-.me-5 {
-    margin-inline-end: 1.25rem
-}
-
 .me-6 {
     margin-inline-end: 1.5rem
 }
@@ -2155,6 +2151,10 @@ select {
 
 .ms-1 {
     margin-inline-start: .25rem
+}
+
+.ms-6 {
+    margin-inline-start: 1.5rem
 }
 
 .ms-auto {

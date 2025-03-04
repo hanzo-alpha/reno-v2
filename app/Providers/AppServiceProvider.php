@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\ActivityPolicy;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Placeholder;
 use Filament\Infolists\Components\Entry;
@@ -12,6 +13,7 @@ use Filament\Tables\Filters\BaseFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 
@@ -65,8 +67,13 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureModels(): void
     {
-        Model::shouldBeStrict(! app()->isProduction());
+        Model::shouldBeStrict(!$this->app->isProduction());
         Model::unguard();
+    }
+
+    private function configureAuthorization(): void
+    {
+        Gate::policy(\Spatie\Activitylog\Models\Activity::class, ActivityPolicy::class);
     }
 
     public function boot(): void
@@ -77,5 +84,6 @@ class AppServiceProvider extends ServiceProvider
         $this->configureLocales();
         $this->configureTesting();
         $this->configureFilamentColumns();
+        $this->configureAuthorization();
     }
 }
