@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureTesting(): void
     {
-        if ('testing' === config('app.env')) {
+        if (config('app.env') === 'testing') {
             $this->app->useDatabasePath(base_path('tests/database'));
         }
     }

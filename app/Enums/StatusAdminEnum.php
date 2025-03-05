@@ -23,7 +23,7 @@ enum StatusAdminEnum: int implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::SUPER_ADMIN => 'primary',

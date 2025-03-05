@@ -18,7 +18,8 @@ return function (Skeletor $skeletor) {
             ->all()
     );
 
-    $adminPanelColor = $skeletor->select('What color would you like to use for the FilamentPHP admin panel?',
+    $adminPanelColor = $skeletor->select(
+        'What color would you like to use for the FilamentPHP admin panel?',
         collect(Color::all())
             ->keys()
             ->map(fn (string $color) => ucfirst($color))
@@ -36,37 +37,37 @@ return function (Skeletor $skeletor) {
     $password = $skeletor->password('What is the demo password?', 'password', required: true);
 
     if ($applicationName) {
-        $skeletor->pregReplaceInFile('/^APP_NAME=(.*)$/m', 'APP_NAME="'.$applicationName.'"', '.env');
+        $skeletor->pregReplaceInFile('/^APP_NAME=(.*)$/m', 'APP_NAME="' . $applicationName . '"', '.env');
     }
 
     if ($applicationDescription) {
         $skeletor->pregReplaceInFile(
             '/"description":\s*".*?"/',
-            '"description": "'.addslashes($applicationDescription).'"',
+            '"description": "' . addslashes($applicationDescription) . '"',
             'composer.json'
         );
     }
 
     if ($name) {
-        $skeletor->pregReplaceInFile('/^DEFAULT_USER_NAME=(".*?"|[^"\s]*|)$/m', 'DEFAULT_USER_NAME="'.$name.'"', '.env');
+        $skeletor->pregReplaceInFile('/^DEFAULT_USER_NAME=(".*?"|[^"\s]*|)$/m', 'DEFAULT_USER_NAME="' . $name . '"', '.env');
     }
 
     if ($email) {
-        $skeletor->pregReplaceInFile('/^DEFAULT_USER_EMAIL=(".*?"|[^"\s]*|)$/m', 'DEFAULT_USER_EMAIL="'.$email.'"', '.env');
+        $skeletor->pregReplaceInFile('/^DEFAULT_USER_EMAIL=(".*?"|[^"\s]*|)$/m', 'DEFAULT_USER_EMAIL="' . $email . '"', '.env');
     }
 
     if ($password) {
-        $skeletor->pregReplaceInFile('/^DEFAULT_USER_PASSWORD=(".*?"|[^"\s]*|)$/m', 'DEFAULT_USER_PASSWORD="'.$password.'"', '.env');
+        $skeletor->pregReplaceInFile('/^DEFAULT_USER_PASSWORD=(".*?"|[^"\s]*|)$/m', 'DEFAULT_USER_PASSWORD="' . $password . '"', '.env');
     }
 
     if ($timezone) {
-        $skeletor->pregReplaceInFile('/^APP_TIMEZONE=(".*?"|[^"\s]*|)$/m', 'APP_TIMEZONE="'.$timezone.'"', '.env');
+        $skeletor->pregReplaceInFile('/^APP_TIMEZONE=(".*?"|[^"\s]*|)$/m', 'APP_TIMEZONE="' . $timezone . '"', '.env');
     }
 
     if ($adminPanelColor) {
         $skeletor->pregReplaceInFile(
             "/'primary'\s*=>\s*Color::[A-Za-z0-9]+/",
-            "'primary' => Color::".$adminPanelColor,
+            "'primary' => Color::" . $adminPanelColor,
             'app/Providers/Filament/AdminPanelProvider.php'
         );
     }

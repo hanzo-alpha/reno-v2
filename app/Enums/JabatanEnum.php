@@ -26,7 +26,7 @@ enum JabatanEnum: string implements HasColor, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::KEPALA_DESA => 'info',
