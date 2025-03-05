@@ -34,7 +34,7 @@ class ImportBantuanPkh implements ShouldQueue, SkipsEmptyRows, ToModel, WithBatc
 
     //    use Importable, SkipsFailures, SkipsErrors;
 
-    public function model(array $row): Model|DataPkh|null
+    public function model(array $row): Model | DataPkh | null
     {
         $namaProp = isset($row['nama_prop']) ? Str::ucfirst($row['nama_prop']) : null;
         $namaKab = isset($row['nama_kab']) ? Str::ucfirst($row['nama_kab']) : null;

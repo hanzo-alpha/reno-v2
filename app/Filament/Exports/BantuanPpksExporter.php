@@ -36,7 +36,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Tempat Lahir'),
             ExportColumn::make('tgl_lahir')
                 ->label('Tanggal Lahir')
-                ->state(fn($record) => $record->tgl_lahir->format('d-m-Y')),
+                ->state(fn ($record) => $record->tgl_lahir->format('d-m-Y')),
             ExportColumn::make('nama_ibu_kandung')
                 ->label('Nama Ibu Kandung'),
             ExportColumn::make('pendidikan_terakhir.nama_pendidikan')
@@ -67,6 +67,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Status Kawin')
                 ->state(function (BantuanPpks $record) {
                     $value = $record->status_kawin->value ?? null;
+
                     return match ($value) {
                         1 => StatusKawinUmumEnum::KAWIN_TERCATAT->getLabel(),
                         2 => StatusKawinUmumEnum::KAWIN_BELUM_TERCATAT->getLabel(),
@@ -112,6 +113,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Status Rumah Tinggal')
                 ->state(function (BantuanPpks $record) {
                     $value = $record->status_rumah_tinggal->value ?? null;
+
                     return match ($value) {
                         default => StatusRumahEnum::MILIK_SENDIRI->getLabel(),
                         2 => StatusRumahEnum::MENUMPANG->getLabel(),
@@ -121,6 +123,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Status Kondisi Rumah')
                 ->state(function (BantuanPpks $record) {
                     $value = $record->status_kondisi_rumah->value ?? null;
+
                     return match ($value) {
                         default => StatusKondisiRumahEnum::BAIK->getLabel(),
                         2 => StatusKondisiRumahEnum::SEDANG->getLabel(),
@@ -142,6 +145,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Status Verifikasi')
                 ->state(function (BantuanPpks $record) {
                     $value = $record->status_verifikasi->value ?? null;
+
                     return match ($value) {
                         'TERVERIFIKASI' => StatusVerifikasiEnum::VERIFIED->getLabel(),
                         default => StatusVerifikasiEnum::UNVERIFIED->getLabel(),
@@ -152,6 +156,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Status Aktif')
                 ->state(function (BantuanPpks $record) {
                     $value = $record->status_aktif->value ?? null;
+
                     return match ($value) {
                         1 => StatusAktif::AKTIF->getLabel(),
                         default => StatusAktif::NONAKTIF->getLabel(),
@@ -164,10 +169,10 @@ class BantuanPpksExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your bantuan ppks export has completed and '.number_format($export->successful_rows).' '.str('row')->plural($export->successful_rows).' exported.';
+        $body = 'Your bantuan ppks export has completed and ' . number_format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' '.number_format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to export.';
+            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';
         }
 
         return $body;

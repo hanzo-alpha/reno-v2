@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BantuanBpnt extends Model
 {
+    use HasUuids;
     use HasWilayah;
     use SoftDeletes;
-    use HasUuids;
 
     protected $table = 'bantuan_bpnt';
 

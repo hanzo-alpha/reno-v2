@@ -7,7 +7,6 @@ use App\Filament\Actions\GeneratePasswordAction;
 use App\Filament\Admin\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
 use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
-use App\Models\Kelurahan;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -33,10 +32,15 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'pengguna';
+
     protected static ?string $label = 'Pengguna';
+
     protected static ?string $pluralLabel = 'Pengguna';
+
     protected static ?string $navigationGroup = 'Pengaturan';
+
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function getGloballySearchableAttributes(): array
@@ -71,7 +75,7 @@ class UserResource extends Resource
                             ->label(__('filament-panels::pages/auth/edit-profile.form.password.label'))
                             ->password()
                             ->unique(ignoreRecord: true)
-                            ->required(fn($livewire) => $livewire instanceof CreateUser)
+                            ->required(fn ($livewire) => $livewire instanceof CreateUser)
                             ->revealable(filament()->arePasswordsRevealable())
                             ->rule(Password::default())
                             ->autocomplete('new-password')
@@ -145,14 +149,14 @@ class UserResource extends Resource
                     ->badge(),
                 Tables\Columns\TextColumn::make('instansi_code')
                     ->placeholder('No Instansi.')
-                    ->formatStateUsing(fn($state) => Village::find($state)?->name)
+                    ->formatStateUsing(fn ($state) => Village::find($state)?->name)
                     ->label('Instansi')
                     ->badge(),
                 Tables\Columns\TextColumn::make('is_admin')
                     ->badge(),
             ])
             ->toggleColumnsTriggerAction(
-                fn(Action $action) => $action
+                fn (Action $action) => $action
                     ->iconButton()
 //                    ->tooltip('Tampilkan / Sembunyikan Kolom Tabel')
                     ->label('Tampilkan / Sembunyikan Kolom Tabel'),
@@ -165,7 +169,7 @@ class UserResource extends Resource
                     ->closeModalByClickingAway(false),
                 Tables\Actions\DeleteAction::make()
                     ->closeModalByClickingAway(false)
-                    ->hidden(fn(Model $record) => (1 === $record->id)),
+                    ->hidden(fn (Model $record) => ($record->id === 1)),
                 ActivityLogTimelineTableAction::make('Aktifitas')
                     ->timelineIcons([
                         'created' => 'heroicon-m-check-badge',
@@ -206,13 +210,13 @@ class UserResource extends Resource
                 ]),
             ])
             ->checkIfRecordIsSelectableUsing(
-                fn(Model $record): bool => (StatusAdminEnum::SUPER_ADMIN !== $record->is_admin) || 1 !== $record->id,
+                fn (Model $record): bool => ($record->is_admin !== StatusAdminEnum::SUPER_ADMIN) || $record->id !== 1,
             );
     }
 
     public static function getEloquentQuery(): Builder
     {
-        if (1 === auth()->user()->id) {
+        if (auth()->user()->id === 1) {
             return parent::getEloquentQuery()
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,

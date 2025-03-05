@@ -28,10 +28,14 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
     use HasWidgetShield;
 
     protected static bool $isDiscovered = false;
+
     protected static ?string $chartId = 'bantuanSosialPerBulanChart';
+
     protected static ?string $heading = 'Bantuan Sosial Per Bulan Chart';
+
     protected static ?int $sort = 4;
-    protected int|string|array $columnSpan = 'full';
+
+    protected int | string | array $columnSpan = 'full';
 
     protected function getFormSchema(): array
     {
@@ -52,7 +56,7 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
                 ->live()
                 ->native(false),
             Select::make('kelurahan')
-                ->options(fn(Get $get) => Village::query()
+                ->options(fn (Get $get) => Village::query()
                     ->where('district_code', $get('kecamatan'))
                     ->pluck('name', 'code'))
                 ->native(false),
@@ -78,10 +82,10 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
         ];
     }
 
-    protected function queryChart(string|int $model, $kodekel, array $filters): int|string|array|Builder|Collection
+    protected function queryChart(string | int $model, $kodekel, array $filters): int | string | array | Builder | Collection
     {
-        $bulan = !empty($filters['bulan']) ? Carbon::parse($filters['bulan'])->month : 0;
-        $kodekel = !empty($kodekel) ? Carbon::parse($kodekel) : today();
+        $bulan = ! empty($filters['bulan']) ? Carbon::parse($filters['bulan'])->month : 0;
+        $kodekel = ! empty($kodekel) ? Carbon::parse($kodekel) : today();
         $model = match ((int) $model) {
             1 => BantuanPkh::class,
             2 => BantuanBpnt::class,
@@ -94,18 +98,18 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
 
         return $model::query()
             ->select(['created_at', 'kecamatan', 'kelurahan', 'jenis_bantuan_id'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
-            ->when($filters['program'], fn(Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
-            ->when($filters['bulan'], fn(Builder $query) => $query->where('created_at', $bulan))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['program'], fn (Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
+            ->when($filters['bulan'], fn (Builder $query) => $query->where('created_at', $bulan))
             ->where('created_at', $kodekel)
             ->count();
     }
 
-    protected function queryChartArray(array|\Illuminate\Support\Collection $bantuan, $kodekel, array $filters): array
+    protected function queryChartArray(array | \Illuminate\Support\Collection $bantuan, $kodekel, array $filters): array
     {
         $results = [];
-        $bulan = !empty($filters['bulan']) ? Carbon::parse($filters['bulan'])->month : 0;
+        $bulan = ! empty($filters['bulan']) ? Carbon::parse($filters['bulan'])->month : 0;
         foreach ($bantuan as $key => $item) {
             $model = match ((int) $item) {
                 1 => BantuanPkh::class,
@@ -115,15 +119,17 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
                 5 => BantuanRastra::class,
             };
 
-            $kodekel = !empty($kodekel) ? Carbon::parse($kodekel) : today();
+            $kodekel = ! empty($kodekel) ? Carbon::parse($kodekel) : today();
 
             $results[$key] = $model::query()
                 ->select(['created_at', 'kecamatan', 'kelurahan', 'jenis_bantuan_id'])
-                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-                ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
-                ->when($filters['program'],
-                    fn(Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
-                ->when($filters['bulan'], fn(Builder $query) => $query->where('created_at', $bulan))
+                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+                ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+                ->when(
+                    $filters['program'],
+                    fn (Builder $query) => $query->where('jenis_bantuan_id', $filters['program'])
+                )
+                ->when($filters['bulan'], fn (Builder $query) => $query->where('created_at', $bulan))
                 ->where('created_at', $kodekel)
                 ->count();
         }
@@ -131,8 +137,8 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
         return $results;
     }
 
-
-    #[NoReturn] protected function getOptions(): array
+    #[NoReturn]
+    protected function getOptions(): array
     {
         $filters = $this->filterFormData;
         $results = [];
@@ -236,7 +242,7 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
                 'enabled' => true,
             ],
             'stroke' => [
-                'width' => 'line' === $filters['cTipe'] ? 8 : 0,
+                'width' => $filters['cTipe'] === 'line' ? 8 : 0,
             ],
             'colors' => $colors,
         ];

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (!Schema::hasColumn('users', 'instansi_code')) {
+        if (! Schema::hasColumn('users', 'instansi_code')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->unsignedBigInteger('instansi_code')->nullable();
             });

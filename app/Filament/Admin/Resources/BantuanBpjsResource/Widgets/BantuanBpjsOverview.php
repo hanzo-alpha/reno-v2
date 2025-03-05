@@ -7,8 +7,6 @@ namespace App\Filament\Admin\Resources\BantuanBpjsResource\Widgets;
 use App\Enums\StatusUsulanEnum;
 use App\Filament\Admin\Resources\BantuanBpjsResource\Pages\ListBantuanBpjs;
 use App\Models\BantuanBpjs;
-use App\Models\Kecamatan;
-use App\Models\PesertaBpjs;
 use App\Traits\HasGlobalFilters;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
@@ -32,8 +30,8 @@ class BantuanBpjsOverview extends BaseWidget
     {
         return BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filter['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
-            ->when($filter['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
+            ->when($filter['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
+            ->when($filter['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
     }
 
     protected function getStats(): array
@@ -54,22 +52,22 @@ class BantuanBpjsOverview extends BaseWidget
     {
         $verified = BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('status_usulan', StatusUsulanEnum::BERHASIL)
             ->count();
 
         $unverified = BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('status_usulan', StatusUsulanEnum::GAGAL)
             ->count();
 
         $review = BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('status_usulan', StatusUsulanEnum::ONPROGRESS)
             ->count();
 
@@ -88,34 +86,33 @@ class BantuanBpjsOverview extends BaseWidget
         return ListBantuanBpjs::class;
     }
 
-
     protected function getOverview(array $data): array
     {
         return [
             Stat::make(
                 label: 'Program BPJS',
-                value: Number::format($this->getPageTableQuery()->count(), 2, 0, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($this->getPageTableQuery()->count(), 2, 0, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Total Keseluruhan Program BPJS')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('danger'),
             Stat::make(
                 label: 'Program BPJS Berhasil',
-                value: Number::format($data['verified'], 2, 2, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['verified'], 2, 2, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Jumlah Program BPJS Berhasil')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('info'),
             Stat::make(
                 label: 'Program BPJS Gagal',
-                value: Number::format($data['unverified'], 2, 2, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['unverified'], 2, 2, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Jumlah Program BPJS Gagal')
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->color('success'),
             Stat::make(
                 label: 'Program BPJS Sedang Proses',
-                value: Number::format($data['review'], 2, 2, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['review'], 2, 2, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Jumlah Program BPJS Sedang Proses')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
@@ -127,10 +124,10 @@ class BantuanBpjsOverview extends BaseWidget
     {
         return Stat::make(
             label: $label ?? 'KPM BPJS',
-            value: Number::format($value ?? 0, 0, locale: ('id')).config('custom.app.stat_prefix'),
+            value: Number::format($value ?? 0, 0, locale: ('id')) . config('custom.app.stat_prefix'),
         )
             ->description($desc ?? 'Total KPM Kec. Marioriwawo')
-            ->descriptionIcon('heroicon-o-'.$icon ?? 'user')
+            ->descriptionIcon('heroicon-o-' . $icon ?? 'user')
             ->color($color ?? 'success');
     }
 }

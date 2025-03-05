@@ -34,17 +34,7 @@ use Maatwebsite\Excel\Validators\Failure;
 use Str;
 use Throwable;
 
-class ImportPesertaBpjs implements
-    ShouldQueue,
-    SkipsEmptyRows,
-    SkipsOnError,
-    SkipsOnFailure,
-    ToModel,
-    WithBatchInserts,
-    WithChunkReading,
-    WithHeadingRow,
-    WithUpserts,
-    WithEvents
+class ImportPesertaBpjs implements ShouldQueue, SkipsEmptyRows, SkipsOnError, SkipsOnFailure, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow, WithUpserts
 {
     use Importable;
     use RegistersEventListeners;
@@ -74,7 +64,7 @@ class ImportPesertaBpjs implements
     {
         $user = Auth::user();
         Notification::make('Import Failed')
-            ->title('Gagal Impor Peserta BPJS '.$event->e->getMessage())
+            ->title('Gagal Impor Peserta BPJS ' . $event->e->getMessage())
             ->danger()
             ->send()
             ->sendToDatabase($user);
@@ -98,7 +88,7 @@ class ImportPesertaBpjs implements
         ];
     }
 
-    public function model(array $row): Model|PesertaJamkesda|null
+    public function model(array $row): Model | PesertaJamkesda | null
     {
         $data = [
             'nomor_kartu' => $row['no_kartu'] ?? '-',
@@ -135,9 +125,9 @@ class ImportPesertaBpjs implements
             $values = $failure->values();
 
             Notification::make('Failure Import')
-                ->title('Baris Ke : '.$baris.' | '.$errmsg)
-                ->body('NIK : '.$values['nik'] ?? '-'.' | No.KK : '.$values['no_kk'] ?? '-'.'
-             | Nama : '.$values['nama_lengkap'] ?? '-')
+                ->title('Baris Ke : ' . $baris . ' | ' . $errmsg)
+                ->body('NIK : ' . $values['nik'] ?? '-' . ' | No.KK : ' . $values['no_kk'] ?? '-' . '
+             | Nama : ' . $values['nama_lengkap'] ?? '-')
                 ->danger()
                 ->sendToDatabase(auth()->user())
                 ->broadcast(User::where('is_admin', 1)->get());
@@ -160,7 +150,6 @@ class ImportPesertaBpjs implements
     {
         return ['nik'];
     }
-
 
     public function batchSize(): int
     {

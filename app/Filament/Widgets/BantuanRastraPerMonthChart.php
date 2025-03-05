@@ -13,15 +13,11 @@ class BantuanRastraPerMonthChart extends ApexChartWidget
 
     /**
      * Chart Id
-     *
-     * @var string
      */
     protected static ?string $chartId = 'bantuanRastraPerMonthChart';
 
     /**
      * Widget Title
-     *
-     * @var string|null
      */
     protected static ?string $heading = 'Bantuan Rastra Per Bulan';
 
@@ -29,12 +25,9 @@ class BantuanRastraPerMonthChart extends ApexChartWidget
 
     protected static bool $isDiscovered = false;
 
-
     /**
      * Chart options (series, labels, types, size, animations...)
      * https://apexcharts.com/docs/options
-     *
-     * @return array
      */
     protected function getOptions(): array
     {

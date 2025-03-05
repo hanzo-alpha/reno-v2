@@ -22,7 +22,6 @@ use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
 use App\Filament\Pages\Settings\Settings;
-use App\Models\BantuanPkh;
 use Awcodes\Curator\CuratorPlugin;
 use Awcodes\Curator\Resources\MediaResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -91,7 +90,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->globalSearchFieldKeyBindingSuffix()
-            ->globalSearchFieldSuffix(fn(): ?string => match (Platform::detect()) {
+            ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
                 Platform::Windows => 'CTRL+K',
                 Platform::Linux,
                 Platform::Mac => '⌘K',
@@ -155,7 +154,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 BreezyCore::make()
-                    ->avatarUploadComponent(fn($fileUpload) => $fileUpload->disableLabel())
+                    ->avatarUploadComponent(fn ($fileUpload) => $fileUpload->disableLabel())
                     ->enableTwoFactorAuthentication()
                     ->myProfile(
                         hasAvatars: true,
@@ -166,7 +165,7 @@ class AdminPanelProvider extends PanelProvider
                 CuratorPlugin::make()
                     ->label('Media')
                     ->pluralLabel('Media')
-                    ->navigationIcon(fn() => null)
+                    ->navigationIcon(fn () => null)
                     ->navigationGroup('Pengaturan')
                     ->navigationCountBadge()
                     ->defaultListView('grid'),
@@ -195,8 +194,8 @@ class AdminPanelProvider extends PanelProvider
                 FilamentApexChartsPlugin::make(),
                 AuthUIEnhancerPlugin::make()
                     ->emptyPanelBackgroundImageUrl(asset('images/background/login.png'))
-                    ->emptyPanelBackgroundImageOpacity('50%')
-//                    ->emptyPanelBackgroundColor(Color::Zinc, '300')
+                    ->emptyPanelBackgroundImageOpacity('50%'),
+                //                    ->emptyPanelBackgroundColor(Color::Zinc, '300')
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

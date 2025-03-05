@@ -3,15 +3,12 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\BantuanPkhResource\Pages;
-use App\Filament\Admin\Resources\BantuanPkhResource\RelationManagers;
 use App\Models\BantuanPkh;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BantuanPkhResource extends Resource
 {

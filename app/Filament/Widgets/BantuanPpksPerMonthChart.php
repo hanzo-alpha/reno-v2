@@ -13,15 +13,11 @@ class BantuanPpksPerMonthChart extends ApexChartWidget
 
     /**
      * Chart Id
-     *
-     * @var string
      */
     protected static ?string $chartId = 'bantuanPpksPerMonthChart';
 
     /**
      * Widget Title
-     *
-     * @var string|null
      */
     protected static ?string $heading = 'Bantuan PPKS Per Bulan';
 
@@ -29,16 +25,14 @@ class BantuanPpksPerMonthChart extends ApexChartWidget
 
     protected static bool $isDiscovered = false;
 
-
     /**
      * Chart options (series, labels, types, size, animations...)
      * https://apexcharts.com/docs/options
-     *
-     * @return array
      */
     protected function getOptions(): array
     {
         $listBulan = list_bulan(short: true);
+
         return [
             'chart' => [
                 'type' => 'bar',

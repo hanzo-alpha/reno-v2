@@ -16,10 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BantuanPkh extends Model
 {
     use HasJenisBantuan;
+    use HasUuids;
     use HasWilayah;
     use SoftDeletes;
-    use HasUuids;
-
 
     protected $table = 'bantuan_pkh';
 

@@ -6,13 +6,12 @@ use App\Enums\StatusDtksEnum;
 use App\Models\HubunganKeluarga;
 use App\Models\JenisPekerjaan;
 use App\Models\PendidikanTerakhir;
-use App\Models\TipePpks;
-use Awcodes\Curator\Models\Media;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('bantuan_ppks', static function (Blueprint $table): void {

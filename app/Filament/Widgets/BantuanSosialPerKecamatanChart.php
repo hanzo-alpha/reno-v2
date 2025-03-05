@@ -28,8 +28,11 @@ class BantuanSosialPerKecamatanChart extends ApexChartWidget
     //    use InteractsWithPageFilters;
 
     protected static ?string $heading = 'Program Bantuan Sosial Per Kecamatan';
+
     protected static ?string $pollingInterval = '30s';
+
     protected static bool $deferLoading = true;
+
     protected static ?int $sort = 3;
 
     //    protected int|string|array $columnSpan = 'full';
@@ -51,7 +54,7 @@ class BantuanSosialPerKecamatanChart extends ApexChartWidget
         ];
     }
 
-    protected function queryChart($model, $kodekec, array $filters): int|string|array|Builder|Collection
+    protected function queryChart($model, $kodekec, array $filters): int | string | array | Builder | Collection
     {
         $model = match ((int) $model) {
             1 => BantuanPkh::class,
@@ -65,7 +68,7 @@ class BantuanSosialPerKecamatanChart extends ApexChartWidget
             ->select(['created_at', 'kecamatan', 'kelurahan'])
             ->where('kecamatan', $kodekec);
 
-        if (RekapPenerimaBpjs::class === $model) {
+        if ($model === RekapPenerimaBpjs::class) {
             return $query->clone()->sum('jumlah');
         }
 
@@ -187,7 +190,7 @@ class BantuanSosialPerKecamatanChart extends ApexChartWidget
                 'enabled' => true,
             ],
             'stroke' => [
-                'width' => 'line' === $filters['chartTipe'] ? 4 : 0,
+                'width' => $filters['chartTipe'] === 'line' ? 4 : 0,
             ],
             'colors' => $colors,
         ];

@@ -26,25 +26,13 @@ use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Str;
 
-class ImportBantuanBpnt implements
-    ShouldQueue,
-    SkipsEmptyRows,
-    ToModel,
-    WithBatchInserts,
-    WithChunkReading,
-    WithHeadingRow,
-    WithUpserts,
-    WithValidation
+class ImportBantuanBpnt implements ShouldQueue, SkipsEmptyRows, ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithUpserts, WithValidation
 {
     use Importable;
     use SkipsErrors;
     use SkipsFailures;
 
-    /**
-     * @param  array  $row
-     * @return \Illuminate\Database\Eloquent\Model|\App\Models\BantuanBpnt|null
-     */
-    public function model(array $row): Model|DataBpnt|null
+    public function model(array $row): Model | DataBpnt | null
     {
         $namaProp = isset($row['nama_prop']) ? Str::ucfirst($row['nama_prop']) : null;
         $namaKab = isset($row['nama_kab']) ? Str::ucfirst($row['nama_kab']) : null;

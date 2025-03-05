@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TipePpks extends Model
 {
     public $timestamps = false;
+
     protected $table = 'tipe_ppks';
+
     protected $with = ['kriteria_ppks'];
 
     public function kriteria_ppks(): BelongsToMany

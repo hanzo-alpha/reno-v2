@@ -15,7 +15,9 @@ class LatestUser extends BaseWidget
     use HasWidgetShield;
 
     protected static ?string $heading = 'Pengguna Terakhir';
+
     protected static ?int $sort = 10;
+
     protected static bool $isDiscovered = false;
 
     public function table(Table $table): Table

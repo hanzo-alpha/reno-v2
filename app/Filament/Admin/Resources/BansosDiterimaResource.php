@@ -17,11 +17,17 @@ class BansosDiterimaResource extends Resource
     protected static ?string $model = BansosDiterima::class;
 
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'bansos-yang-diterima';
+
     protected static ?string $label = 'Bansos Yang Diterima';
+
     protected static ?string $navigationGroup = 'Dashboard Bantuan';
+
     protected static ?string $pluralLabel = 'Bansos Yang Diterima';
+
     protected static ?string $modelLabel = 'Bansos Yang Diterima';
+
     protected static ?string $recordTitleAttribute = 'nama_bansos';
 
     public static function form(Form $form): Form

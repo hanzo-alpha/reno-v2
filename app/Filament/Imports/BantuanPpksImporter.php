@@ -63,7 +63,7 @@ class BantuanPpksImporter extends Importer
             ImportColumn::make('tgl_lahir')
                 ->requiredMapping()
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
-                    if (null !== $state) {
+                    if ($state !== null) {
                         $record->tgl_lahir = DateHelper::convertTglFromString($state);
                     }
 
@@ -127,7 +127,7 @@ class BantuanPpksImporter extends Importer
                 ->requiredMapping()
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
                     $provinsi = Provinsi::query()
-                        ->where('name', 'like', '%'.Str::ucfirst($state).'%')
+                        ->where('name', 'like', '%' . Str::ucfirst($state) . '%')
                         ->first()?->code;
                     $record->provinsi = $provinsi ?? '73';
                 })
@@ -137,7 +137,7 @@ class BantuanPpksImporter extends Importer
                 ->requiredMapping()
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
                     $kabupaten = Kabupaten::query()
-                        ->where('name', 'like', '%'.Str::ucfirst($state).'%')
+                        ->where('name', 'like', '%' . Str::ucfirst($state) . '%')
                         ->first()?->code;
 
                     $record->kabupaten = $kabupaten ?? '7312';
@@ -149,7 +149,7 @@ class BantuanPpksImporter extends Importer
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
                     $kecamatan = Kecamatan::query()
                         ->whereIn('kabupaten_code', ['7308', '7312', '7371', '7604', '9171'])
-                        ->where('name', 'like', '%'.Str::upper($state).'%')
+                        ->where('name', 'like', '%' . Str::upper($state) . '%')
                         ->first()?->code;
                     $record->kecamatan = $kecamatan ?? null;
                 })
@@ -159,7 +159,7 @@ class BantuanPpksImporter extends Importer
                 ->guess(['Kelurahan/Desa', 'Kelurahan', 'Kel'])
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
                     $kelurahan = Kelurahan::query()
-                        ->where('name', 'like', '%'.Str::ucfirst($state).'%')
+                        ->where('name', 'like', '%' . Str::ucfirst($state) . '%')
                         ->first()?->code;
                     $record->kelurahan = $kelurahan ?? null;
                 })
@@ -169,7 +169,7 @@ class BantuanPpksImporter extends Importer
                 ->requiredMapping()
                 ->fillRecordUsing(function ($record, $state): void {
                     $bansos = BansosDiterima::query()
-                        ->where('nama_bansos', 'like', '%'.Str::upper($state).'%')
+                        ->where('nama_bansos', 'like', '%' . Str::upper($state) . '%')
                         ->first();
                     $record->bansos_diterima_ids = collect($bansos?->id)->toArray();
                 }),
@@ -198,7 +198,7 @@ class BantuanPpksImporter extends Importer
             ImportColumn::make('status_rumah_tinggal')
                 ->requiredMapping()
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
-                    $record->status_rumah_tinggal = (1 === (int) $state)
+                    $record->status_rumah_tinggal = ((int) $state === 1)
                         ? StatusRumahEnum::MILIK_SENDIRI
                         : StatusRumahEnum::MENUMPANG;
                 }),
@@ -242,11 +242,11 @@ class BantuanPpksImporter extends Importer
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Impor Data Bantuan PPKS telah selesai dan '.number_format($import->successful_rows).' '.str('baris')
-                ->plural($import->successful_rows).' berhasil diimpor.';
+        $body = 'Impor Data Bantuan PPKS telah selesai dan ' . number_format($import->successful_rows) . ' ' . str('baris')
+            ->plural($import->successful_rows) . ' berhasil diimpor.';
 
         if ($failedRowsCount = $import->getFailedRowsCount()) {
-            $body .= ' '.number_format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' gagal diimpor.';
+            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' gagal diimpor.';
         }
 
         return $body;
@@ -260,7 +260,7 @@ class BantuanPpksImporter extends Importer
             ]);
         }
 
-        return new BantuanPpks();
+        return new BantuanPpks;
     }
 
     public function getJobConnection(): ?string

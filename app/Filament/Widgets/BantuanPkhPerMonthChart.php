@@ -13,15 +13,11 @@ class BantuanPkhPerMonthChart extends ApexChartWidget
 
     /**
      * Chart Id
-     *
-     * @var string
      */
     protected static ?string $chartId = 'bantuanPkhPerMonthChart';
 
     /**
      * Widget Title
-     *
-     * @var string|null
      */
     protected static ?string $heading = 'Bantuan Pkh Per Bulan';
 
@@ -29,12 +25,9 @@ class BantuanPkhPerMonthChart extends ApexChartWidget
 
     protected static bool $isDiscovered = false;
 
-
     /**
      * Chart options (series, labels, types, size, animations...)
      * https://apexcharts.com/docs/options
-     *
-     * @return array
      */
     protected function getOptions(): array
     {

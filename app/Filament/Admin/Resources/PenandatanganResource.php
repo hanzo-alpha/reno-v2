@@ -26,11 +26,17 @@ class PenandatanganResource extends Resource
     protected static ?string $model = Penandatangan::class;
 
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'penandatangan';
+
     protected static ?string $label = 'Penandatangan';
+
     protected static ?string $pluralLabel = 'Penandatangan';
+
     protected static ?string $navigationLabel = 'Penandatangan';
+
     protected static ?string $navigationGroup = 'Dashboard Bantuan';
+
     protected static ?string $recordTitleAttribute = 'nama_penandatangan';
 
     public static function form(Form $form): Form
@@ -40,8 +46,10 @@ class PenandatanganResource extends Resource
                 Select::make('kode_kecamatan')
                     ->label('Kecamatan')
                     ->options(function (Get $get) {
-                        return District::where('city_code',
-                            setting('app.kodekab', config('custom.default.kodekab')))->pluck('name', 'code');
+                        return District::where(
+                            'city_code',
+                            setting('app.kodekab', config('custom.default.kodekab'))
+                        )->pluck('name', 'code');
                     })
                     ->searchable()
                     ->live(onBlur: true)
@@ -96,13 +104,13 @@ class PenandatanganResource extends Resource
                     ->label('Kecamatan')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->formatStateUsing(fn($state): string => District::where('code', $state)->first()?->name ?? '-')
+                    ->formatStateUsing(fn ($state): string => District::where('code', $state)->first()?->name ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kode_instansi')
                     ->label('Instansi')
                     ->sortable()
                     ->toggleable()
-                    ->formatStateUsing(fn($state): string => Village::where('code', $state)->first()?->name ?? '-')
+                    ->formatStateUsing(fn ($state): string => Village::where('code', $state)->first()?->name ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->sortable()
@@ -127,14 +135,14 @@ class PenandatanganResource extends Resource
                     ->badge(),
             ])
             ->filters([
-//                Tables\Filters\SelectFilter::make('kode_instansi')
-//                    ->label('Instansi')
-//                    ->options(Kelurahan::whereIn(
-//                        'kecamatan_code',
-//                        config('custom.kode_kecamatan'),
-//                    )->pluck('name', 'code'))
-//                    ->searchable()
-//                    ->preload(),
+                //                Tables\Filters\SelectFilter::make('kode_instansi')
+                //                    ->label('Instansi')
+                //                    ->options(Kelurahan::whereIn(
+                //                        'kecamatan_code',
+                //                        config('custom.kode_kecamatan'),
+                //                    )->pluck('name', 'code'))
+                //                    ->searchable()
+                //                    ->preload(),
                 Tables\Filters\SelectFilter::make('status_penandatangan')
                     ->label('Status Penandatangan')
                     ->options(StatusPenandatangan::class)
