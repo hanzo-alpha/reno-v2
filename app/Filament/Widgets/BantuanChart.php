@@ -17,20 +17,20 @@ class BantuanChart extends ApexChartWidget
 
     /**
      * Chart Id
-     *
-     * @var string
      */
     protected static ?string $chartId = 'bantuanChart';
 
     /**
      * Widget Title
-     *
-     * @var string|null
      */
     protected static ?string $heading = 'Statistik Program Bantuan Sosial';
+
     protected static ?int $contentHeight = 500;
+
     protected static bool $deferLoading = true;
+
     protected static ?string $pollingInterval = '30s';
+
     protected static ?int $sort = 4;
 
     protected function getOptions(): array

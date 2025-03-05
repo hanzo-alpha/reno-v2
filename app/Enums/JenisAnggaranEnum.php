@@ -21,7 +21,7 @@ enum JenisAnggaranEnum: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::APBD => 'success',

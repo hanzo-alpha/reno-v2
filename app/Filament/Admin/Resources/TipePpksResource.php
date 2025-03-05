@@ -22,11 +22,17 @@ class TipePpksResource extends Resource
     protected static ?string $model = TipePpks::class;
 
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'tipe-ppks';
+
     protected static ?string $label = 'Tipe PPKS';
+
     protected static ?string $pluralLabel = 'Tipe PPKS';
+
     protected static ?string $navigationLabel = 'Tipe PPKS';
+
     protected static ?string $navigationGroup = 'Dashboard Bantuan';
+
     protected static ?string $recordTitleAttribute = 'nama_tipe';
 
     public static function getGloballySearchableAttributes(): array
@@ -80,7 +86,7 @@ class TipePpksResource extends Resource
                 Tables\Actions\CreateAction::make()
                     ->label('Tambah')
                     ->icon('heroicon-m-plus')
-                    ->disabled(fn() => cek_batas_input('ppks'))
+                    ->disabled(fn () => cek_batas_input('ppks'))
                     ->button(),
             ])
             ->columns([
@@ -88,7 +94,7 @@ class TipePpksResource extends Resource
                     ->label('Kategori PPKS')
                     ->suffixBadges([
                         Badge::make('alias')
-                            ->label(fn($record) => $record->alias)
+                            ->label(fn ($record) => $record->alias)
                             ->color('success'),
                     ])
                     ->sortable()

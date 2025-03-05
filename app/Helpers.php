@@ -7,23 +7,23 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-if (!function_exists('date_format')) {
+if (! function_exists('date_format')) {
     function date_format($date, $format): string
     {
         return Carbon::createFromFormat('Y-m-d', $date)->format($format);
     }
 }
 
-if (!function_exists('tanggal_ke_kalimat')) {
+if (! function_exists('tanggal_ke_kalimat')) {
     function tanggal_ke_kalimat($tanggal): string
     {
         // Validasi input
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $tanggal)) {
+        if (! preg_match('/^\d{4}-\d{2}-\d{2}$/', $tanggal)) {
             return 'Format tanggal tidak valid!';
         }
 
         // Pecah tanggal menjadi bagian tahun, bulan, dan hari
-        list($tahun, $bulan, $hari) = explode('-', $tanggal);
+        [$tahun, $bulan, $hari] = explode('-', $tanggal);
 
         // Konversi bulan ke dalam format teks
         $bulan_kalimat = match ($bulan) {
@@ -51,15 +51,15 @@ if (!function_exists('tanggal_ke_kalimat')) {
         $tahun_kalimat = terbilang((int) $tahun);
 
         // Gabungkan bagian-bagian tanggal menjadi kalimat
-        return $hari_kalimat.' '.$bulan_kalimat.' Tahun '.$tahun_kalimat;
+        return $hari_kalimat . ' ' . $bulan_kalimat . ' Tahun ' . $tahun_kalimat;
     }
 }
 
-if (!function_exists('terbilang')) {
+if (! function_exists('terbilang')) {
     function terbilang($angka): string
     {
         // Validasi input
-        if (!is_numeric($angka)) {
+        if (! is_numeric($angka)) {
             return 'Masukan harus berupa angka!';
         }
 
@@ -68,8 +68,8 @@ if (!function_exists('terbilang')) {
         }
 
         // Sanitasi input
-        $angka = abs($angka); //mengubah angka agar menjadi bernilai positif
-        $angka = floor($angka); //mengubah angka agar menjadi bilangan bulat
+        $angka = abs($angka); // mengubah angka agar menjadi bernilai positif
+        $angka = floor($angka); // mengubah angka agar menjadi bilangan bulat
 
         $angka_huruf = [
             '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas',
@@ -79,42 +79,43 @@ if (!function_exists('terbilang')) {
             return $angka_huruf[$angka];
         }
         if ($angka < 20) {
-            return terbilang($angka - 10).' Belas';
+            return terbilang($angka - 10) . ' Belas';
         }
         if ($angka < 100) {
-            return terbilang($angka / 10).' Puluh '.terbilang($angka % 10);
+            return terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
         }
         if ($angka < 200) {
-            return 'Seratus '.terbilang($angka - 100);
+            return 'Seratus ' . terbilang($angka - 100);
         }
         if ($angka < 1000) {
-            return terbilang($angka / 100).' Ratus '.terbilang($angka % 100);
+            return terbilang($angka / 100) . ' Ratus ' . terbilang($angka % 100);
         }
         if ($angka < 2000) {
-            return 'Seribu '.terbilang($angka - 1000);
+            return 'Seribu ' . terbilang($angka - 1000);
         }
         if ($angka < 1000000) {
-            return terbilang($angka / 1000).' Ribu '.terbilang($angka % 1000);
+            return terbilang($angka / 1000) . ' Ribu ' . terbilang($angka % 1000);
         }
         if ($angka < 1000000000) {
-            return terbilang($angka / 1000000).' Juta '.terbilang($angka % 1000000);
+            return terbilang($angka / 1000000) . ' Juta ' . terbilang($angka % 1000000);
         }
         if ($angka < 1000000000000) {
-            return terbilang($angka / 1000000000).' Miliar '.terbilang($angka % 1000000000);
+            return terbilang($angka / 1000000000) . ' Miliar ' . terbilang($angka % 1000000000);
         }
-        return terbilang($angka / 1000000000000).' Triliun '.terbilang($angka % 1000000000000);
+
+        return terbilang($angka / 1000000000000) . ' Triliun ' . terbilang($angka % 1000000000000);
     }
 }
 
-if (!function_exists('replace_nama_file_excel')) {
+if (! function_exists('replace_nama_file_excel')) {
     function replace_nama_file_excel($namafile): string
     {
-        return str_replace(['/', "\\", ':', '*', '?', '«', '<', '>', '|'], '-', $namafile);
+        return str_replace(['/', '\\', ':', '*', '?', '«', '<', '>', '|'], '-', $namafile);
     }
 }
 
-if (!function_exists('superadmin_admin_roles')) {
-    function superadmin_admin_roles(): array|Collection
+if (! function_exists('superadmin_admin_roles')) {
+    function superadmin_admin_roles(): array | Collection
     {
         $admin = Helpers::getAdminRoles();
         $sadmin = ['super_admin'];
@@ -123,7 +124,7 @@ if (!function_exists('superadmin_admin_roles')) {
     }
 }
 
-if (!function_exists('cek_batas_input')) {
+if (! function_exists('cek_batas_input')) {
     function cek_batas_input($date): bool
     {
         $date = $date instanceof Carbon ? $date : Carbon::parse($date)->format('Y-m-d');
@@ -132,8 +133,8 @@ if (!function_exists('cek_batas_input')) {
     }
 }
 
-if (!function_exists('hitung_umur')) {
-    function hitung_umur($date, $format = false): string|int
+if (! function_exists('hitung_umur')) {
+    function hitung_umur($date, $format = false): string | int
     {
         $date = $date instanceof Carbon ? $date->format('Y-m-d') : Carbon::parse($date)->format('Y-m-d');
 
@@ -147,7 +148,7 @@ if (!function_exists('hitung_umur')) {
     }
 }
 
-if (!function_exists('list_tahun')) {
+if (! function_exists('list_tahun')) {
     function list_tahun(): array
     {
         $year_range = range(date('Y'), date('Y') - 3);
@@ -156,15 +157,15 @@ if (!function_exists('list_tahun')) {
     }
 }
 
-if (!function_exists('getModelList')) {
+if (! function_exists('getModelList')) {
     function getModelList(): array
     {
         $modelList = [];
-        $path = app_path().'/Models';
+        $path = app_path() . '/Models';
         $results = scandir($path);
 
         foreach ($results as $result) {
-            if ('.' === $result || '..' === $result) {
+            if ($result === '.' || $result === '..') {
                 continue;
             }
             $filename = $result;
@@ -180,14 +181,14 @@ if (!function_exists('getModelList')) {
     }
 }
 
-if (!function_exists('convertNameBasedOnModelName')) {
-    function convertNameBasedOnModelName(Stringable|string $name): Stringable|string
+if (! function_exists('convertNameBasedOnModelName')) {
+    function convertNameBasedOnModelName(Stringable | string $name): Stringable | string
     {
         return Str::of($name)->prepend('Bantuan')->camel()->ucfirst();
     }
 }
 
-if (!function_exists('list_bulan')) {
+if (! function_exists('list_bulan')) {
     function list_bulan($short = false): array
     {
         if ($short) {
@@ -224,7 +225,7 @@ if (!function_exists('list_bulan')) {
     }
 }
 
-if (!function_exists('bulan_to_integer')) {
+if (! function_exists('bulan_to_integer')) {
     function bulan_to_integer($bulan, $short = false): ?string
     {
         $bulan = Str::upper($bulan);
@@ -265,8 +266,8 @@ if (!function_exists('bulan_to_integer')) {
     }
 }
 
-if (!function_exists('bulan_to_string')) {
-    function bulan_to_string(int|string $bulan, $short = false): string
+if (! function_exists('bulan_to_string')) {
+    function bulan_to_string(int | string $bulan, $short = false): string
     {
         $bulan = is_int($bulan) ? $bulan : (int) $bulan;
 
@@ -303,7 +304,7 @@ if (!function_exists('bulan_to_string')) {
         };
     }
 
-    if (!function_exists('convertToRoman')) {
+    if (! function_exists('convertToRoman')) {
         function convertToRoman($integer): string
         {
             // Convert the integer into an integer (just to make sure)

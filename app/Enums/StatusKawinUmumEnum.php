@@ -28,7 +28,7 @@ enum StatusKawinUmumEnum: int implements HasColor, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::KAWIN_TERCATAT => 'primary',

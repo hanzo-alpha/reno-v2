@@ -22,7 +22,7 @@ final class ImportBantuanPpks implements ToModel, WithBatchInserts, WithChunkRea
     /**
      * @return \Illuminate\Database\Eloquent\Model|\App\Models\BantuanPkh|null
      */
-    public function model(array $row): Model|DataPpks|null
+    public function model(array $row): Model | DataPpks | null
     {
         $provinsi = Provinsi::query()->where('name', Str::ucfirst($row['nama_prop']))->first()->code;
         $kabupaten = Kabupaten::query()->where('name', Str::ucfirst($row['nama_kab']))->first()->code;

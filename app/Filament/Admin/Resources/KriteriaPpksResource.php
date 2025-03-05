@@ -20,12 +20,19 @@ class KriteriaPpksResource extends Resource
     protected static ?string $model = KriteriaPpks::class;
 
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'kriteria-ppks';
+
     protected static ?string $label = 'Kriteria PPKS';
+
     protected static ?string $pluralLabel = 'Kriteria PPKS';
+
     protected static ?string $navigationLabel = 'Kriteria PPKS';
+
     protected static ?string $navigationParentItem = 'Tipe PPKS';
+
     protected static ?string $navigationGroup = 'Dashboard Bantuan';
+
     protected static ?string $recordTitleAttribute = 'nama_kriteria';
 
     public static function form(Form $form): Form
@@ -71,7 +78,7 @@ class KriteriaPpksResource extends Resource
                     ->searchable()
                     ->suffixBadges([
                         Badge::make('tipe_ppks.nama_tipe')
-                            ->label(fn(Model $record) => $record->tipe_ppks()->first()->nama_tipe),
+                            ->label(fn (Model $record) => $record->tipe_ppks()->first()->nama_tipe),
                     ]),
             ])
             ->filters([

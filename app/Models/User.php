@@ -18,15 +18,15 @@ use Laravolt\Indonesia\Models\Village;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
-use Teguh02\IndonesiaTerritoryForms\Models\SubDistrict;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
     use HasRoles;
-    use TwoFactorAuthenticatable;
-    use SoftDeletes;
     use LogsActivity;
+    use Notifiable;
+    use SoftDeletes;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -41,7 +41,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'avatar_url',
         'is_admin',
         'jenis_bantuan_id',
-        'instansi_code'
+        'instansi_code',
     ];
 
     /**

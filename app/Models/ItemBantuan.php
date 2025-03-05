@@ -19,8 +19,12 @@ class ItemBantuan extends Model
 
     public function beritaAcara(): BelongsToMany
     {
-        return $this->belongsToMany(BeritaAcaraRastra::class, 'item_bantuan_berita_acara_rastra', 'item_bantuan_id',
-            'berita_acara_rastra_id');
+        return $this->belongsToMany(
+            BeritaAcaraRastra::class,
+            'item_bantuan_berita_acara_rastra',
+            'item_bantuan_id',
+            'berita_acara_rastra_id'
+        );
     }
 
     public function kel(): BelongsTo

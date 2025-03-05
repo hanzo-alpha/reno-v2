@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,9 +28,9 @@ class BantuanPpks extends Model
 {
     use HasRelationships;
     use HasTambahan;
+    use HasUuids;
     use HasWilayah;
     use SoftDeletes;
-    use HasUuids;
 
     protected $table = 'bantuan_ppks';
 
@@ -96,7 +95,7 @@ class BantuanPpks extends Model
 
     public function kriteria(): HasManyDeep
     {
-        return $this->hasManyDeepFromRelations($this->tipe_ppks(), (new TipePpks())->kriteria_ppks());
+        return $this->hasManyDeepFromRelations($this->tipe_ppks(), (new TipePpks)->kriteria_ppks());
     }
 
     public function subKategori(): BelongsToMany

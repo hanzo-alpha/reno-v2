@@ -25,7 +25,8 @@ final class ManageJenisBantuan extends ManageRecords
                 ->mutateFormDataUsing(function (array $data) {
                     $alias = Str::of($data['alias']);
                     $data['alias'] = $alias->upper();
-                    $data['model_name'] = 'App\\Models\\'.convertNameBasedOnModelName($alias->ucfirst());
+                    $data['model_name'] = 'App\\Models\\' . convertNameBasedOnModelName($alias->ucfirst());
+
                     return $data;
                 }),
         ];

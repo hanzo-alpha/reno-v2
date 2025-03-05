@@ -3,9 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ItemBantuanResource\Pages;
-use App\Filament\Admin\Resources\ItemBantuanResource\RelationManagers;
 use App\Models\ItemBantuan;
-use App\Models\Kelurahan;
 use App\Supports\Helpers;
 use Awcodes\FilamentBadgeableColumn\Components\Badge;
 use Awcodes\FilamentBadgeableColumn\Components\BadgeableColumn;
@@ -18,7 +16,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Laravolt\Indonesia\Models\Village;
 
 class ItemBantuanResource extends Resource
@@ -26,11 +23,17 @@ class ItemBantuanResource extends Resource
     protected static ?string $model = ItemBantuan::class;
 
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'item-bantuan';
+
     protected static ?string $label = 'Item Bantuan';
+
     protected static ?string $pluralLabel = 'Item Bantuan';
+
     protected static ?string $navigationGroup = 'Dashboard Bantuan';
+
     protected static ?int $navigationSort = 9;
+
     protected static ?string $recordTitleAttribute = 'nama_item';
 
     public static function form(Form $form): Form
@@ -50,7 +53,7 @@ class ItemBantuanResource extends Resource
                         return Village::query()
                             ->when(
                                 auth()->user()->instansi_code,
-                                fn(Builder $query) => $query->where(
+                                fn (Builder $query) => $query->where(
                                     'code',
                                     auth()->user()->instansi_code,
                                 ),
@@ -81,7 +84,7 @@ class ItemBantuanResource extends Resource
                     ->live(onBlur: true)
                     ->default(0)
                     ->afterStateUpdated(
-                        fn(Forms\Get $get, Forms\Set $set, $state) => $set('total_harga', $get('kuantitas') * $state),
+                        fn (Forms\Get $get, Forms\Set $set, $state) => $set('total_harga', $get('kuantitas') * $state),
                     ),
                 Forms\Components\TextInput::make('total_harga')
                     ->label('Total Harga')
@@ -111,7 +114,7 @@ class ItemBantuanResource extends Resource
                 Tables\Columns\TextColumn::make('jenisBantuan.alias')
                     ->label('Jenis Bantuan')
                     ->badge()
-                    ->color(fn($record) => Color::hex($record->jenisBantuan->warna))
+                    ->color(fn ($record) => Color::hex($record->jenisBantuan->warna))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('kel.name')
@@ -121,11 +124,11 @@ class ItemBantuanResource extends Resource
                     ->searchable()
                     ->suffixBadges([
                         Badge::make('jumlah_bulan')
-                            ->label(fn(Model $record) => $record->jumlah_bulan.' bulan')
+                            ->label(fn (Model $record) => $record->jumlah_bulan . ' bulan')
                             ->color('info'),
                     ]),
                 Tables\Columns\TextColumn::make('kuantitas')
-                    ->formatStateUsing(fn($record) => $record->kuantitas.' '.$record->satuan)
+                    ->formatStateUsing(fn ($record) => $record->kuantitas . ' ' . $record->satuan)
                     ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('harga_satuan')
@@ -143,8 +146,10 @@ class ItemBantuanResource extends Resource
                 Tables\Filters\SelectFilter::make('kode_kelurahan')
                     ->label('Kelurahan')
                     ->options(function () {
-                        return Village::query()->whereIn('district_code',
-                            config('custom.kode_kecamatan'))->pluck('name', 'code');
+                        return Village::query()->whereIn(
+                            'district_code',
+                            config('custom.kode_kecamatan')
+                        )->pluck('name', 'code');
                     })
                     ->searchable()
                     ->preload(),

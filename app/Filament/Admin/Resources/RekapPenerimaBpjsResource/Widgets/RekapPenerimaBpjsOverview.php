@@ -21,14 +21,15 @@ class RekapPenerimaBpjsOverview extends BaseWidget
     use InteractsWithPageFilters;
 
     protected static bool $isDiscovered = false;
+
     protected static ?int $sort = 1;
 
     protected static function getQuery(array $filter): Builder
     {
         return RekapPenerimaBpjs::query()
             ->select(['created_at', 'bulan', 'jumlah', 'kecamatan', 'kelurahan'])
-            ->when($filter['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
-            ->when($filter['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
+            ->when($filter['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
+            ->when($filter['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
     }
 
     protected function getStats(): array
@@ -46,12 +47,12 @@ class RekapPenerimaBpjsOverview extends BaseWidget
         foreach ($listKecamatan as $code => $name) {
             $value = RekapPenerimaBpjs::query()
                 ->select(['created_at', 'jumlah', 'kecamatan', 'kelurahan'])
-                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
                 ->where('kecamatan', $code)
                 ->sum('jumlah');
-            $label = 'KPM BPJS Kec. '.$name;
-            $desc = 'Total BPJS Kec. '.$name;
+            $label = 'KPM BPJS Kec. ' . $name;
+            $desc = 'Total BPJS Kec. ' . $name;
             $icon = 'user';
 
             $results[] = $this->renderStats($value, $label, $desc, $icon);
@@ -72,22 +73,22 @@ class RekapPenerimaBpjsOverview extends BaseWidget
     {
         $verified = RekapPenerimaBpjs::query()
             ->select(['created_at', 'jumlah', 'bulan', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('bulan', now()->month)
             ->sum('jumlah');
 
         $unverified = RekapPenerimaBpjs::query()
             ->select(['created_at', 'jumlah', 'bulan', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('bulan', now()->subMonth(2)->month)
             ->sum('jumlah');
 
         $review = RekapPenerimaBpjs::query()
             ->select(['created_at', 'jumlah', 'bulan', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('bulan', now()->addMonth(1)->month)
             ->sum('jumlah');
 
@@ -106,28 +107,28 @@ class RekapPenerimaBpjsOverview extends BaseWidget
         return [
             Stat::make(
                 label: 'Peserta PBI',
-                value: Number::format($data['jamkesda'], 2, 0, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['jamkesda'], 2, 0, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Total Peserta PBI BPJS')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('danger'),
             Stat::make(
                 label: 'Peserta PBI BPJS Berhasil',
-                value: Number::format($data['verified'], 2, 2, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['verified'], 2, 2, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Jumlah Peserta PBI BPJS Berhasil')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('info'),
             Stat::make(
                 label: 'Peserta PBI BPJS Gagal',
-                value: Number::format($data['unverified'], 2, 2, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['unverified'], 2, 2, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Jumlah Peserta PBI BPJS Gagal')
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->color('success'),
             Stat::make(
                 label: 'Peserta PBI BPJS Sedang Proses',
-                value: Number::format($data['review'], 2, 2, 'id').config('custom.app.stat_prefix'),
+                value: Number::format($data['review'], 2, 2, 'id') . config('custom.app.stat_prefix'),
             )
                 ->description('Jumlah Peserta PBI BPJS Sedang Proses')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
@@ -139,10 +140,10 @@ class RekapPenerimaBpjsOverview extends BaseWidget
     {
         return Stat::make(
             label: $label ?: 'KPM BPJS',
-            value: Number::format((int) $value, 0, locale: ('id')).config('custom.app.stat_prefix'),
+            value: Number::format((int) $value, 0, locale: ('id')) . config('custom.app.stat_prefix'),
         )
             ->description($desc ?: 'Total KPM Kec. Marioriwawo')
-            ->descriptionIcon('heroicon-o-'.$icon ?? 'user')
+            ->descriptionIcon('heroicon-o-' . $icon ?? 'user')
             ->color($color ?? 'success');
     }
 }

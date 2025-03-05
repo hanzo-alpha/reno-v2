@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BeritaAcaraRastra extends Model
 {
-    use HasWilayah;
     use HasUuids;
+    use HasWilayah;
 
     protected $table = 'berita_acara_rastra';
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Models\BantuanRastra;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('berita_acara_rastra', static function (Blueprint $table): void {

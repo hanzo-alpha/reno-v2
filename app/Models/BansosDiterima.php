@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class BansosDiterima extends Model
 {
     protected $table = 'bansos_diterima';
+
     protected $guarded = [];
 
     public function bantuan_ppks(): BelongsTo

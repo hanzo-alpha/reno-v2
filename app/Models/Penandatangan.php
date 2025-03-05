@@ -14,7 +14,9 @@ use Teguh02\IndonesiaTerritoryForms\Models\SubDistrict;
 class Penandatangan extends Model
 {
     protected $table = 'penandatangan';
+
     protected $with = ['kecamatan', 'kelurahan'];
+
     protected $casts = [
         'status_penandatangan' => StatusPenandatangan::class,
         'jabatan' => JabatanEnum::class,

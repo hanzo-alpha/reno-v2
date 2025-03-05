@@ -16,6 +16,7 @@ class Laporan extends BaseSettings
     use HasPageShield;
 
     protected ?string $heading = 'Pengaturan Laporan';
+
     protected static ?string $navigationIcon = null;
 
     public static function getNavigationLabel(): string
@@ -28,7 +29,7 @@ class Laporan extends BaseSettings
         return 'Laporan';
     }
 
-    public function schema(): array|Closure
+    public function schema(): array | Closure
     {
         return [
             Section::make('Kop Berita Acara & Layout')

@@ -31,13 +31,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BantuanRastra extends Model
 {
     use HasTambahan;
+    use HasUuids;
     use HasWilayah;
     use SoftDeletes;
-    use HasUuids;
 
     protected $table = 'bantuan_rastra';
 
     protected $guarded = [];
+
     protected $with = [
         'kec', 'kel', 'penggantiRastra',
     ];
@@ -125,7 +126,7 @@ class BantuanRastra extends Model
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ));
-                            if (!$kab) {
+                            if (! $kab) {
                                 return Kecamatan::where('kabupaten_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
@@ -135,14 +136,14 @@ class BantuanRastra extends Model
 
                             return $kab->pluck('name', 'code');
                         })
-                        ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
+                        ->afterStateUpdated(fn (callable $set) => $set('kelurahan', null)),
 
                     Select::make('kelurahan')
                         ->required()
-                        ->options(fn(callable $get) => Kelurahan::query()
+                        ->options(fn (callable $get) => Kelurahan::query()
                             ->when(
                                 auth()->user()->instansi_id,
-                                fn(Builder $query) => $query->where(
+                                fn (Builder $query) => $query->where(
                                     'code',
                                     auth()->user()->instansi_id,
                                 ),
@@ -180,7 +181,7 @@ class BantuanRastra extends Model
                 ->relationship(
                     name: 'jenis_bantuan',
                     titleAttribute: 'alias',
-                    modifyQueryUsing: fn(Builder $query) => $query->whereNotIn('id', [1, 2]),
+                    modifyQueryUsing: fn (Builder $query) => $query->whereNotIn('id', [1, 2]),
                 )
                 ->default(5)
                 ->dehydrated(),
@@ -190,7 +191,7 @@ class BantuanRastra extends Model
                 ->options(StatusVerifikasiEnum::class)
                 ->default(StatusVerifikasiEnum::UNVERIFIED)
                 ->preload()
-                ->visible(fn() => auth()->user()?->hasRole(superadmin_admin_roles())),
+                ->visible(fn () => auth()->user()?->hasRole(superadmin_admin_roles())),
 
             Select::make('status_rastra')
                 ->label('Status Rastra')
@@ -209,7 +210,7 @@ class BantuanRastra extends Model
                     ->pluck('nama_lengkap', 'id'))
                 ->searchable(['nama_lengkap', 'nik', 'nokk'])
                 ->lazy()
-                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
+                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
                 ->preload(),
 
             Select::make('penggantiRastra.alasan_dikeluarkan')
@@ -220,7 +221,7 @@ class BantuanRastra extends Model
                 ->preload()
                 ->lazy()
                 ->required()
-                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
+                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
                 ->default(AlasanEnum::PINDAH),
 
             CuratorPicker::make('penggantiRastra.media_id')
@@ -229,7 +230,7 @@ class BantuanRastra extends Model
                 ->buttonLabel('Tambah File')
                 ->required()
                 ->preserveFilenames()
-                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
+                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
                 ->maxSize(2048),
 
             TextInput::make('keterangan')

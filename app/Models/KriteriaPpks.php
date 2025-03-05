@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class KriteriaPpks extends Model
 {
     public $timestamps = false;
+
     protected $table = 'kriteria_ppks';
 
     public function tipePpks(): BelongsTo

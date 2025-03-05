@@ -8,7 +8,7 @@ use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum StatusVerifikasiEnum: string implements HasColor, HasLabel, HasIcon
+enum StatusVerifikasiEnum: string implements HasColor, HasIcon, HasLabel
 {
     case UNVERIFIED = 'BELUM DIVERIFIKASI';
     case VERIFIED = 'TERVERIFIKASI';
@@ -23,7 +23,7 @@ enum StatusVerifikasiEnum: string implements HasColor, HasLabel, HasIcon
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::UNVERIFIED => 'danger',

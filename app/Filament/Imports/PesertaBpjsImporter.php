@@ -51,10 +51,10 @@ class PesertaBpjsImporter extends Importer
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Your peserta bpjs import has completed and '.number_format($import->successful_rows).' '.str('row')->plural($import->successful_rows).' imported.';
+        $body = 'Your peserta bpjs import has completed and ' . number_format($import->successful_rows) . ' ' . str('row')->plural($import->successful_rows) . ' imported.';
 
         if ($failedRowsCount = $import->getFailedRowsCount()) {
-            $body .= ' '.number_format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to import.';
+            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to import.';
         }
 
         return $body;
@@ -67,6 +67,6 @@ class PesertaBpjsImporter extends Importer
         //     'email' => $this->data['email'],
         // ]);
 
-        return new PesertaBpjs();
+        return new PesertaBpjs;
     }
 }

@@ -15,11 +15,17 @@ use Filament\Tables\Table;
 final class PendidikanTerakhirResource extends Resource
 {
     protected static ?string $model = PendidikanTerakhir::class;
+
     protected static ?string $navigationIcon = null;
+
     protected static ?string $slug = 'pendidikan-terakhir';
+
     protected static ?string $label = 'Pendidikan Terakhir';
+
     protected static ?string $pluralLabel = 'Pendidikan Terakhir';
+
     protected static ?string $navigationGroup = 'Dashboard Bantuan';
+
     protected static ?string $recordTitleAttribute = 'nama_pendidikan';
 
     public static function form(Form $form): Form

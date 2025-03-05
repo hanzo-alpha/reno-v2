@@ -35,12 +35,12 @@ class BantuanBpntOverview extends BaseWidget
         foreach ($listKecamatan as $code => $name) {
             $value = BantuanBpnt::query()
                 ->select(['created_at', 'kecamatan', 'kelurahan'])
-                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters))
-                ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters))
+                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters))
+                ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters))
                 ->where('kecamatan', $code)
                 ->count();
-            $label = 'KPM BPNT Kec. '.$name;
-            $desc = 'Total BPNT Kec. '.$name;
+            $label = 'KPM BPNT Kec. ' . $name;
+            $desc = 'Total BPNT Kec. ' . $name;
             $icon = 'user';
 
             $results[] = $this->renderStats($value, $label, $desc, $icon);
@@ -61,10 +61,10 @@ class BantuanBpntOverview extends BaseWidget
     {
         return Stat::make(
             label: $label ?? 'KPM PKH Kec. Marioriwawo',
-            value: Number::format($value ?? 0, 0, locale: 'id').config('custom.app.stat_prefix'),
+            value: Number::format($value ?? 0, 0, locale: 'id') . config('custom.app.stat_prefix'),
         )
             ->description($desc ?? 'Total KPM')
-            ->descriptionIcon('heroicon-o-'.$icon ?? 'document-chart-bar')
+            ->descriptionIcon('heroicon-o-' . $icon ?? 'document-chart-bar')
             ->color($color ?? 'success');
     }
 }
