@@ -27,7 +27,6 @@ function swappable() {
         },
     };
 }
-
 export {
     swappable as default,
 };

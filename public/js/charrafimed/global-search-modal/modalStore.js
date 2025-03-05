@@ -49,7 +49,6 @@ var handleResizes = (entries) => {
             updatePos(entry.target);
     });
 };
-
 function observePosition(el) {
     const oldObserver = intersections.get(el);
     oldObserver === null || oldObserver === void 0 ? void 0 : oldObserver.disconnect();
@@ -78,7 +77,6 @@ function observePosition(el) {
     observer.observe(el);
     intersections.set(el, observer);
 }
-
 function updatePos(el) {
     clearTimeout(debounces.get(el));
     const optionsOrPlugin = getOptions(el);
@@ -93,20 +91,17 @@ function updatePos(el) {
         }
     }, delay));
 }
-
 function updateAllPos() {
     clearTimeout(debounces.get(root));
     debounces.set(root, setTimeout(() => {
         parents.forEach((parent) => forEach(parent, (el) => lowPriority(() => updatePos(el))));
     }, 100));
 }
-
 function poll(el) {
     setTimeout(() => {
         intervals.set(el, setInterval(() => lowPriority(updatePos.bind(null, el)), 2e3));
     }, Math.round(2e3 * Math.random()));
 }
-
 function lowPriority(callback) {
     if (typeof requestIdleCallback === 'function') {
         requestIdleCallback(() => callback());
@@ -114,7 +109,6 @@ function lowPriority(callback) {
         requestAnimationFrame(() => callback());
     }
 }
-
 var mutations;
 var resize;
 var supportedBrowser = typeof window !== 'undefined' && 'ResizeObserver' in window;
@@ -128,7 +122,6 @@ if (supportedBrowser) {
     });
     resize.observe(root);
 }
-
 function getElements(mutations2) {
     const observedNodes = mutations2.reduce((nodes, mutation) => {
         return [
@@ -178,14 +171,12 @@ function getElements(mutations2) {
         return elements;
     }, /* @__PURE__ */ new Set());
 }
-
 function target(el, child) {
     if (!child && !(TGT in el))
         Object.defineProperty(el, TGT, { value: el });
     else if (child && !(TGT in child))
         Object.defineProperty(child, TGT, { value: el });
 }
-
 function animate(el) {
     var _a;
     const isMounted = el.isConnected;
@@ -205,11 +196,9 @@ function animate(el) {
         add(el);
     }
 }
-
 function raw(str) {
     return Number(str.replace(/[^0-9.\-]/g, ''));
 }
-
 function getScrollOffset(el) {
     let p = el.parentElement;
     while (p) {
@@ -220,7 +209,6 @@ function getScrollOffset(el) {
     }
     return { x: 0, y: 0 };
 }
-
 function getCoords(el) {
     const rect = el.getBoundingClientRect();
     const { x, y } = getScrollOffset(el);
@@ -231,7 +219,6 @@ function getCoords(el) {
         height: rect.height,
     };
 }
-
 function getTransitionSizes(el, oldCoords, newCoords) {
     let widthFrom = oldCoords.width;
     let heightFrom = oldCoords.height;
@@ -249,22 +236,18 @@ function getTransitionSizes(el, oldCoords, newCoords) {
     }
     return [widthFrom, widthTo, heightFrom, heightTo].map(Math.round);
 }
-
 function getOptions(el) {
     return TGT in el && options.has(el[TGT]) ? options.get(el[TGT]) : { duration: 250, easing: 'ease-in-out' };
 }
-
 function getTarget(el) {
     if (TGT in el)
         return el[TGT];
     return void 0;
 }
-
 function isEnabled(el) {
     const target2 = getTarget(el);
     return target2 ? enabled.has(target2) : false;
 }
-
 function forEach(parent, ...callbacks) {
     callbacks.forEach((callback) => callback(parent, options.has(parent)));
     for (let i = 0; i < parent.children.length; i++) {
@@ -274,17 +257,14 @@ function forEach(parent, ...callbacks) {
         }
     }
 }
-
 function getPluginTuple(pluginReturn) {
     if (Array.isArray(pluginReturn))
         return pluginReturn;
     return [pluginReturn];
 }
-
 function isPlugin(config) {
     return typeof config === 'function';
 }
-
 function remain(el) {
     const oldCoords = coords.get(el);
     const newCoords = getCoords(el);
@@ -325,7 +305,6 @@ function remain(el) {
     coords.set(el, newCoords);
     animation.addEventListener('finish', updatePos.bind(null, el));
 }
-
 function add(el) {
     if (NEW in el)
         delete el[NEW];
@@ -352,7 +331,6 @@ function add(el) {
     animations.set(el, animation);
     animation.addEventListener('finish', updatePos.bind(null, el));
 }
-
 function cleanUp(el, styles) {
     var _a;
     el.remove();
@@ -371,7 +349,6 @@ function cleanUp(el, styles) {
         }
     }, 0);
 }
-
 function remove(el) {
     var _a;
     if (!siblings.has(el) || !coords.has(el))
@@ -431,7 +408,6 @@ function remove(el) {
     animations.set(el, animation);
     animation.addEventListener('finish', cleanUp.bind(null, el, styleReset));
 }
-
 function adjustScroll(el, finalX, finalY, optionsOrPlugin) {
     const scrollDeltaX = scrollX - finalX;
     const scrollDeltaY = scrollY - finalY;
@@ -470,7 +446,6 @@ function adjustScroll(el, finalX, finalY, optionsOrPlugin) {
 
     smoothScroll();
 }
-
 function deletePosition(el) {
     const oldCoords = coords.get(el);
     const [width, , height] = getTransitionSizes(el, oldCoords, getCoords(el));
@@ -486,7 +461,6 @@ function deletePosition(el) {
     const left = Math.round(oldCoords.left - parentCoords.left) - raw(parentStyles.borderLeftWidth);
     return [top, left, width, height];
 }
-
 function autoAnimate(el, config = {}) {
     if (mutations && resize) {
         const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -517,7 +491,6 @@ function autoAnimate(el, config = {}) {
         isEnabled: () => enabled.has(el),
     });
 }
-
 var src_default = (Alpine2) => {
     Alpine2.directive('animate', (el, { value, modifiers, expression }, {
         Alpine: Alpine22,

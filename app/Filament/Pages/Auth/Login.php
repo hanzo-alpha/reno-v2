@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Auth;
 
+use DiogoGPinto\AuthUIEnhancer\Pages\Auth\Concerns\HasCustomLayout;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Auth\Login as BasePage;
@@ -9,6 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class Login extends BasePage
 {
+    use HasCustomLayout;
+
     protected function getForms(): array
     {
         return [

@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('instansi_code')->nullable();
-        });
+        if (!Schema::hasColumn('users', 'instansi_code')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->unsignedBigInteger('instansi_code')->nullable();
+            });
+        }
     }
 
     public function down(): void

@@ -73,7 +73,6 @@ function search({
         },
     };
 }
-
 export {
     search as default,
 };

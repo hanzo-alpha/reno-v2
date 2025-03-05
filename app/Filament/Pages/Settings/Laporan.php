@@ -16,6 +16,7 @@ class Laporan extends BaseSettings
     use HasPageShield;
 
     protected ?string $heading = 'Pengaturan Laporan';
+    protected static ?string $navigationIcon = null;
 
     public static function getNavigationLabel(): string
     {

@@ -3,22 +3,32 @@
 namespace App\Providers;
 
 use App\Filament\Admin\Resources\BansosDiterimaResource;
+use App\Filament\Admin\Resources\BantuanBpjsResource;
+use App\Filament\Admin\Resources\BantuanBpntResource;
+use App\Filament\Admin\Resources\BantuanPkhResource;
+use App\Filament\Admin\Resources\BantuanPpksResource;
+use App\Filament\Admin\Resources\BantuanRastraResource;
 use App\Filament\Admin\Resources\HubunganKeluargaResource;
+use App\Filament\Admin\Resources\ItemBantuanResource;
 use App\Filament\Admin\Resources\JenisPekerjaanResource;
 use App\Filament\Admin\Resources\KriteriaPpksResource;
 use App\Filament\Admin\Resources\PenandatanganResource;
 use App\Filament\Admin\Resources\PendidikanTerakhirResource;
+use App\Filament\Admin\Resources\RekapPenerimaBpjsResource;
+use App\Filament\Admin\Resources\RoleResource;
 use App\Filament\Admin\Resources\TipePpksResource;
 use App\Filament\Admin\Resources\UserResource;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
 use App\Filament\Pages\Settings\Settings;
+use App\Models\BantuanPkh;
 use Awcodes\Curator\CuratorPlugin;
 use Awcodes\Curator\Resources\MediaResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use BezhanSalleh\FilamentShield\Resources\RoleResource;
 use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
+use Devonab\FilamentEasyFooter\EasyFooterPlugin;
+use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 use Filafly\PhosphorIconReplacement;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -38,8 +48,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Outerweb\FilamentSettings\Filament\Plugins\FilamentSettingsPlugin;
 use Rmsramos\Activitylog\ActivitylogPlugin;
 use Rmsramos\Activitylog\Resources\ActivitylogResource;
@@ -56,7 +68,6 @@ class AdminPanelProvider extends PanelProvider
             ->databaseTransactions()
             ->databaseNotifications()
             ->passwordReset()
-            ->sidebarCollapsibleOnDesktop()
             ->spa()
             ->maxContentWidth(MaxWidth::Full)
             ->colors([
@@ -96,7 +107,12 @@ class AdminPanelProvider extends PanelProvider
                             ->label('Bantuan Sosial')
                             ->icon('heroicon-o-cog-6-tooth')
                             ->items([
-
+                                ...BantuanBpjsResource::getNavigationItems(),
+                                ...BantuanPkhResource::getNavigationItems(),
+                                ...BantuanBpntResource::getNavigationItems(),
+                                ...BantuanRastraResource::getNavigationItems(),
+                                ...BantuanPpksResource::getNavigationItems(),
+                                ...RekapPenerimaBpjsResource::getNavigationItems(),
                             ]),
                         NavigationGroup::make('Master Data')
                             ->label('Master Data')
@@ -109,6 +125,7 @@ class AdminPanelProvider extends PanelProvider
                                 ...PendidikanTerakhirResource::getNavigationItems(),
                                 ...TipePpksResource::getNavigationItems(),
                                 ...KriteriaPpksResource::getNavigationItems(),
+                                ...ItemBantuanResource::getNavigationItems(),
 
                             ]),
                         NavigationGroup::make()
@@ -149,7 +166,7 @@ class AdminPanelProvider extends PanelProvider
                 CuratorPlugin::make()
                     ->label('Media')
                     ->pluralLabel('Media')
-                    ->navigationIcon('heroicon-o-photo')
+                    ->navigationIcon(fn() => null)
                     ->navigationGroup('Pengaturan')
                     ->navigationCountBadge()
                     ->defaultListView('grid'),
@@ -169,8 +186,17 @@ class AdminPanelProvider extends PanelProvider
                     ->pluralLabel('Aktivitas')
                     ->navigationGroup('Pengaturan')
                     ->navigationItem(true)
-                    ->navigationIcon('heroicon-o-shield-check')
+                    ->navigationIcon('')
                     ->navigationCountBadge(true),
+                EasyFooterPlugin::make()
+                    ->withGithub(showLogo: true, showUrl: true)
+                    ->withSentence(new HtmlString('<img src="https://static.cdnlogo.com/logos/l/23/laravel.svg" style="margin-right:.5rem;" alt="Laravel Logo" width="20" height="20"> Laravel'))
+                    ->withLoadTime('This page loaded in'),
+                FilamentApexChartsPlugin::make(),
+                AuthUIEnhancerPlugin::make()
+                    ->emptyPanelBackgroundImageUrl(asset('images/background/login.png'))
+                    ->emptyPanelBackgroundImageOpacity('50%')
+//                    ->emptyPanelBackgroundColor(Color::Zinc, '300')
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

@@ -15,7 +15,7 @@ use Filament\Tables\Table;
 final class PendidikanTerakhirResource extends Resource
 {
     protected static ?string $model = PendidikanTerakhir::class;
-    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationIcon = null;
     protected static ?string $slug = 'pendidikan-terakhir';
     protected static ?string $label = 'Pendidikan Terakhir';
     protected static ?string $pluralLabel = 'Pendidikan Terakhir';

@@ -143,7 +143,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('roles.name')
                     ->placeholder('No Roles.')
                     ->badge(),
-                Tables\Columns\TextColumn::make('instansi_id')
+                Tables\Columns\TextColumn::make('instansi_code')
                     ->placeholder('No Instansi.')
                     ->formatStateUsing(fn($state) => Village::find($state)?->name)
                     ->label('Instansi')

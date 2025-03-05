@@ -25,7 +25,6 @@ function observer() {
         },
     };
 }
-
 export {
     observer as default,
 };

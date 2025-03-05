@@ -15,6 +15,7 @@ class Administrasi extends BaseSettings
     use HasPageShield;
 
     protected ?string $heading = 'Pengaturan Administrasi';
+    protected static ?string $navigationIcon = null;
 
     public static function getNavigationLabel(): string
     {

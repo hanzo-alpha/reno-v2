@@ -16,7 +16,7 @@ final class HubunganKeluargaResource extends Resource
 {
     protected static ?string $model = HubunganKeluarga::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-lifebuoy';
+    protected static ?string $navigationIcon = null;
 
     protected static ?string $slug = 'hubungan-keluarga';
 

@@ -16,7 +16,7 @@ class BansosDiterimaResource extends Resource
 {
     protected static ?string $model = BansosDiterima::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = null;
     protected static ?string $slug = 'bansos-yang-diterima';
     protected static ?string $label = 'Bansos Yang Diterima';
     protected static ?string $navigationGroup = 'Dashboard Bantuan';

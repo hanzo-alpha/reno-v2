@@ -47,10 +47,10 @@ return [
     'resources' => [
         'label' => 'Media',
         'plural_label' => 'Media',
-        'navigation_group' => null,
+        'navigation_group' => 'Managemen',
         'cluster' => null,
         'navigation_label' => 'Media',
-        'navigation_icon' => 'heroicon-o-photo',
+        'navigation_icon' => '',
         'navigation_sort' => null,
         'navigation_count_badge' => false,
         'resource' => \Awcodes\Curator\Resources\MediaResource::class,

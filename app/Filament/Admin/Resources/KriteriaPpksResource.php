@@ -19,7 +19,7 @@ class KriteriaPpksResource extends Resource
 {
     protected static ?string $model = KriteriaPpks::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-ticket';
+    protected static ?string $navigationIcon = null;
     protected static ?string $slug = 'kriteria-ppks';
     protected static ?string $label = 'Kriteria PPKS';
     protected static ?string $pluralLabel = 'Kriteria PPKS';

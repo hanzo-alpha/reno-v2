@@ -21,7 +21,7 @@ class TipePpksResource extends Resource
 {
     protected static ?string $model = TipePpks::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-ticket';
+    protected static ?string $navigationIcon = null;
     protected static ?string $slug = 'tipe-ppks';
     protected static ?string $label = 'Tipe PPKS';
     protected static ?string $pluralLabel = 'Tipe PPKS';
