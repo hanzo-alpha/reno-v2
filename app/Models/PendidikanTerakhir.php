@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 final class PendidikanTerakhir extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     protected $table = 'pendidikan_terakhir';

@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Village;
 
 class BantuanRastra extends Model
 {
@@ -121,13 +123,13 @@ class BantuanRastra extends Model
                         ->live(onBlur: true)
                         ->native(false)
                         ->options(function () {
-                            $kab = Kecamatan::query()
-                                ->where('kabupaten_code', setting(
+                            $kab = District::query()
+                                ->where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ));
                             if (! $kab) {
-                                return Kecamatan::where('kabupaten_code', setting(
+                                return District::where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ))
@@ -140,15 +142,15 @@ class BantuanRastra extends Model
 
                     Select::make('kelurahan')
                         ->required()
-                        ->options(fn (callable $get) => Kelurahan::query()
+                        ->options(fn(callable $get) => Village::query()
                             ->when(
-                                auth()->user()->instansi_id,
+                                auth()->user()->instansi_code,
                                 fn (Builder $query) => $query->where(
                                     'code',
-                                    auth()->user()->instansi_id,
+                                    auth()->user()->instansi_code,
                                 ),
                             )
-                            ->where('kecamatan_code', $get('kecamatan'))
+                            ->where('district_code', $get('kecamatan'))
                             ?->pluck('name', 'code'))
                         ->live(onBlur: true)
                         ->native(false)

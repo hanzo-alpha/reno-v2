@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Activitylog\Models\Activity;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -73,7 +74,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureAuthorization(): void
     {
-        Gate::policy(\Spatie\Activitylog\Models\Activity::class, ActivityPolicy::class);
+        Gate::policy(Activity::class, ActivityPolicy::class);
     }
 
     public function boot(): void

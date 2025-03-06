@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanPpksResource\Widgets;
+namespace App\Filament\Clusters\ProgramPpks\Resources\BantuanPpksResource\Widgets;
 
 use App\Enums\StatusVerifikasiEnum;
 use App\Models\BantuanPpks;

@@ -6,7 +6,6 @@ use App\Filament\Admin\Resources\BansosDiterimaResource;
 use App\Filament\Admin\Resources\BantuanBpjsResource;
 use App\Filament\Admin\Resources\BantuanBpntResource;
 use App\Filament\Admin\Resources\BantuanPkhResource;
-use App\Filament\Admin\Resources\BantuanPpksResource;
 use App\Filament\Admin\Resources\BantuanRastraResource;
 use App\Filament\Admin\Resources\HubunganKeluargaResource;
 use App\Filament\Admin\Resources\ItemBantuanResource;
@@ -18,6 +17,7 @@ use App\Filament\Admin\Resources\RekapPenerimaBpjsResource;
 use App\Filament\Admin\Resources\RoleResource;
 use App\Filament\Admin\Resources\TipePpksResource;
 use App\Filament\Admin\Resources\UserResource;
+use App\Filament\Clusters\ProgramPpks;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
@@ -110,7 +110,7 @@ class AdminPanelProvider extends PanelProvider
                                 ...BantuanPkhResource::getNavigationItems(),
                                 ...BantuanBpntResource::getNavigationItems(),
                                 ...BantuanRastraResource::getNavigationItems(),
-                                ...BantuanPpksResource::getNavigationItems(),
+                                ...ProgramPpks::getNavigationItems(),
                                 ...RekapPenerimaBpjsResource::getNavigationItems(),
                             ]),
                         NavigationGroup::make('Master Data')
@@ -199,8 +199,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,

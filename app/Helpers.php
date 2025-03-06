@@ -125,11 +125,12 @@ if (! function_exists('superadmin_admin_roles')) {
 }
 
 if (! function_exists('cek_batas_input')) {
-    function cek_batas_input($date): bool
+    function cek_batas_input($date): ?bool
     {
-        $date = $date instanceof Carbon ? $date : Carbon::parse($date)->format('Y-m-d');
+        $date = $date instanceof Carbon ? $date : Carbon::parse($date);
+        return $date->isSameDay(now());
 
-        return strtotime($date) <= strtotime(now()->format('Y-m-d'));
+//        return strtotime($date) <= strtotime(now()->format('Y-m-d'));
     }
 }
 
