@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramPpks\Resources;
 
 use App\Enums\JenisAnggaranEnum;
 use App\Enums\StatusDtksEnum;
 use App\Filament\Clusters\ProgramPpks;
 use App\Filament\Clusters\ProgramPpks\Resources\DetailBantuanPpksResource\Pages;
-use App\Filament\Clusters\ProgramPpks\Resources\DetailBantuanPpksResource\RelationManagers;
 use App\Models\DetailBantuanPpks;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -25,7 +26,7 @@ class DetailBantuanPpksResource extends Resource
     protected static ?string $label = 'Detail Bantuan PPKS';
     protected static ?string $pluralLabel = 'Detail Bantuan PPKS';
     protected static ?string $recordTitleAttribute = 'nama_bantuan';
-//    protected static ?string $navigationGroup = 'PPKS';
+    //    protected static ?string $navigationGroup = 'PPKS';
     protected static ?int $navigationSort = 2;
     protected static bool $shouldRegisterNavigation = true;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ItemBantuanResource\Pages;
@@ -49,18 +51,16 @@ class ItemBantuanResource extends Resource
                 Select::make('kode_kelurahan')
                     ->label('Kelurahan')
                     ->required()
-                    ->options(function () {
-                        return Village::query()
-                            ->when(
+                    ->options(fn() => Village::query()
+                        ->when(
+                            auth()->user()->instansi_code,
+                            fn(Builder $query) => $query->where(
+                                'code',
                                 auth()->user()->instansi_code,
-                                fn (Builder $query) => $query->where(
-                                    'code',
-                                    auth()->user()->instansi_code,
-                                ),
-                            )
-                            ->whereIn('district_code', config('custom.kode_kecamatan'))
-                            ?->pluck('name', 'code');
-                    })
+                            ),
+                        )
+                        ->whereIn('district_code', config('custom.kode_kecamatan'))
+                        ?->pluck('name', 'code'))
                     ->native(false)
                     ->searchable(),
                 Forms\Components\TextInput::make('nama_item')
@@ -84,7 +84,7 @@ class ItemBantuanResource extends Resource
                     ->live(onBlur: true)
                     ->default(0)
                     ->afterStateUpdated(
-                        fn (Forms\Get $get, Forms\Set $set, $state) => $set('total_harga', $get('kuantitas') * $state),
+                        fn(Forms\Get $get, Forms\Set $set, $state) => $set('total_harga', $get('kuantitas') * $state),
                     ),
                 Forms\Components\TextInput::make('total_harga')
                     ->label('Total Harga')
@@ -114,7 +114,7 @@ class ItemBantuanResource extends Resource
                 Tables\Columns\TextColumn::make('jenisBantuan.alias')
                     ->label('Jenis Bantuan')
                     ->badge()
-                    ->color(fn ($record) => Color::hex($record->jenisBantuan->warna))
+                    ->color(fn($record) => Color::hex($record->jenisBantuan->warna))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('kel.name')
@@ -124,11 +124,11 @@ class ItemBantuanResource extends Resource
                     ->searchable()
                     ->suffixBadges([
                         Badge::make('jumlah_bulan')
-                            ->label(fn (Model $record) => $record->jumlah_bulan . ' bulan')
+                            ->label(fn(Model $record) => $record->jumlah_bulan . ' bulan')
                             ->color('info'),
                     ]),
                 Tables\Columns\TextColumn::make('kuantitas')
-                    ->formatStateUsing(fn ($record) => $record->kuantitas . ' ' . $record->satuan)
+                    ->formatStateUsing(fn($record) => $record->kuantitas . ' ' . $record->satuan)
                     ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('harga_satuan')
@@ -145,12 +145,10 @@ class ItemBantuanResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('kode_kelurahan')
                     ->label('Kelurahan')
-                    ->options(function () {
-                        return Village::query()->whereIn(
-                            'district_code',
-                            config('custom.kode_kecamatan')
-                        )->pluck('name', 'code');
-                    })
+                    ->options(fn() => Village::query()->whereIn(
+                        'district_code',
+                        config('custom.kode_kecamatan'),
+                    )->pluck('name', 'code'))
                     ->searchable()
                     ->preload(),
             ])

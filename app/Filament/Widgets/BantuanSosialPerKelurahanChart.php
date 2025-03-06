@@ -48,15 +48,13 @@ class BantuanSosialPerKelurahanChart extends ApexChartWidget
                 ->default(3)
                 ->native(false),
             Select::make('kecamatan')
-                ->options(function () {
-                    return District::query()
-                        ->where('city_code', setting('app.kodekab'))
-                        ->pluck('name', 'code');
-                })
+                ->options(fn() => District::query()
+                    ->where('city_code', setting('app.kodekab'))
+                    ->pluck('name', 'code'))
                 ->live()
                 ->native(false),
             Select::make('kelurahan')
-                ->options(fn (Get $get) => Village::query()
+                ->options(fn(Get $get) => Village::query()
                     ->where('district_code', $get('kecamatan'))
                     ->pluck('name', 'code'))
                 ->native(false),
@@ -103,16 +101,16 @@ class BantuanSosialPerKelurahanChart extends ApexChartWidget
 
         $query = $model::query()
             ->select(['created_at', 'kecamatan', 'kelurahan', 'jenis_bantuan_id'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('kelurahan', $kodekel);
 
-        if ($model === RekapPenerimaBpjs::class) {
+        if (RekapPenerimaBpjs::class === $model) {
             return $query->clone()->sum('jumlah');
         }
 
         return $query
-            ->when($filters['program'], fn (Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
+            ->when($filters['program'], fn(Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
             ->count();
     }
 
@@ -131,11 +129,11 @@ class BantuanSosialPerKelurahanChart extends ApexChartWidget
 
             $results[] = $model::query()
                 ->select(['created_at', 'kecamatan', 'kelurahan', 'jenis_bantuan_id'])
-                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-                ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+                ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
                 ->when(
                     $filters['program'],
-                    fn (Builder $query) => $query->where('jenis_bantuan_id', $filters['program']),
+                    fn(Builder $query) => $query->where('jenis_bantuan_id', $filters['program']),
                 )
                 ->where('kelurahan', $kodekel)
                 ->count();

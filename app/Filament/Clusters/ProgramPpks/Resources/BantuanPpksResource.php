@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramPpks\Resources;
 
 use App\Enums\JenisAnggaranEnum;
@@ -59,7 +61,7 @@ class BantuanPpksResource extends Resource
     protected static ?string $label = 'Program PPKS';
     protected static ?string $pluralLabel = 'Program PPKS';
     protected static ?string $navigationLabel = 'Program PPKS';
-//    protected static ?string $navigationGroup = 'PPKS';
+    //    protected static ?string $navigationGroup = 'PPKS';
     protected static ?int $navigationSort = 1;
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
 
@@ -230,9 +232,7 @@ class BantuanPpksResource extends Resource
                                         ->searchable()
                                         ->live()
                                         ->native(false)
-                                        ->options(function () {
-                                            return Province::pluck('name', 'code');
-                                        })
+                                        ->options(fn() => Province::pluck('name', 'code'))
                                         ->default(setting('app.kodeprov', config('custom.default.kodeprov')))
                                         ->afterStateUpdated(function (callable $set): void {
                                             $set('kabupaten', null);
@@ -246,7 +246,7 @@ class BantuanPpksResource extends Resource
                                         ->native(false)
                                         ->options(function (Get $get) {
                                             $kab = City::query()->where('province_code', $get('provinsi'));
-                                            if (!$kab) {
+                                            if ( ! $kab) {
                                                 return City::where(
                                                     'province_code',
                                                     setting('app.kodekab', config('custom.default.kodekab')),
@@ -268,7 +268,7 @@ class BantuanPpksResource extends Resource
                                         ->native(false)
                                         ->options(function (Get $get) {
                                             $kab = District::query()->where('city_code', $get('kabupaten'));
-                                            if (!$kab) {
+                                            if ( ! $kab) {
                                                 return District::where(
                                                     'city_code',
                                                     setting('app.kodekab', config('custom.default.kodekab')),
@@ -404,7 +404,7 @@ class BantuanPpksResource extends Resource
                                 ->native(false)
                                 ->preload()
                                 ->visible(fn() => auth()->user()
-                                        ?->hasRole(['super_admin', 'admin'])
+                                    ?->hasRole(['super_admin', 'admin'])
                                     || auth()->user()->is_admin),
 
                             Forms\Components\Textarea::make('keterangan')
@@ -417,7 +417,7 @@ class BantuanPpksResource extends Resource
                                     fn(
                                         TemporaryUploadedFile $file,
                                     ): string => (string) str($file->getClientOriginalName())
-                                        ->prepend(date('d-m-Y-H-i-s').'-'),
+                                        ->prepend(date('d-m-Y-H-i-s') . '-'),
                                 )
                                 ->preserveFilenames()
                                 ->multiple()
@@ -527,7 +527,7 @@ class BantuanPpksResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('no_rt')
                     ->label('RT/RW')
-                    ->formatStateUsing(fn($record) => $record->no_rt.'/'.$record->no_rw)
+                    ->formatStateUsing(fn($record) => $record->no_rt . '/' . $record->no_rw)
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('penghasilan_rata_rata')
@@ -764,7 +764,7 @@ class BantuanPpksResource extends Resource
                                 ->color('primary'),
                             TextEntry::make('detailBantuanPpks.jumlah_bantuan')
                                 ->label('Jumlah Bantuan')
-                                ->formatStateUsing(fn($state) => $state.' Bantuan')
+                                ->formatStateUsing(fn($state) => $state . ' Bantuan')
                                 ->weight(FontWeight::SemiBold)
                                 ->color('primary'),
                             TextEntry::make('detailBantuanPpks.jenis_anggaran')
@@ -910,7 +910,7 @@ class BantuanPpksResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

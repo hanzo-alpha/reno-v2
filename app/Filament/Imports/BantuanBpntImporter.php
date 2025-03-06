@@ -80,7 +80,7 @@ class BantuanBpntImporter extends Importer
         //     'email' => $this->data['email'],
         // ]);
 
-        return new BantuanBpnt;
+        return new BantuanBpnt();
     }
 
     public function getJobConnection(): ?string

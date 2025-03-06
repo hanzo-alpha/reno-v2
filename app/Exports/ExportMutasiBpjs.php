@@ -13,16 +13,16 @@ class ExportMutasiBpjs extends ExcelExport
     public function setUp(): void
     {
         $this->askForFilename();
-        $this->withFilename(fn ($filename) => date('Ymdhis') . '-' . $filename . '-ekspor');
+        $this->withFilename(fn($filename) => date('Ymdhis') . '-' . $filename . '-ekspor');
         $this->askForWriterType();
         $this->withColumns([
             Column::make('id')->heading('NO'),
             Column::make('peserta_bpjs_id')
-                ->formatStateUsing(fn ($record) => $record->peserta->nama_lengkap)
+                ->formatStateUsing(fn($record) => $record->peserta->nama_lengkap)
                 ->heading('PESERTA BPJS'),
             Column::make('nomor_kartu')->heading('No. KARTU'),
             Column::make('nik')
-                ->formatStateUsing(fn ($state) => "'" . $state)
+                ->formatStateUsing(fn($state) => "'" . $state)
                 ->heading('N I K'),
             Column::make('nama_lengkap')->heading('NAMA LENGKAP'),
             Column::make('periode_bulan')->heading('PERIODE BULAN'),

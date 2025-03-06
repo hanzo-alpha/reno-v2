@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\RekapPenerimaBpjsResource\Pages;
@@ -73,7 +75,7 @@ class RekapPenerimaBpjsResource extends Resource
                             ->native(false)
                             ->options(function (Get $get) {
                                 $kab = Kabupaten::query()->where('provinsi_code', $get('provinsi'));
-                                if (! $kab) {
+                                if ( ! $kab) {
                                     return Kabupaten::where(
                                         'provinsi_code',
                                         setting('app.kodekab', config('custom.default.kodekab')),
@@ -95,7 +97,7 @@ class RekapPenerimaBpjsResource extends Resource
                             ->native(false)
                             ->options(function (Get $get) {
                                 $kab = Kecamatan::query()->where('kabupaten_code', $get('kabupaten'));
-                                if (! $kab) {
+                                if ( ! $kab) {
                                     return Kecamatan::where(
                                         'kabupaten_code',
                                         setting('app.kodekab', config('custom.default.kodekab')),
@@ -105,12 +107,12 @@ class RekapPenerimaBpjsResource extends Resource
 
                                 return $kab->pluck('name', 'code');
                             })
-                            ->afterStateUpdated(fn (callable $set) => $set('kelurahan', null)),
+                            ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
 
                         Select::make('kelurahan')
                             ->required()
                             ->native(false)
-                            ->options(fn (callable $get) => Kelurahan::query()->where(
+                            ->options(fn(callable $get) => Kelurahan::query()->where(
                                 'kecamatan_code',
                                 $get('kecamatan'),
                             )?->pluck(
@@ -140,11 +142,11 @@ class RekapPenerimaBpjsResource extends Resource
                 Tables\Grouping\Group::make('kecamatan')
                     ->label('Kecamatan ')
                     ->titlePrefixedWithLabel()
-                    ->getTitleFromRecordUsing(fn (RekapPenerimaBpjs $record) => ucfirst($record->kec->name)),
+                    ->getTitleFromRecordUsing(fn(RekapPenerimaBpjs $record) => ucfirst($record->kec->name)),
                 Tables\Grouping\Group::make('bulan')
                     ->label('Bulan ')
                     ->titlePrefixedWithLabel()
-                    ->getTitleFromRecordUsing(fn (RekapPenerimaBpjs $record) => bulan_to_string($record->bulan)),
+                    ->getTitleFromRecordUsing(fn(RekapPenerimaBpjs $record) => bulan_to_string($record->bulan)),
             ])
             ->columns([
                 Tables\Columns\TextColumn::make('prov.name')
@@ -169,7 +171,7 @@ class RekapPenerimaBpjsResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('bulan')
                     ->label('Periode Bulan')
-                    ->formatStateUsing(fn ($record) => bulan_to_string($record->bulan))
+                    ->formatStateUsing(fn($record) => bulan_to_string($record->bulan))
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -192,28 +194,28 @@ class RekapPenerimaBpjsResource extends Resource
                     ->indicator('Wilayah')
                     ->form([
                         Select::make('kecamatan')
-                            ->options(fn () => Kecamatan::query()
+                            ->options(fn() => Kecamatan::query()
                                 ->where('kabupaten_code', setting('app.kodekab'))
                                 ->pluck('name', 'code'))
                             ->live()
                             ->searchable()
                             ->native(false),
                         Select::make('kelurahan')
-                            ->options(fn (Get $get) => Kelurahan::query()
+                            ->options(fn(Get $get) => Kelurahan::query()
                                 ->whereIn('kecamatan_code', config('custom.kode_kecamatan'))
                                 ->where('kecamatan_code', $get('kecamatan'))
                                 ->pluck('name', 'code'))
                             ->searchable()
                             ->native(false),
                     ])
-                    ->query(fn (Builder $query, array $data): Builder => $query
+                    ->query(fn(Builder $query, array $data): Builder => $query
                         ->when(
                             $data['kecamatan'],
-                            fn (Builder $query, $data): Builder => $query->where('kecamatan', $data),
+                            fn(Builder $query, $data): Builder => $query->where('kecamatan', $data),
                         )
                         ->when(
                             $data['kelurahan'],
-                            fn (Builder $query, $data): Builder => $query->where('kelurahan', $data),
+                            fn(Builder $query, $data): Builder => $query->where('kelurahan', $data),
                         )),
                 SelectFilter::make('bulan')
                     ->label('Bulan')

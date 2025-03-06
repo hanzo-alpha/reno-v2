@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Pages\Auth;
 
 use DiogoGPinto\AuthUIEnhancer\Pages\Auth\Concerns\HasCustomLayout;
@@ -11,6 +13,19 @@ use Illuminate\Validation\ValidationException;
 class Login extends BasePage
 {
     use HasCustomLayout;
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        if (app()->isLocal()) {
+            $this->form->fill([
+                'email' => config('app.default_user.email'),
+                'password' => config('app.default_user.password'),
+                'remember' => true,
+            ]);
+        }
+    }
 
     protected function getForms(): array
     {
@@ -34,7 +49,7 @@ class Login extends BasePage
             ->required()
             ->autocomplete()
             ->autofocus()
-            ->default(fn () => app()->isLocal() ? config('app.default_user.email') : null)
+            ->default(fn() => app()->isLocal() ? config('app.default_user.email') : null)
             ->extraInputAttributes(['tabindex' => 1]);
     }
 
@@ -53,18 +68,5 @@ class Login extends BasePage
         throw ValidationException::withMessages([
             'data.login' => __('filament-panels::pages/auth/login.messages.failed'),
         ]);
-    }
-
-    public function mount(): void
-    {
-        parent::mount();
-
-        if (app()->isLocal()) {
-            $this->form->fill([
-                'email' => config('app.default_user.email'),
-                'password' => config('app.default_user.password'),
-                'remember' => true,
-            ]);
-        }
     }
 }

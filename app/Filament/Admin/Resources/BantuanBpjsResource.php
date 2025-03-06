@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\JenisKelaminEnum;
@@ -89,13 +91,13 @@ class BantuanBpjsResource extends Resource
                             Forms\Components\TextInput::make('nama_lengkap')
                                 ->label('Nama Lengkap')
                                 ->required()
-                                ->dehydrateStateUsing(fn ($state) => Str::upper($state))
-                                ->afterStateUpdated(fn ($state) => Str::upper($state))
+                                ->dehydrateStateUsing(fn($state) => Str::upper($state))
+                                ->afterStateUpdated(fn($state) => Str::upper($state))
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('tempat_lahir')
                                 ->label('Tempat Lahir')
-                                ->dehydrateStateUsing(fn ($state) => Str::upper($state))
-                                ->afterStateUpdated(fn ($state) => Str::upper($state))
+                                ->dehydrateStateUsing(fn($state) => Str::upper($state))
+                                ->afterStateUpdated(fn($state) => Str::upper($state))
                                 ->maxLength(100),
                             Forms\Components\DatePicker::make('tgl_lahir')
                                 ->label('Tgl. Lahir')
@@ -109,8 +111,8 @@ class BantuanBpjsResource extends Resource
                         ->schema([
                             TextInput::make('alamat')
                                 ->required()
-                                ->dehydrateStateUsing(fn ($state) => Str::upper($state))
-                                ->afterStateUpdated(fn ($state) => Str::upper($state))
+                                ->dehydrateStateUsing(fn($state) => Str::upper($state))
+                                ->afterStateUpdated(fn($state) => Str::upper($state))
                                 ->columnSpanFull(),
                             Select::make('kecamatan')
                                 ->required()
@@ -123,12 +125,12 @@ class BantuanBpjsResource extends Resource
 
                                     return $kab->clone()->pluck('name', 'code');
                                 })
-                                ->afterStateUpdated(fn (callable $set) => $set('kelurahan', null)),
+                                ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
 
                             Select::make('kelurahan')
                                 ->required()
-                                ->options(fn (callable $get) => Village::query()
-                                    ->when(auth()->user()->instansi_code, fn (Builder $query) => $query->where(
+                                ->options(fn(callable $get) => Village::query()
+                                    ->when(auth()->user()->instansi_code, fn(Builder $query) => $query->where(
                                         'code',
                                         auth()->user()->instansi_code,
                                     ))
@@ -249,7 +251,7 @@ class BantuanBpjsResource extends Resource
                 Tables\Actions\CreateAction::make()
                     ->label('Tambah')
                     ->icon('heroicon-m-plus')
-                    ->disabled(fn (): bool => cek_batas_input(setting('app.batas_tgl_input_bpjs')))
+                    ->disabled(fn(): bool => cek_batas_input(setting('app.batas_tgl_input_bpjs')))
                     ->button(),
             ])
 //            ->recordClasses(fn(Model $record) => null !== $record->is_mutasi ? 'border-s-2 border-orange-600 dark:border-orange-300 bg-gray-200 dark:bg-white/5' : null)
@@ -260,7 +262,7 @@ class BantuanBpjsResource extends Resource
                     ->sortable()
                     ->suffixBadges([
                         Badge::make('umur')
-                            ->label(fn ($record) => hitung_umur($record->tgl_lahir) . ' Tahun')
+                            ->label(fn($record) => hitung_umur($record->tgl_lahir) . ' Tahun')
                             ->color('gray'),
                     ])
                     ->sortable()
@@ -269,14 +271,14 @@ class BantuanBpjsResource extends Resource
                     ->label('N I K')
                     ->toggleable()
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => Str::mask($state, '*', 2, 12))
+                    ->formatStateUsing(fn($state) => Str::mask($state, '*', 2, 12))
                     ->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nokk_tmt')
                     ->label('No. KK')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => Str::mask($state, '*', 2, 12))
+                    ->formatStateUsing(fn($state) => Str::mask($state, '*', 2, 12))
                     ->copyable()
                     ->searchable(),
                 BadgeableColumn::make('tempat_lahir')
@@ -284,7 +286,7 @@ class BantuanBpjsResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable()
-                    ->suffix(fn ($record) => ', ' . $record->tgl_lahir->format(setting('app.format_tgl')))
+                    ->suffix(fn($record) => ', ' . $record->tgl_lahir->format(setting('app.format_tgl')))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tgl_lahir')
@@ -310,14 +312,14 @@ class BantuanBpjsResource extends Resource
                 Tables\Columns\TextColumn::make('kec.name')
                     ->label('Kecamatan')
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => Str::upper($state))
+                    ->formatStateUsing(fn($state) => Str::upper($state))
                     ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kel.name')
                     ->label('Kelurahan')
                     ->sortable()
                     ->toggleable()
-                    ->formatStateUsing(fn ($state) => Str::upper($state))
+                    ->formatStateUsing(fn($state) => Str::upper($state))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('dusun')
                     ->label('Dusun')
@@ -336,7 +338,7 @@ class BantuanBpjsResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('bulan')
                     ->label('Periode')
-                    ->formatStateUsing(fn ($record) => bulan_to_string($record->bulan) . ' ' . $record->tahun)
+                    ->formatStateUsing(fn($record) => bulan_to_string($record->bulan) . ' ' . $record->tahun)
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('tahun')
                     ->label('Tahun')
@@ -344,7 +346,7 @@ class BantuanBpjsResource extends Resource
                 Tables\Columns\TextColumn::make('status_usulan')
                     ->label('Status Usulan BPJS')
                     ->sortable()
-                    ->formatStateUsing(fn ($record) => $record->status_bpjs->value . ' - ' .
+                    ->formatStateUsing(fn($record) => $record->status_bpjs->value . ' - ' .
                         $record->status_usulan->value)
                     ->toggleable()
                     ->badge(),
@@ -370,28 +372,28 @@ class BantuanBpjsResource extends Resource
                     ->indicator('Wilayah')
                     ->form([
                         Forms\Components\Select::make('kecamatan')
-                            ->options(fn () => District::query()
+                            ->options(fn() => District::query()
                                 ->where('city_code', setting('app.kodekab'))
                                 ->pluck('name', 'code'))
                             ->live()
                             ->searchable()
                             ->native(false),
                         Forms\Components\Select::make('kelurahan')
-                            ->options(fn (Forms\Get $get) => Village::query()
+                            ->options(fn(Forms\Get $get) => Village::query()
                                 ->whereIn('district_code', config('custom.kode_kecamatan'))
                                 ->where('district_code', $get('kecamatan'))
                                 ->pluck('name', 'code'))
                             ->searchable()
                             ->native(false),
                     ])
-                    ->query(fn (Builder $query, array $data): Builder => $query
+                    ->query(fn(Builder $query, array $data): Builder => $query
                         ->when(
                             $data['kecamatan'],
-                            fn (Builder $query, $data): Builder => $query->where('kecamatan', $data),
+                            fn(Builder $query, $data): Builder => $query->where('kecamatan', $data),
                         )
                         ->when(
                             $data['kelurahan'],
-                            fn (Builder $query, $data): Builder => $query->where('kelurahan', $data),
+                            fn(Builder $query, $data): Builder => $query->where('kelurahan', $data),
                         )),
                 SelectFilter::make('status_usulan')
                     ->label('Status Usulan')
@@ -413,7 +415,7 @@ class BantuanBpjsResource extends Resource
                     ->placeholder('Semua')
                     ->trueLabel('Hanya Mutasi')
                     ->falseLabel('Tanpa Mutasi')
-                    ->queries(true: fn ($query) => $query->mutasi(), false: fn ($query) => $query->notMutasi()),
+                    ->queries(true: fn($query) => $query->mutasi(), false: fn($query) => $query->notMutasi()),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->deferFilters()
@@ -521,7 +523,7 @@ class BantuanBpjsResource extends Resource
                                 ->preload()
                                 ->lazy(),
                         ])
-                        ->action(fn (Collection $record, $data) => $record->each->update($data))
+                        ->action(fn(Collection $record, $data) => $record->each->update($data))
                         ->after(function (): void {
                             Notification::make()
                                 ->success()
@@ -630,7 +632,7 @@ class BantuanBpjsResource extends Resource
                                 ->color('primary'),
                             TextEntry::make('nort')
                                 ->label('RT/RW')
-                                ->formatStateUsing(fn ($record) => 'RT. ' . $record->nort . '/RW. ' . $record->norw)
+                                ->formatStateUsing(fn($record) => 'RT. ' . $record->nort . '/RW. ' . $record->norw)
                                 ->icon('heroicon-o-map')
                                 ->weight(FontWeight::SemiBold)
                                 ->color('primary'),
@@ -643,7 +645,7 @@ class BantuanBpjsResource extends Resource
                         ->schema([
                             TextEntry::make('bulan')
                                 ->label('PERIODE')
-                                ->formatStateUsing(fn ($record) => bulan_to_string($record->bulan) . ' ' . $record->tahun)
+                                ->formatStateUsing(fn($record) => bulan_to_string($record->bulan) . ' ' . $record->tahun)
                                 ->weight(FontWeight::SemiBold)
                                 ->color('primary'),
                             TextEntry::make('jenis_kelamin')
@@ -713,7 +715,7 @@ class BantuanBpjsResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

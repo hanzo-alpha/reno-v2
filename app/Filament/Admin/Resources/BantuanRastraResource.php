@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\AlasanEnum;
@@ -92,7 +94,7 @@ class BantuanRastraResource extends Resource
                     ->sortable()
                     ->toggleable()
                     ->description(function ($record): void {
-                        'Kec. '.$record->kec->name.' Kel. '.$record->kel->name;
+                        'Kec. ' . $record->kec->name . ' Kel. ' . $record->kel->name;
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kec.name')
@@ -268,7 +270,7 @@ class BantuanRastraResource extends Resource
                                                 'app.kodekab',
                                                 config('custom.default.kodekab'),
                                             ));
-                                        if (!$kab) {
+                                        if ( ! $kab) {
                                             return District::where('city_code', setting(
                                                 'app.kodekab',
                                                 config('custom.default.kodekab'),
@@ -282,8 +284,10 @@ class BantuanRastraResource extends Resource
 
                                 Select::make('kelurahan')
                                     ->required()
-                                    ->options(fn(callable $get) => Village::query()->where('district_code',
-                                        $get('kecamatan'))?->pluck(
+                                    ->options(fn(callable $get) => Village::query()->where(
+                                        'district_code',
+                                        $get('kecamatan'),
+                                    )?->pluck(
                                         'name',
                                         'code',
                                     ))
@@ -494,7 +498,7 @@ class BantuanRastraResource extends Resource
                             TextEntry::make('no_rt')
                                 ->label('RT/RW')
                                 ->placeholder('Belum ada RT/RW')
-                                ->formatStateUsing(fn($record) => $record->no_rt.'/'.$record->no_rw),
+                                ->formatStateUsing(fn($record) => $record->no_rt . '/' . $record->no_rw),
                         ])->columns(2),
                 ])->columnSpan(2),
 

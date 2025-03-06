@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\BantuanRastraResource\Pages;
 
 use App\Enums\AlasanEnum;
@@ -59,7 +61,7 @@ class EditBantuanRastra extends EditRecord
                                         'app.kodekab',
                                         config('custom.default.kodekab'),
                                     ));
-                                if (!$kab) {
+                                if ( ! $kab) {
                                     return District::where('city_code', setting(
                                         'app.kodekab',
                                         config('custom.default.kodekab'),
@@ -73,8 +75,10 @@ class EditBantuanRastra extends EditRecord
 
                         Select::make('kelurahan')
                             ->required()
-                            ->options(fn(callable $get) => Village::query()->where('district_code',
-                                $get('kecamatan'))?->pluck(
+                            ->options(fn(callable $get) => Village::query()->where(
+                                'district_code',
+                                $get('kecamatan'),
+                            )?->pluck(
                                 'name',
                                 'code',
                             ))

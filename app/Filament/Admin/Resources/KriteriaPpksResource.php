@@ -78,7 +78,7 @@ class KriteriaPpksResource extends Resource
                     ->searchable()
                     ->suffixBadges([
                         Badge::make('tipe_ppks.nama_tipe')
-                            ->label(fn (Model $record) => $record->tipe_ppks()->first()->nama_tipe),
+                            ->label(fn(Model $record) => $record->tipe_ppks()->first()->nama_tipe),
                     ]),
             ])
             ->filters([

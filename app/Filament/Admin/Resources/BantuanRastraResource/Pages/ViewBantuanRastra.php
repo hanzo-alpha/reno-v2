@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\BantuanRastraResource\Pages;
 
 use App\Enums\AlasanEnum;
@@ -8,8 +10,6 @@ use App\Enums\StatusDtksEnum;
 use App\Enums\StatusRastra;
 use App\Enums\StatusVerifikasiEnum;
 use App\Filament\Admin\Resources\BantuanRastraResource;
-use App\Models\Kecamatan;
-use App\Models\Kelurahan;
 use App\Traits\HasInputDateLimit;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Filament\Actions;
@@ -64,7 +64,7 @@ class ViewBantuanRastra extends ViewRecord
                                         'app.kodekab',
                                         config('custom.default.kodekab'),
                                     ));
-                                if (!$kab) {
+                                if ( ! $kab) {
                                     return District::where('city_code', setting(
                                         'app.kodekab',
                                         config('custom.default.kodekab'),
@@ -78,8 +78,10 @@ class ViewBantuanRastra extends ViewRecord
 
                         Select::make('kelurahan')
                             ->required()
-                            ->options(fn(callable $get) => Village::query()->where('district_code',
-                                $get('kecamatan'))?->pluck(
+                            ->options(fn(callable $get) => Village::query()->where(
+                                'district_code',
+                                $get('kecamatan'),
+                            )?->pluck(
                                 'name',
                                 'code',
                             ))

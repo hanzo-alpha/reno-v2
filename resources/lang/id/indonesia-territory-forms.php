@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // indonesian translations for Teguh02/IndonesiaTerritoryForms
 return [
     'section_title' => 'Formulir Wilayah Indonesia',

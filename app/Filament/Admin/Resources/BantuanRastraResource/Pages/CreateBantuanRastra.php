@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\BantuanRastraResource\Pages;
 
 use App\Enums\StatusAktif;
@@ -47,7 +49,7 @@ class CreateBantuanRastra extends CreateRecord
             $rastra->status_aktif = StatusAktif::NONAKTIF;
             $rastra->status_verifikasi = StatusVerifikasiEnum::UNVERIFIED;
 
-            $rastra->keterangan = 'TELAH DIGANTIKAN DENGAN NIK:'.$data['nik'];
+            $rastra->keterangan = 'TELAH DIGANTIKAN DENGAN NIK:' . $data['nik'];
             $rastra->save();
             $rastra->delete();
         }

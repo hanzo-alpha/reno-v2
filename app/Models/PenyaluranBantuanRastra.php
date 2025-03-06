@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Storage;
 
 class PenyaluranBantuanRastra extends Model
 {
-    use SoftDeletes;
     use HasUuids;
+    use SoftDeletes;
 
     protected $table = 'penyaluran_bantuan_rastra';
 
@@ -33,16 +33,6 @@ class PenyaluranBantuanRastra extends Model
         'location',
     ];
 
-    public function uniqueIds(): array
-    {
-        return ['penyaluran_bantuan_rastra_uuid'];
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'penyaluran_bantuan_rastra_uuid';
-    }
-
     public static function getLatLngAttributes(): array
     {
         return [
@@ -54,6 +44,16 @@ class PenyaluranBantuanRastra extends Model
     public static function getComputedLocation(): string
     {
         return 'location';
+    }
+
+    public function uniqueIds(): array
+    {
+        return ['penyaluran_bantuan_rastra_uuid'];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'penyaluran_bantuan_rastra_uuid';
     }
 
     public function penandatangan(): BelongsTo

@@ -21,11 +21,11 @@ class RekapPenerimaBpjsImporter extends Importer
             ImportColumn::make('provinsi')
                 ->guess(['PROVINSI', 'PROV', 'NO'])
                 ->requiredMapping()
-                ->fillRecordUsing(fn ($record) => $record->provinsi = setting('app.kodeprov', '73')),
+                ->fillRecordUsing(fn($record) => $record->provinsi = setting('app.kodeprov', '73')),
             ImportColumn::make('kabupaten')
                 ->guess(['KABUPATEN', 'KAB', 'NO'])
                 ->requiredMapping()
-                ->fillRecordUsing(fn ($record) => $record->kabupaten = setting('app.kodekab', '7312')),
+                ->fillRecordUsing(fn($record) => $record->kabupaten = setting('app.kodekab', '7312')),
             ImportColumn::make('kecamatan')
                 ->requiredMapping()
                 ->fillRecordUsing(function ($record, $state): void {

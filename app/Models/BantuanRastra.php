@@ -56,16 +56,6 @@ class BantuanRastra extends Model
         'keterangan' => 'string',
     ];
 
-    public function uniqueIds(): array
-    {
-        return ['bantuan_rastra_uuid'];
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'bantuan_rastra_uuid';
-    }
-
     public static function getLatLngAttributes(): array
     {
         return [
@@ -128,7 +118,7 @@ class BantuanRastra extends Model
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ));
-                            if (! $kab) {
+                            if ( ! $kab) {
                                 return District::where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
@@ -138,14 +128,14 @@ class BantuanRastra extends Model
 
                             return $kab->pluck('name', 'code');
                         })
-                        ->afterStateUpdated(fn (callable $set) => $set('kelurahan', null)),
+                        ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
 
                     Select::make('kelurahan')
                         ->required()
                         ->options(fn(callable $get) => Village::query()
                             ->when(
                                 auth()->user()->instansi_code,
-                                fn (Builder $query) => $query->where(
+                                fn(Builder $query) => $query->where(
                                     'code',
                                     auth()->user()->instansi_code,
                                 ),
@@ -183,7 +173,7 @@ class BantuanRastra extends Model
                 ->relationship(
                     name: 'jenis_bantuan',
                     titleAttribute: 'alias',
-                    modifyQueryUsing: fn (Builder $query) => $query->whereNotIn('id', [1, 2]),
+                    modifyQueryUsing: fn(Builder $query) => $query->whereNotIn('id', [1, 2]),
                 )
                 ->default(5)
                 ->dehydrated(),
@@ -193,7 +183,7 @@ class BantuanRastra extends Model
                 ->options(StatusVerifikasiEnum::class)
                 ->default(StatusVerifikasiEnum::UNVERIFIED)
                 ->preload()
-                ->visible(fn () => auth()->user()?->hasRole(superadmin_admin_roles())),
+                ->visible(fn() => auth()->user()?->hasRole(superadmin_admin_roles())),
 
             Select::make('status_rastra')
                 ->label('Status Rastra')
@@ -212,7 +202,7 @@ class BantuanRastra extends Model
                     ->pluck('nama_lengkap', 'id'))
                 ->searchable(['nama_lengkap', 'nik', 'nokk'])
                 ->lazy()
-                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
                 ->preload(),
 
             Select::make('penggantiRastra.alasan_dikeluarkan')
@@ -223,7 +213,7 @@ class BantuanRastra extends Model
                 ->preload()
                 ->lazy()
                 ->required()
-                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
                 ->default(AlasanEnum::PINDAH),
 
             CuratorPicker::make('penggantiRastra.media_id')
@@ -232,7 +222,7 @@ class BantuanRastra extends Model
                 ->buttonLabel('Tambah File')
                 ->required()
                 ->preserveFilenames()
-                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
                 ->maxSize(2048),
 
             TextInput::make('keterangan')
@@ -287,6 +277,16 @@ class BantuanRastra extends Model
                 ->preserveFilenames()
                 ->columnSpanFull(),
         ];
+    }
+
+    public function uniqueIds(): array
+    {
+        return ['bantuan_rastra_uuid'];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'bantuan_rastra_uuid';
     }
 
     public function beritaAcara(): BelongsTo

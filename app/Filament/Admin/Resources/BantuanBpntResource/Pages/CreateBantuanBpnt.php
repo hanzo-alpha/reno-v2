@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\BantuanBpntResource\Pages;
 
 use App\Filament\Admin\Resources\BantuanBpntResource;
-use App\Traits\HasInputDateLimit;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateBantuanBpnt extends CreateRecord

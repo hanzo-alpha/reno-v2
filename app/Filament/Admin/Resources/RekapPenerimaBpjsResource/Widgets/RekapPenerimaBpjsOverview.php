@@ -28,8 +28,8 @@ class RekapPenerimaBpjsOverview extends BaseWidget
     {
         return RekapPenerimaBpjs::query()
             ->select(['created_at', 'bulan', 'jumlah', 'kecamatan', 'kelurahan'])
-            ->when($filter['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
-            ->when($filter['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
+            ->when($filter['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
+            ->when($filter['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
     }
 
     protected function getStats(): array
@@ -47,8 +47,8 @@ class RekapPenerimaBpjsOverview extends BaseWidget
         foreach ($listKecamatan as $code => $name) {
             $value = RekapPenerimaBpjs::query()
                 ->select(['created_at', 'jumlah', 'kecamatan', 'kelurahan'])
-                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
                 ->where('kecamatan', $code)
                 ->sum('jumlah');
             $label = 'KPM BPJS Kec. ' . $name;
@@ -73,22 +73,22 @@ class RekapPenerimaBpjsOverview extends BaseWidget
     {
         $verified = RekapPenerimaBpjs::query()
             ->select(['created_at', 'jumlah', 'bulan', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('bulan', now()->month)
             ->sum('jumlah');
 
         $unverified = RekapPenerimaBpjs::query()
             ->select(['created_at', 'jumlah', 'bulan', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('bulan', now()->subMonth(2)->month)
             ->sum('jumlah');
 
         $review = RekapPenerimaBpjs::query()
             ->select(['created_at', 'jumlah', 'bulan', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('bulan', now()->addMonth(1)->month)
             ->sum('jumlah');
 

@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', fn() => view('welcome'));
 
 Route::middleware(['auth'])->group(function (): void {
     Route::controller(PdfController::class)->group(function (): void {

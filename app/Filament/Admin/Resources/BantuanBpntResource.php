@@ -1,14 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\BantuanBpntResource\Pages;
 use App\Filament\Admin\Resources\BantuanBpntResource\Widgets\BantuanBpntOverview;
-use App\Filament\Imports\BantuanBpntImporter;
 use App\Models\BantuanBpnt;
-use App\Traits\HasInputDateLimit;
-use Filament\Actions\ImportAction;
-use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -80,7 +78,7 @@ class BantuanBpntResource extends Resource
                             ->nullable()
                             ->options(function (callable $get) {
                                 $kab = City::query()->where('province_code', $get('provinsi'));
-                                if (!$kab) {
+                                if ( ! $kab) {
                                     return City::where('code', setting(
                                         'app.kodekab',
                                         config('custom.default.kodekab'),
@@ -106,7 +104,7 @@ class BantuanBpntResource extends Resource
                             ->native(false)
                             ->options(function (callable $get) {
                                 $kab = District::query()->where('city_code', $get('kabupaten'));
-                                if (!$kab) {
+                                if ( ! $kab) {
                                     return District::where('city_code', setting(
                                         'app.kodekab',
                                         config('custom.default.kodekab'),
@@ -205,8 +203,10 @@ class BantuanBpntResource extends Resource
                 Tables\Actions\CreateAction::make()
                     ->label('Tambah')
                     ->icon('heroicon-m-plus')
-                    ->disabled(fn(): bool => cek_batas_input(setting('app.batas_tgl_input_bpnt',
-                        setting('app.batas_tgl_input'))))
+                    ->disabled(fn(): bool => cek_batas_input(setting(
+                        'app.batas_tgl_input_bpnt',
+                        setting('app.batas_tgl_input'),
+                    )))
                     ->button(),
             ])
             ->columns([
@@ -295,7 +295,7 @@ class BantuanBpntResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

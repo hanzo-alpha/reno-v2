@@ -63,7 +63,7 @@ class BantuanPpksImporter extends Importer
             ImportColumn::make('tgl_lahir')
                 ->requiredMapping()
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
-                    if ($state !== null) {
+                    if (null !== $state) {
                         $record->tgl_lahir = DateHelper::convertTglFromString($state);
                     }
 
@@ -198,7 +198,7 @@ class BantuanPpksImporter extends Importer
             ImportColumn::make('status_rumah_tinggal')
                 ->requiredMapping()
                 ->fillRecordUsing(function (BantuanPpks $record, $state): void {
-                    $record->status_rumah_tinggal = ((int) $state === 1)
+                    $record->status_rumah_tinggal = (1 === (int) $state)
                         ? StatusRumahEnum::MILIK_SENDIRI
                         : StatusRumahEnum::MENUMPANG;
                 }),
@@ -260,7 +260,7 @@ class BantuanPpksImporter extends Importer
             ]);
         }
 
-        return new BantuanPpks;
+        return new BantuanPpks();
     }
 
     public function getJobConnection(): ?string

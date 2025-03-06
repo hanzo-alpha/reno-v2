@@ -48,15 +48,13 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
                 ->options(list_bulan())
                 ->native(false),
             Select::make('kecamatan')
-                ->options(function () {
-                    return District::query()
-                        ->where('city_code', setting('app.kodekab'))
-                        ->pluck('name', 'code');
-                })
+                ->options(fn() => District::query()
+                    ->where('city_code', setting('app.kodekab'))
+                    ->pluck('name', 'code'))
                 ->live()
                 ->native(false),
             Select::make('kelurahan')
-                ->options(fn (Get $get) => Village::query()
+                ->options(fn(Get $get) => Village::query()
                     ->where('district_code', $get('kecamatan'))
                     ->pluck('name', 'code'))
                 ->native(false),
@@ -98,10 +96,10 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
 
         return $model::query()
             ->select(['created_at', 'kecamatan', 'kelurahan', 'jenis_bantuan_id'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
-            ->when($filters['program'], fn (Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
-            ->when($filters['bulan'], fn (Builder $query) => $query->where('created_at', $bulan))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['program'], fn(Builder $query) => $query->where('jenis_bantuan_id', $filters['program']))
+            ->when($filters['bulan'], fn(Builder $query) => $query->where('created_at', $bulan))
             ->where('created_at', $kodekel)
             ->count();
     }
@@ -123,13 +121,13 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
 
             $results[$key] = $model::query()
                 ->select(['created_at', 'kecamatan', 'kelurahan', 'jenis_bantuan_id'])
-                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-                ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+                ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
                 ->when(
                     $filters['program'],
-                    fn (Builder $query) => $query->where('jenis_bantuan_id', $filters['program'])
+                    fn(Builder $query) => $query->where('jenis_bantuan_id', $filters['program']),
                 )
-                ->when($filters['bulan'], fn (Builder $query) => $query->where('created_at', $bulan))
+                ->when($filters['bulan'], fn(Builder $query) => $query->where('created_at', $bulan))
                 ->where('created_at', $kodekel)
                 ->count();
         }
@@ -242,7 +240,7 @@ class BantuanSosialPerBulanChart extends ApexChartWidget
                 'enabled' => true,
             ],
             'stroke' => [
-                'width' => $filters['cTipe'] === 'line' ? 8 : 0,
+                'width' => 'line' === $filters['cTipe'] ? 8 : 0,
             ],
             'colors' => $colors,
         ];

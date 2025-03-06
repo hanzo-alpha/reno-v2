@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\StatusDtksEnum;
@@ -96,9 +98,7 @@ class BantuanPkhResource extends Resource
                                     ->nullable()
                                     ->searchable()
                                     ->reactive()
-                                    ->options(function () {
-                                        return Province::pluck('name', 'code');
-                                    })
+                                    ->options(fn() => Province::pluck('name', 'code'))
                                     ->default(config('custom.default.kodeprov'))
                                     ->afterStateUpdated(fn(callable $set) => $set('kabupaten', null)),
 
@@ -106,7 +106,7 @@ class BantuanPkhResource extends Resource
                                     ->nullable()
                                     ->options(function (callable $get) {
                                         $kab = City::query()->where('province_code', $get('provinsi'));
-                                        if (!$kab) {
+                                        if ( ! $kab) {
                                             return City::where('code', config('custom.default.kodekab'))
                                                 ->pluck('name', 'code');
                                         }
@@ -126,7 +126,7 @@ class BantuanPkhResource extends Resource
                                     ->reactive()
                                     ->options(function (callable $get) {
                                         $kab = District::query()->where('city_code', $get('kabupaten'));
-                                        if (!$kab) {
+                                        if ( ! $kab) {
                                             return District::where('city_code', config('custom.default.kodekab'))
                                                 ->pluck('name', 'code');
                                         }
@@ -238,21 +238,21 @@ class BantuanPkhResource extends Resource
                                 $kec = Str::title($record->kec->name);
                                 $kel = Str::title($record->kel->name);
                                 $dusun = ('-' !== $record->dusun || null === $record->dusun)
-                                    ? ', '.Str::title($record->dusun)
+                                    ? ', ' . Str::title($record->dusun)
                                     : '';
-                                $rtrw = 'RT. '.$record->no_rt.' /RW. '.$record->no_rw;
+                                $rtrw = 'RT. ' . $record->no_rt . ' /RW. ' . $record->no_rw;
                                 return $alamat
-                                    .$dusun
-                                    .', '
-                                    .$rtrw
-                                    .', Kec. '
-                                    .$kec
-                                    .', Kel. '
-                                    .$kel
-                                    .', '
-                                    .$kab
-                                    .', '
-                                    .$prov;
+                                    . $dusun
+                                    . ', '
+                                    . $rtrw
+                                    . ', Kec. '
+                                    . $kec
+                                    . ', Kel. '
+                                    . $kel
+                                    . ', '
+                                    . $kab
+                                    . ', '
+                                    . $prov;
                             })
                             ->columnSpanFull(),
                         TextEntry::make('prov.name')
@@ -284,7 +284,7 @@ class BantuanPkhResource extends Resource
                             ->color('primary'),
                         TextEntry::make('no_rt')
                             ->label('RT/RW')
-                            ->formatStateUsing(fn($record) => 'RT. '.$record->no_rt.'/RW. '.$record->no_rw)
+                            ->formatStateUsing(fn($record) => 'RT. ' . $record->no_rt . '/RW. ' . $record->no_rw)
                             ->icon('heroicon-o-map-pin')
                             ->weight(FontWeight::SemiBold)
                             ->color('primary'),
@@ -352,8 +352,10 @@ class BantuanPkhResource extends Resource
                 Tables\Actions\CreateAction::make()
                     ->label('Tambah')
                     ->icon('heroicon-m-plus')
-                    ->disabled(fn(): bool => cek_batas_input(setting('app.batas_tgl_input_pkh',
-                        setting('app.batas_tgl_input'))))
+                    ->disabled(fn(): bool => cek_batas_input(setting(
+                        'app.batas_tgl_input_pkh',
+                        setting('app.batas_tgl_input'),
+                    )))
                     ->button(),
             ])
             ->columns([
@@ -408,7 +410,7 @@ class BantuanPkhResource extends Resource
                 Tables\Columns\TextColumn::make('alamat')
                     ->sortable()
                     ->toggleable()
-                    ->description(fn($record) => 'Kec. '.$record->kec()->get()->first()->name.' | Kel. '.
+                    ->description(fn($record) => 'Kec. ' . $record->kec()->get()->first()->name . ' | Kel. ' .
                         $record->kel()->get()->first()->name)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kec.name')
@@ -542,7 +544,7 @@ class BantuanPkhResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

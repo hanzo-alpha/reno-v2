@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramPpks\Resources\BantuanPpksResource\Pages;
 
 use App\Filament\Clusters\ProgramPpks\Resources\BantuanPpksResource;

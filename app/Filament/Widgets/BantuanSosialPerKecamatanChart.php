@@ -68,7 +68,7 @@ class BantuanSosialPerKecamatanChart extends ApexChartWidget
             ->select(['created_at', 'kecamatan', 'kelurahan'])
             ->where('kecamatan', $kodekec);
 
-        if ($model === RekapPenerimaBpjs::class) {
+        if (RekapPenerimaBpjs::class === $model) {
             return $query->clone()->sum('jumlah');
         }
 
@@ -190,7 +190,7 @@ class BantuanSosialPerKecamatanChart extends ApexChartWidget
                 'enabled' => true,
             ],
             'stroke' => [
-                'width' => $filters['chartTipe'] === 'line' ? 4 : 0,
+                'width' => 'line' === $filters['chartTipe'] ? 4 : 0,
             ],
             'colors' => $colors,
         ];

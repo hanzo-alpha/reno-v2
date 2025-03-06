@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -43,11 +45,11 @@ class MakeFilamentActionCommand extends Command
         $className = $this->getClassName($name);
         $type = $this->getActionType();
         $actionClass = $this->actionTypes[$type];
-        $baseClass = $type === 'table-bulk' ? 'BulkAction' : 'Action';
+        $baseClass = 'table-bulk' === $type ? 'BulkAction' : 'Action';
         $path = $this->getFilePath($className, $type);
 
         if ($this->fileExists($path)) {
-            warning("$className already exists.");
+            warning("{$className} already exists.");
 
             return;
         }
@@ -55,7 +57,7 @@ class MakeFilamentActionCommand extends Command
         $stubContent = $this->getStubContent();
         $this->generateActionFile($path, $className, $actionClass, $stubContent, $baseClass);
 
-        info("$className created successfully at:");
+        info("{$className} created successfully at:");
         info($path);
     }
 
@@ -92,7 +94,7 @@ class MakeFilamentActionCommand extends Command
             exit;
         }
 
-        if (count($selectedTypes) === 0) {
+        if (0 === count($selectedTypes)) {
             $selectedType = select(
                 label: 'Please select the type of the Filament Action',
                 options: [
@@ -103,7 +105,7 @@ class MakeFilamentActionCommand extends Command
                     'notification' => 'Notification',
                     'global-search' => 'GlobalSearch',
                     'custom-component' => 'Custom',
-                ]
+                ],
             );
 
             return (string) $selectedType;
@@ -124,7 +126,7 @@ class MakeFilamentActionCommand extends Command
             default => '',
         };
 
-        return app_path("Filament/Actions/$subDirectory/$className.php");
+        return app_path("Filament/Actions/{$subDirectory}/{$className}.php");
     }
 
     private function fileExists(string $path): bool
@@ -147,7 +149,7 @@ class MakeFilamentActionCommand extends Command
         $content = str_replace(
             ['{{ namespace }}', '{{ className }}', '{{ defaultName }}', '{{ actionClass }}', '{{ baseClass }}'],
             [$namespace, $className, $defaultName, $actionClass, $baseClass],
-            $stubContent
+            $stubContent,
         );
 
         File::ensureDirectoryExists(dirname($path));

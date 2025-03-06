@@ -34,13 +34,21 @@ use Maatwebsite\Excel\Events\BeforeImport;
 use Maatwebsite\Excel\Events\ImportFailed;
 use Str;
 
-class ImportBantuanPkh implements ShouldQueue, SkipsEmptyRows, ToModel, WithBatchInserts, WithChunkReading,
-    WithHeadingRow, WithUpserts, WithValidation, WithEvents
+class ImportBantuanPkh implements
+    ShouldQueue,
+    SkipsEmptyRows,
+    ToModel,
+    WithBatchInserts,
+    WithChunkReading,
+    WithHeadingRow,
+    WithUpserts,
+    WithValidation,
+    WithEvents
 {
     use Importable;
+    use RegistersEventListeners;
     use SkipsErrors;
     use SkipsFailures;
-    use RegistersEventListeners;
 
     public static function beforeImport(BeforeImport $event): void
     {
@@ -65,7 +73,7 @@ class ImportBantuanPkh implements ShouldQueue, SkipsEmptyRows, ToModel, WithBatc
     {
         $user = Auth::user();
         Notification::make('Import Failed')
-            ->title('Gagal Impor KPM PKH '.$event->e->getMessage())
+            ->title('Gagal Impor KPM PKH ' . $event->e->getMessage())
             ->danger()
             ->send()
             ->sendToDatabase($user);

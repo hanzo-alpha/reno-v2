@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Policies\ActivityPolicy;
@@ -20,9 +22,17 @@ use Spatie\Activitylog\Models\Activity;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public function register(): void
+    public function register(): void {}
+
+    public function boot(): void
     {
-        //
+        $this->configureCommands();
+        $this->configureModels();
+        $this->translatableComponents();
+        $this->configureLocales();
+        $this->configureTesting();
+        $this->configureFilamentColumns();
+        $this->configureAuthorization();
     }
 
     protected function translatableComponents(): void
@@ -51,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureTesting(): void
     {
-        if (config('app.env') === 'testing') {
+        if ('testing' === config('app.env')) {
             $this->app->useDatabasePath(base_path('tests/database'));
         }
     }
@@ -68,23 +78,12 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureModels(): void
     {
-        Model::shouldBeStrict(! $this->app->isProduction());
+        Model::shouldBeStrict( ! $this->app->isProduction());
         Model::unguard();
     }
 
     private function configureAuthorization(): void
     {
         Gate::policy(Activity::class, ActivityPolicy::class);
-    }
-
-    public function boot(): void
-    {
-        $this->configureCommands();
-        $this->configureModels();
-        $this->translatableComponents();
-        $this->configureLocales();
-        $this->configureTesting();
-        $this->configureFilamentColumns();
-        $this->configureAuthorization();
     }
 }

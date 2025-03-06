@@ -8,7 +8,6 @@ use App\Enums\AlasanBpjsEnum;
 use App\Enums\StatusMutasi;
 use App\Enums\TipeMutasiEnum;
 use Awcodes\Curator\Models\Media;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

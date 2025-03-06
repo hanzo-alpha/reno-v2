@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\BantuanPkhResource\Pages;
 
 use App\Enums\StatusDtksEnum;
 use App\Enums\StatusPkhBpntEnum;
 use App\Filament\Admin\Resources\BantuanPkhResource;
-use App\Traits\HasInputDateLimit;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Str;
 

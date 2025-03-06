@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Filament\Pages\App\Profile;
 use App\Models\User;
 use Illuminate\Support\Str;
 
 use function Pest\Livewire\livewire;
 
-it('can render the profile page', function () {
+it('can render the profile page', function (): void {
     livewire(Profile::class)
         ->assertSuccessful();
 });
 
-it('can update profile', function () {
+it('can update profile', function (): void {
     $updatedUser = User::factory()->make();
 
     livewire(Profile::class)
@@ -29,7 +31,7 @@ it('can update profile', function () {
     ]);
 });
 
-it('can update password and authenticate', function () {
+it('can update password and authenticate', function (): void {
     $user = auth()->user();
 
     livewire(Profile::class)
@@ -50,7 +52,7 @@ it('can update password and authenticate', function () {
     ]));
 });
 
-it('can validate password confirmation', function () {
+it('can validate password confirmation', function (): void {
     livewire(Profile::class)
         ->fillForm([
             'password' => 'password',
@@ -61,7 +63,7 @@ it('can validate password confirmation', function () {
         ->assertHasFormErrors(['password' => ['same']]);
 });
 
-it('can validate required', function ($column) {
+it('can validate required', function ($column): void {
     livewire(Profile::class)
         ->fillForm([$column => null])
         ->assertActionExists('save')
@@ -69,7 +71,7 @@ it('can validate required', function ($column) {
         ->assertHasFormErrors([$column => ['required']]);
 })->with(['name', 'email']);
 
-it('can validate email', function () {
+it('can validate email', function (): void {
     livewire(Profile::class)
         ->fillForm([
             'email' => 'invalid-email-format',
@@ -79,7 +81,7 @@ it('can validate email', function () {
         ->assertHasFormErrors(['email' => ['email']]);
 });
 
-it('can validate unique email', function () {
+it('can validate unique email', function (): void {
     $user = User::factory()->create();
 
     livewire(Profile::class)
@@ -91,7 +93,7 @@ it('can validate unique email', function () {
         ->assertHasFormErrors(['email' => ['unique']]);
 });
 
-it('can validate max length', function (string $column) {
+it('can validate max length', function (string $column): void {
     livewire(Profile::class)
         ->fillForm([$column => Str::random(256)])
         ->assertActionExists('save')
