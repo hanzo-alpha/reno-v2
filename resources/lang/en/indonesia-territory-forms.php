@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // translations for Teguh02/IndonesiaTerritoryForms
 return [
     'section_title' => 'Indonesia Territory Forms',

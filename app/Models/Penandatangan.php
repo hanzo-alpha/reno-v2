@@ -8,8 +8,8 @@ use App\Enums\JabatanEnum;
 use App\Enums\StatusPenandatangan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Teguh02\IndonesiaTerritoryForms\Models\District;
-use Teguh02\IndonesiaTerritoryForms\Models\SubDistrict;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Village;
 
 class Penandatangan extends Model
 {
@@ -24,11 +24,11 @@ class Penandatangan extends Model
 
     public function kecamatan(): BelongsTo
     {
-        return $this->belongsTo(District::class, 'kode_kecamatan', 'id');
+        return $this->belongsTo(District::class, 'kode_kecamatan', 'code');
     }
 
     public function kelurahan(): BelongsTo
     {
-        return $this->belongsTo(SubDistrict::class, 'kode_instansi', 'id');
+        return $this->belongsTo(Village::class, 'kode_instansi', 'code');
     }
 }

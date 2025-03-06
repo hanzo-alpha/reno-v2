@@ -67,6 +67,6 @@ class PesertaBpjsImporter extends Importer
         //     'email' => $this->data['email'],
         // ]);
 
-        return new PesertaBpjs;
+        return new PesertaBpjs();
     }
 }

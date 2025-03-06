@@ -40,13 +40,13 @@ final class JenisBantuanResource extends Resource
                 Forms\Components\TextInput::make('nama_bantuan')
                     ->required()
                     ->maxLength(150)
-                    ->dehydrateStateUsing(fn ($state) => Str::of($state)->prepend('Bantuan ')->title()),
+                    ->dehydrateStateUsing(fn($state) => Str::of($state)->prepend('Bantuan ')->title()),
                 Forms\Components\TextInput::make('alias')
                     ->maxLength(7),
                 Forms\Components\ColorPicker::make('warna'),
                 Forms\Components\TextInput::make('deskripsi')
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => Str::title($state)),
+                    ->dehydrateStateUsing(fn($state) => Str::title($state)),
             ]);
     }
 
@@ -64,7 +64,7 @@ final class JenisBantuanResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nama_bantuan')
                     ->label('Nama Bantuan')
-                    ->description(fn ($record) => $record->deskripsi)
+                    ->description(fn($record) => $record->deskripsi)
                     ->searchable()
                     ->weight(FontWeight::SemiBold)
                     ->sortable(),
@@ -73,7 +73,7 @@ final class JenisBantuanResource extends Resource
                     ->badge()
                     ->sortable()
                     ->searchable()
-                    ->color(fn ($record) => Color::hex($record->warna)),
+                    ->color(fn($record) => Color::hex($record->warna)),
                 Tables\Columns\ColorColumn::make('warna')
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('deskripsi')

@@ -53,7 +53,7 @@ final class DateHelper
 
     public static function selisihHari($date): string
     {
-        $date = $date !== null ? $date : null;
+        $date = null !== $date ? $date : null;
         if ($date) {
             $hari = Carbon::parse($date)->diffInDays(config('custom.tanggal_periode_pajak'));
         } else {
@@ -88,7 +88,7 @@ final class DateHelper
     {
         $date ??= '';
         Date::setLocale('id');
-        if (! $toDate) {
+        if ( ! $toDate) {
             return Date::parse($date)->timezone(config('app.timezone'))->locale('id')->toDateTime();
         }
 
@@ -118,7 +118,7 @@ final class DateHelper
         //        }
 
         if (preg_match('/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/', $date, $matches)) {
-            if (! checkdate((int) $matches[2], (int) $matches[1], (int) $matches[3])) {
+            if ( ! checkdate((int) $matches[2], (int) $matches[1], (int) $matches[3])) {
                 $error = true;
             }
         } else {
@@ -130,7 +130,7 @@ final class DateHelper
 
     public static function namaHari($tanggal = ''): string
     {
-        if ($tanggal === '') {
+        if ('' === $tanggal) {
             $tanggal = date(config('custom.date.date_db'));
             $ind = date('w', strtotime($tanggal));
         } elseif (mb_strlen($tanggal) < 2) {
@@ -145,7 +145,7 @@ final class DateHelper
 
     public static function getNamaBulanIndo($bln): string
     {
-        $bln = $bln !== null ? $bln : config('masa_pajak_bulan');
+        $bln = null !== $bln ? $bln : config('masa_pajak_bulan');
 
         return match ($bln) {
             '' => 'Tidak ada Bulan',
@@ -204,7 +204,7 @@ final class DateHelper
 
     public static function namaBulan($tanggal = '', $short = false): string
     {
-        if ($tanggal === '' || $tanggal === 'now') {
+        if ('' === $tanggal || 'now' === $tanggal) {
             $tanggal = date(config('custom.date.date_db'));
             $ind = date('m', strtotime($tanggal));
         } elseif (mb_strlen($tanggal) < 3) {
@@ -238,7 +238,7 @@ final class DateHelper
         if (in_array($tanggal, $null, true)) {
             return $emptyVal;
         }
-        if ($tanggal === 'now') {
+        if ('now' === $tanggal) {
             $tanggal = date('Y-m-d H:i:s');
         }
         $tgl = date('j', strtotime($tanggal));
@@ -250,7 +250,7 @@ final class DateHelper
 
     public static function tanggalJam($tanggal = '', $sep = ' - '): string
     {
-        if ($tanggal === '') {
+        if ('' === $tanggal) {
             $tanggal = date(config('custom.date.date_db'));
         }
 
@@ -260,7 +260,7 @@ final class DateHelper
     public static function dayDate($tanggal = '')
     {
         Date::setLocale(config('app.locale'));
-        if ($tanggal === '') {
+        if ('' === $tanggal) {
             $tanggal = Date::now()->format('l, j F Y');
         }
 
@@ -280,7 +280,7 @@ final class DateHelper
     public static function hariTanggal($tanggal = ''): string
     {
         Carbon::setLocale('id');
-        if ($tanggal === '') {
+        if ('' === $tanggal) {
             $tanggal = Carbon::now()->timezone(config('app.timezone'))->format(config('custom.date.date_db'));
         }
         $tgl = date('d', strtotime($tanggal));
@@ -294,7 +294,7 @@ final class DateHelper
 
     public static function hariTanggalJam($tanggal = '', $sep = ' pukul '): string
     {
-        if ($tanggal === '') {
+        if ('' === $tanggal) {
             $tanggal = date(config('custom.date.date_db'));
         }
 
@@ -303,10 +303,10 @@ final class DateHelper
 
     public static function ddmmy($tanggal = 'now', $sep = '/', $fullyear = true): string
     {
-        if ($tanggal === null || $tanggal === self::FORMATDATE) {
+        if (null === $tanggal || self::FORMATDATE === $tanggal) {
             return '';
         }
-        if ($tanggal === 'now') {
+        if ('now' === $tanggal) {
             $tanggal = date('Y-m-d');
         }
         $tanggal = strtotime($tanggal);
@@ -317,10 +317,10 @@ final class DateHelper
 
     public static function dmyhi($tanggal = 'now', $sep = '/', $fullyear = true)
     {
-        if ($tanggal === null || $tanggal === self::FORMATDATE) {
+        if (null === $tanggal || self::FORMATDATE === $tanggal) {
             return '';
         }
-        if ($tanggal === 'now') {
+        if ('now' === $tanggal) {
             $tanggal = date(config('custom.date.date_db'));
         }
         $tanggal = strtotime($tanggal);
@@ -344,7 +344,7 @@ final class DateHelper
 
     public static function ymdhis($tanggal = '', $sep = '/', $incTime = true): string
     {
-        if ($tanggal === '') {
+        if ('' === $tanggal) {
             return date(config('custom.date.date_db'));
         }
 
@@ -387,7 +387,7 @@ final class DateHelper
                 $year = date('Y') . mb_substr($start, 1, mb_strlen($start));
             } elseif (str_starts_with($start, '-')) {
                 $year = date('Y') - mb_substr($start, 1, mb_strlen($start));
-            } elseif ($start === '0') {
+            } elseif ('0' === $start) {
                 $year = date('Y');
             }
         } else {

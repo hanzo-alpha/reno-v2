@@ -115,7 +115,7 @@ class ImportBantuanBpjs implements ShouldQueue, SkipsEmptyRows, SkipsOnError, Sk
             default => JenisKelaminEnum::LAKI,
         };
 
-        $bulan = (isset($row['periode_bulan']) && $row['periode_bulan'] !== 0) ? (int) bulan_to_integer($row['periode_bulan']) : now()->month;
+        $bulan = (isset($row['periode_bulan']) && 0 !== $row['periode_bulan']) ? (int) bulan_to_integer($row['periode_bulan']) : now()->month;
         $rowStatus = $row['status_usulan'] ?: $row['status_tl'];
 
         $statusUsulan = Str::of($rowStatus)->matchAll('/[a-zA-Z]+/');

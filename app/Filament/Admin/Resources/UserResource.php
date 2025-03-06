@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\StatusAdminEnum;
@@ -75,12 +77,12 @@ class UserResource extends Resource
                             ->label(__('filament-panels::pages/auth/edit-profile.form.password.label'))
                             ->password()
                             ->unique(ignoreRecord: true)
-                            ->required(fn ($livewire) => $livewire instanceof CreateUser)
+                            ->required(fn($livewire) => $livewire instanceof CreateUser)
                             ->revealable(filament()->arePasswordsRevealable())
                             ->rule(Password::default())
                             ->autocomplete('new-password')
-                            ->dehydrated(fn ($state): bool => filled($state))
-                            ->dehydrateStateUsing(fn ($state): string => Hash::make($state))
+                            ->dehydrated(fn($state): bool => filled($state))
+                            ->dehydrateStateUsing(fn($state): string => Hash::make($state))
                             ->live(debounce: 500)
                             ->same('passwordConfirmation')
                             ->suffixActions([
@@ -91,7 +93,7 @@ class UserResource extends Resource
                             ->password()
                             ->revealable(filament()->arePasswordsRevealable())
                             ->required()
-                            ->visible(fn (Get $get): bool => filled($get('password')))
+                            ->visible(fn(Get $get): bool => filled($get('password')))
                             ->dehydrated(false),
                         Forms\Components\Select::make('roles')
                             ->relationship('roles', 'name')
@@ -100,10 +102,8 @@ class UserResource extends Resource
                         Forms\Components\Select::make('instansi_code')
                             ->nullable()
                             ->unique(ignoreRecord: true)
-                            ->options(function () {
-                                return Village::query()->whereIn('district_code', config('custom.kode_kecamatan'))
-                                    ->pluck('name', 'code');
-                            })
+                            ->options(fn() => Village::query()->whereIn('district_code', config('custom.kode_kecamatan'))
+                                ->pluck('name', 'code'))
                             ->searchable()
                             ->label('Instansi')
                             ->live(onBlur: true)
@@ -149,27 +149,27 @@ class UserResource extends Resource
                     ->badge(),
                 Tables\Columns\TextColumn::make('instansi_code')
                     ->placeholder('No Instansi.')
-                    ->formatStateUsing(fn ($state) => Village::find($state)?->name)
+                    ->formatStateUsing(fn($state) => Village::find($state)?->name)
                     ->label('Instansi')
                     ->badge(),
                 Tables\Columns\TextColumn::make('is_admin')
                     ->badge(),
             ])
             ->toggleColumnsTriggerAction(
-                fn (Action $action) => $action
+                fn(Action $action) => $action
                     ->iconButton()
 //                    ->tooltip('Tampilkan / Sembunyikan Kolom Tabel')
                     ->label('Tampilkan / Sembunyikan Kolom Tabel'),
             )
             ->filters([
-                //
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->closeModalByClickingAway(false),
                 Tables\Actions\DeleteAction::make()
                     ->closeModalByClickingAway(false)
-                    ->hidden(fn (Model $record) => ($record->id === 1)),
+                    ->hidden(fn(Model $record) => (1 === $record->id)),
                 ActivityLogTimelineTableAction::make('Aktifitas')
                     ->timelineIcons([
                         'created' => 'heroicon-m-check-badge',
@@ -210,13 +210,13 @@ class UserResource extends Resource
                 ]),
             ])
             ->checkIfRecordIsSelectableUsing(
-                fn (Model $record): bool => ($record->is_admin !== StatusAdminEnum::SUPER_ADMIN) || $record->id !== 1,
+                fn(Model $record): bool => (StatusAdminEnum::SUPER_ADMIN !== $record->is_admin) || 1 !== $record->id,
             );
     }
 
     public static function getEloquentQuery(): Builder
     {
-        if (auth()->user()->id === 1) {
+        if (1 === auth()->user()->id) {
             return parent::getEloquentQuery()
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,
@@ -233,7 +233,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

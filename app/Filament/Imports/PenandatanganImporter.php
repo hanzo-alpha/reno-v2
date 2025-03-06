@@ -121,14 +121,14 @@ class PenandatanganImporter extends Importer
                 ])
                 ->where('name', $this->data['kode_instansi'])->first();
 
-            if (! $penandatangan) {
+            if ( ! $penandatangan) {
                 throw new RowImportFailedException('Tidak ditemukan penandatangan dengan instansi: ' . $this->data['kode_instansi']);
             }
 
             return $penandatangan;
         }
 
-        return new Penandatangan;
+        return new Penandatangan();
     }
 
     public function getJobConnection(): ?string

@@ -108,7 +108,7 @@ class BantuanRastraImporter extends Importer
             ]);
         }
 
-        return new BantuanRastra;
+        return new BantuanRastra();
     }
 
     public function getJobConnection(): ?string

@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Filament\Pages\Auth\Login;
 use Filament\Facades\Filament;
 
 use function Pest\Livewire\livewire;
 
-test('an unauthenticated user can access the login page', function () {
+test('an unauthenticated user can access the login page', function (): void {
     auth()->logout();
 
     $this->get(Filament::getLoginUrl())
         ->assertOk();
 });
 
-test('an unauthenticated user can not access the admin panel', function () {
+test('an unauthenticated user can not access the admin panel', function (): void {
     auth()->logout();
 
     $this->get('admin')
         ->assertRedirect(Filament::getLoginUrl());
 });
 
-test('an unauthenticated user can login', function () {
+test('an unauthenticated user can login', function (): void {
     auth()->logout();
 
     livewire(Login::class)
@@ -32,12 +34,12 @@ test('an unauthenticated user can login', function () {
         ->assertHasNoFormErrors();
 });
 
-test('an authenticated user can access the admin panel', function () {
+test('an authenticated user can access the admin panel', function (): void {
     $this->get('admin')
         ->assertOk();
 });
 
-test('an authenticated user can logout', function () {
+test('an authenticated user can logout', function (): void {
     $this->assertAuthenticated();
 
     $this->post(Filament::getLogoutUrl())

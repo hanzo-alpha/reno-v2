@@ -35,8 +35,8 @@ class BantuanBpntOverview extends BaseWidget
         foreach ($listKecamatan as $code => $name) {
             $value = BantuanBpnt::query()
                 ->select(['created_at', 'kecamatan', 'kelurahan'])
-                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters))
-                ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters))
+                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters))
+                ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters))
                 ->where('kecamatan', $code)
                 ->count();
             $label = 'KPM BPNT Kec. ' . $name;

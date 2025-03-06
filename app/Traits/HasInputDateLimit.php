@@ -23,6 +23,10 @@ trait HasInputDateLimit
             default => setting('app.batas_tgl_input'),
         };
 
+        if (null === $date) {
+            $date = setting('app.batas_tgl_input');
+        }
+
         return cek_batas_input($date);
     }
 }

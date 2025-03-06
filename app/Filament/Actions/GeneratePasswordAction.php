@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Actions;
 
 use Filament\Forms\Components\Actions\Action;
@@ -9,18 +11,13 @@ use Illuminate\Support\Str;
 
 class GeneratePasswordAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'generatePassword';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->icon('heroicon-s-key')
             ->color('info')
-            ->action(function (Set $set) {
+            ->action(function (Set $set): void {
                 $password = Str::password();
 
                 $set('password', $password);
@@ -31,5 +28,9 @@ class GeneratePasswordAction extends Action
                     ->title(__('Password successfully generated.'))
                     ->send();
             });
+    }
+    public static function getDefaultName(): ?string
+    {
+        return 'generatePassword';
     }
 }

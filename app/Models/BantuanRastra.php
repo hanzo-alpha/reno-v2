@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Village;
 
 class BantuanRastra extends Model
 {
@@ -53,16 +55,6 @@ class BantuanRastra extends Model
         'status_verifikasi' => StatusVerifikasiEnum::class,
         'keterangan' => 'string',
     ];
-
-    public function uniqueIds(): array
-    {
-        return ['bantuan_rastra_uuid'];
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'bantuan_rastra_uuid';
-    }
 
     public static function getLatLngAttributes(): array
     {
@@ -121,13 +113,13 @@ class BantuanRastra extends Model
                         ->live(onBlur: true)
                         ->native(false)
                         ->options(function () {
-                            $kab = Kecamatan::query()
-                                ->where('kabupaten_code', setting(
+                            $kab = District::query()
+                                ->where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ));
-                            if (! $kab) {
-                                return Kecamatan::where('kabupaten_code', setting(
+                            if ( ! $kab) {
+                                return District::where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ))
@@ -136,19 +128,19 @@ class BantuanRastra extends Model
 
                             return $kab->pluck('name', 'code');
                         })
-                        ->afterStateUpdated(fn (callable $set) => $set('kelurahan', null)),
+                        ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
 
                     Select::make('kelurahan')
                         ->required()
-                        ->options(fn (callable $get) => Kelurahan::query()
+                        ->options(fn(callable $get) => Village::query()
                             ->when(
-                                auth()->user()->instansi_id,
-                                fn (Builder $query) => $query->where(
+                                auth()->user()->instansi_code,
+                                fn(Builder $query) => $query->where(
                                     'code',
-                                    auth()->user()->instansi_id,
+                                    auth()->user()->instansi_code,
                                 ),
                             )
-                            ->where('kecamatan_code', $get('kecamatan'))
+                            ->where('district_code', $get('kecamatan'))
                             ?->pluck('name', 'code'))
                         ->live(onBlur: true)
                         ->native(false)
@@ -181,7 +173,7 @@ class BantuanRastra extends Model
                 ->relationship(
                     name: 'jenis_bantuan',
                     titleAttribute: 'alias',
-                    modifyQueryUsing: fn (Builder $query) => $query->whereNotIn('id', [1, 2]),
+                    modifyQueryUsing: fn(Builder $query) => $query->whereNotIn('id', [1, 2]),
                 )
                 ->default(5)
                 ->dehydrated(),
@@ -191,7 +183,7 @@ class BantuanRastra extends Model
                 ->options(StatusVerifikasiEnum::class)
                 ->default(StatusVerifikasiEnum::UNVERIFIED)
                 ->preload()
-                ->visible(fn () => auth()->user()?->hasRole(superadmin_admin_roles())),
+                ->visible(fn() => auth()->user()?->hasRole(superadmin_admin_roles())),
 
             Select::make('status_rastra')
                 ->label('Status Rastra')
@@ -210,7 +202,7 @@ class BantuanRastra extends Model
                     ->pluck('nama_lengkap', 'id'))
                 ->searchable(['nama_lengkap', 'nik', 'nokk'])
                 ->lazy()
-                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
                 ->preload(),
 
             Select::make('penggantiRastra.alasan_dikeluarkan')
@@ -221,7 +213,7 @@ class BantuanRastra extends Model
                 ->preload()
                 ->lazy()
                 ->required()
-                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
                 ->default(AlasanEnum::PINDAH),
 
             CuratorPicker::make('penggantiRastra.media_id')
@@ -230,7 +222,7 @@ class BantuanRastra extends Model
                 ->buttonLabel('Tambah File')
                 ->required()
                 ->preserveFilenames()
-                ->visible(fn (Get $get) => $get('status_rastra') === StatusRastra::PENGGANTI)
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
                 ->maxSize(2048),
 
             TextInput::make('keterangan')
@@ -285,6 +277,16 @@ class BantuanRastra extends Model
                 ->preserveFilenames()
                 ->columnSpanFull(),
         ];
+    }
+
+    public function uniqueIds(): array
+    {
+        return ['bantuan_rastra_uuid'];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'bantuan_rastra_uuid';
     }
 
     public function beritaAcara(): BelongsTo

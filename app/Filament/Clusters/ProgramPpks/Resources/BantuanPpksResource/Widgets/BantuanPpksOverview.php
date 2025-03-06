@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanPpksResource\Widgets;
+namespace App\Filament\Clusters\ProgramPpks\Resources\BantuanPpksResource\Widgets;
 
 use App\Enums\StatusVerifikasiEnum;
 use App\Models\BantuanPpks;
@@ -40,8 +40,8 @@ class BantuanPpksOverview extends BaseWidget
         foreach ($listKecamatan as $code => $name) {
             $value = BantuanPpks::query()
                 ->select(['created_at', 'kecamatan', 'kelurahan'])
-                ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters))
-                ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters))
+                ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters))
+                ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters))
                 ->where('kecamatan', $code)
                 ->count();
             $label = 'KPM PPKS Kec. ' . $name;
@@ -128,8 +128,8 @@ class BantuanPpksOverview extends BaseWidget
     protected function queryBantuan(array $filters): Builder | Collection | array
     {
         return BantuanPpks::query()->with(['tipe_ppks'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']));
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']));
     }
 
     protected function filterField(): array

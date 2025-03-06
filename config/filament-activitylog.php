@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'resources' => [
         'label' => 'Activity Log',

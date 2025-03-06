@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Filament\Support\Colors\Color;
 use NiftyCo\Skeletor\Skeletor;
 
-return function (Skeletor $skeletor) {
+return function (Skeletor $skeletor): void {
     $skeletor->intro('Welcome to Larament setup! Let\'s get started.');
 
     $applicationName = $skeletor->text('What is the application name?', 'Laravel', required: true);
@@ -12,20 +14,20 @@ return function (Skeletor $skeletor) {
 
     $timezone = $skeletor->search(
         'Which timezone would you like to use?',
-        fn (string $query) => collect(timezone_identifiers_list())
-            ->filter(fn (string $timezone) => str_contains(strtolower($timezone), strtolower($query)))
+        fn(string $query) => collect(timezone_identifiers_list())
+            ->filter(fn(string $timezone) => str_contains(mb_strtolower($timezone), mb_strtolower($query)))
             ->values()
-            ->all()
+            ->all(),
     );
 
     $adminPanelColor = $skeletor->select(
         'What color would you like to use for the FilamentPHP admin panel?',
         collect(Color::all())
             ->keys()
-            ->map(fn (string $color) => ucfirst($color))
+            ->map(fn(string $color) => ucfirst($color))
             ->flatten()
             ->values()
-            ->toArray()
+            ->toArray(),
     );
 
     $skeletor->intro('Let\'s setup the default user that will be created.');
@@ -44,7 +46,7 @@ return function (Skeletor $skeletor) {
         $skeletor->pregReplaceInFile(
             '/"description":\s*".*?"/',
             '"description": "' . addslashes($applicationDescription) . '"',
-            'composer.json'
+            'composer.json',
         );
     }
 
@@ -68,7 +70,7 @@ return function (Skeletor $skeletor) {
         $skeletor->pregReplaceInFile(
             "/'primary'\s*=>\s*Color::[A-Za-z0-9]+/",
             "'primary' => Color::" . $adminPanelColor,
-            'app/Providers/Filament/AdminPanelProvider.php'
+            'app/Providers/Filament/AdminPanelProvider.php',
         );
     }
 

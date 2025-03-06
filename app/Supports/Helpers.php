@@ -18,18 +18,18 @@ class Helpers
     {
         $instansi = setting('app.alias_dinas', 'DINSOS');
         $judulNo = setting('rastra.judul_no', 'BAST');
-        $text = ($model === 'rastra') ? setting('rastra.judul_no', 'BAST-RASTRA') : setting('ppks.judul_no', 'BAST.B');
+        $text = ('rastra' === $model) ? setting('rastra.judul_no', 'BAST-RASTRA') : setting('ppks.judul_no', 'BAST.B');
         $pad = setting('app.pad') ?? '0';
         $sep = setting('app.separator') ?? $sep;
         $bulan = convertToRoman(now()->month);
         $tahun = now()->year;
-        $modelClass = ($model === 'rastra') ? BeritaAcara::class : PenyaluranBantuanPpks::class;
+        $modelClass = ('rastra' === $model) ? BeritaAcara::class : PenyaluranBantuanPpks::class;
         $max = $modelClass::max('id') + 1;
         $kodePpks = setting('ppks.no_ba') ?? Str::padLeft($max, 3, $pad);
         $kodePpks = $kodePpks . $sep . $text;
         $kodeAset = Str::padLeft($max, 4, $pad) . $sep . $text;
 
-        $kode = ($model === 'rastra') ? $kodeAset : $kodePpks;
+        $kode = ('rastra' === $model) ? $kodeAset : $kodePpks;
 
         return $kode . $sep . $instansi . $sep . $bulan . $sep . $tahun;
     }
@@ -55,7 +55,7 @@ class Helpers
     {
         return JenisBantuan::query()
             ->get()
-            ->map(fn ($item) => 'admin_' . Str::lower($item->alias))->toArray();
+            ->map(fn($item) => 'admin_' . Str::lower($item->alias))->toArray();
     }
 
     public static function getAdminBantuan(): array | Collection
@@ -99,11 +99,11 @@ class Helpers
 
     public static function toPersen($jumlah, $total): int | string
     {
-        if (! isset($jumlah, $total)) {
+        if ( ! isset($jumlah, $total)) {
             return 0;
         }
 
-        if (! is_float($jumlah) || ! is_float($total)) {
+        if ( ! is_float($jumlah) || ! is_float($total)) {
             $jumlah = (float) $jumlah;
             $total = (float) $total;
         }

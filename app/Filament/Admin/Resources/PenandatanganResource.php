@@ -45,12 +45,10 @@ class PenandatanganResource extends Resource
             ->schema([
                 Select::make('kode_kecamatan')
                     ->label('Kecamatan')
-                    ->options(function (Get $get) {
-                        return District::where(
-                            'city_code',
-                            setting('app.kodekab', config('custom.default.kodekab'))
-                        )->pluck('name', 'code');
-                    })
+                    ->options(fn(Get $get) => District::where(
+                        'city_code',
+                        setting('app.kodekab', config('custom.default.kodekab')),
+                    )->pluck('name', 'code'))
                     ->searchable()
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Set $set): void {
@@ -59,9 +57,7 @@ class PenandatanganResource extends Resource
                     ->required(),
                 Select::make('kode_instansi')
                     ->label('Kelurahan')
-                    ->options(function (Get $get) {
-                        return Village::where('district_code', $get('kode_kecamatan'))->pluck('name', 'code');
-                    })
+                    ->options(fn(Get $get) => Village::where('district_code', $get('kode_kecamatan'))->pluck('name', 'code'))
                     ->searchable()
                     ->required(),
                 TextInput::make('nama_penandatangan')
@@ -104,13 +100,13 @@ class PenandatanganResource extends Resource
                     ->label('Kecamatan')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->formatStateUsing(fn ($state): string => District::where('code', $state)->first()?->name ?? '-')
+                    ->formatStateUsing(fn($state): string => District::where('code', $state)->first()?->name ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kode_instansi')
                     ->label('Instansi')
                     ->sortable()
                     ->toggleable()
-                    ->formatStateUsing(fn ($state): string => Village::where('code', $state)->first()?->name ?? '-')
+                    ->formatStateUsing(fn($state): string => Village::where('code', $state)->first()?->name ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->sortable()

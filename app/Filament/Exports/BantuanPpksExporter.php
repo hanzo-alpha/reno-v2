@@ -36,7 +36,7 @@ class BantuanPpksExporter extends Exporter
                 ->label('Tempat Lahir'),
             ExportColumn::make('tgl_lahir')
                 ->label('Tanggal Lahir')
-                ->state(fn ($record) => $record->tgl_lahir->format('d-m-Y')),
+                ->state(fn($record) => $record->tgl_lahir->format('d-m-Y')),
             ExportColumn::make('nama_ibu_kandung')
                 ->label('Nama Ibu Kandung'),
             ExportColumn::make('pendidikan_terakhir.nama_pendidikan')

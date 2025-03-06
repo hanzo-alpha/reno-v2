@@ -23,7 +23,7 @@ class ItemBantuan extends Model
             BeritaAcaraRastra::class,
             'item_bantuan_berita_acara_rastra',
             'item_bantuan_id',
-            'berita_acara_rastra_id'
+            'berita_acara_rastra_id',
         );
     }
 

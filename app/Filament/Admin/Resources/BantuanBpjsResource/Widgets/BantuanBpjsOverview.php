@@ -30,8 +30,8 @@ class BantuanBpjsOverview extends BaseWidget
     {
         return BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filter['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
-            ->when($filter['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
+            ->when($filter['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filter['kecamatan']))
+            ->when($filter['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filter['kelurahan']));
     }
 
     protected function getStats(): array
@@ -52,22 +52,22 @@ class BantuanBpjsOverview extends BaseWidget
     {
         $verified = BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('status_usulan', StatusUsulanEnum::BERHASIL)
             ->count();
 
         $unverified = BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('status_usulan', StatusUsulanEnum::GAGAL)
             ->count();
 
         $review = BantuanBpjs::query()
             ->select(['created_at', 'status_bpjs', 'kecamatan', 'kelurahan'])
-            ->when($filters['kecamatan'], fn (Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
-            ->when($filters['kelurahan'], fn (Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
+            ->when($filters['kecamatan'], fn(Builder $query) => $query->where('kecamatan', $filters['kecamatan']))
+            ->when($filters['kelurahan'], fn(Builder $query) => $query->where('kelurahan', $filters['kelurahan']))
             ->where('status_usulan', StatusUsulanEnum::ONPROGRESS)
             ->count();
 
