@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramBpjs\Resources;
 
 use App\Filament\Clusters\ProgramBpjs;
@@ -31,8 +33,8 @@ class RekapPenerimaBpjsResource extends Resource
     protected static ?string $modelLabel = 'Rekap Penerima PBI APBD';
     protected static ?string $pluralModelLabel = 'Rekap Penerima PBI APBD';
     protected static ?string $navigationLabel = 'Rekap PBI';
-//    protected static ?string $navigationParentItem = 'Program BPJS';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationParentItem = 'Program BPJS';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?int $navigationSort = 4;
     protected static ?string $cluster = ProgramBpjs::class;
 
@@ -66,7 +68,7 @@ class RekapPenerimaBpjsResource extends Resource
                             ->native(false)
                             ->options(function (Get $get) {
                                 $kab = City::query()->where('province_code', $get('provinsi'));
-                                if (!$kab) {
+                                if ( ! $kab) {
                                     return City::where(
                                         'province_code',
                                         setting('app.kodekab', config('custom.default.kodekab')),
@@ -88,7 +90,7 @@ class RekapPenerimaBpjsResource extends Resource
                             ->native(false)
                             ->options(function (Get $get) {
                                 $kab = District::query()->where('city_code', $get('kabupaten'));
-                                if (!$kab) {
+                                if ( ! $kab) {
                                     return District::where(
                                         'city_code',
                                         setting('app.kodekab', config('custom.default.kodekab')),

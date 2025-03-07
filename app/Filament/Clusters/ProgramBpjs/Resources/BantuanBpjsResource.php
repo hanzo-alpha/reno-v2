@@ -51,7 +51,7 @@ class BantuanBpjsResource extends Resource
     protected static ?string $label = 'Program BPJS';
     protected static ?string $pluralLabel = 'Program BPJS';
     protected static ?string $navigationLabel = 'Program BPJS';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
     protected static ?string $cluster = ProgramBpjs::class;
 

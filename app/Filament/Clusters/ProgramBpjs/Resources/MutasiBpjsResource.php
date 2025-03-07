@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramBpjs\Resources;
 
 use App\Enums\AlasanBpjsEnum;
 use App\Enums\StatusMutasi;
 use App\Filament\Clusters\ProgramBpjs;
 use App\Filament\Clusters\ProgramBpjs\Resources\MutasiBpjsResource\Pages;
-use App\Filament\Clusters\ProgramBpjs\Resources\MutasiBpjsResource\RelationManagers;
 use App\Models\MutasiBpjs;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Awcodes\Curator\PathGenerators\UserPathGenerator;
@@ -27,8 +28,8 @@ class MutasiBpjsResource extends Resource
     protected static ?string $label = 'Mutasi BPJS';
     protected static ?string $pluralLabel = 'Mutasi BPJS';
     protected static ?string $navigationLabel = 'Mutasi BPJS';
-//    protected static ?string $navigationParentItem = 'Program BPJS';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationParentItem = 'Program BPJS';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
     protected static ?int $navigationSort = 3;
 
@@ -55,7 +56,7 @@ class MutasiBpjsResource extends Resource
                         ->getOptionLabelFromRecordUsing(
                             fn(
                                 $record,
-                            ) => "<strong>{$record->nama_lengkap}</strong> | NIK: ".$record->nik.' | No. Kartu : '.$record->nomor_kartu,
+                            ) => "<strong>{$record->nama_lengkap}</strong> | NIK: " . $record->nik . ' | No. Kartu : ' . $record->nomor_kartu,
                         )
                         ->allowHtml()
                         ->columnSpanFull(),
@@ -128,8 +129,9 @@ class MutasiBpjsResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('periode_bulan')
                     ->label('Periode')
-                    ->formatStateUsing(fn($record
-                    ) => bulan_to_string($record->periode_bulan).' - '.$record->periode_tahun)
+                    ->formatStateUsing(fn(
+                        $record,
+                    ) => bulan_to_string($record->periode_bulan) . ' - ' . $record->periode_tahun)
                     ->badge()
                     ->sortable()
                     ->searchable(),

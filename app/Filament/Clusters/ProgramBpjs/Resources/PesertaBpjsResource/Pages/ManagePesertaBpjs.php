@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramBpjs\Resources\PesertaBpjsResource\Pages;
 
 use App\Filament\Clusters\ProgramBpjs\Resources\PesertaBpjsResource;
