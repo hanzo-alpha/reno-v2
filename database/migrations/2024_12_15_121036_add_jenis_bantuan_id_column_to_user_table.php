@@ -10,7 +10,7 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('users', static function (Blueprint $table): void {
-            $table->string('jenis_bantuan_id')->after('instansi_id')->nullable();
+            $table->string('jenis_bantuan_id')->after('instansi_code')->nullable();
         });
     }
 

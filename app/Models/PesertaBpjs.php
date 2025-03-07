@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class PesertaBpjs extends Model
 {
+    use HasFactory;
+
     protected $table = 'peserta_bpjs';
 
     protected $guarded = [];

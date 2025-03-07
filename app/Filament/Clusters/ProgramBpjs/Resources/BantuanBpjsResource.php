@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Clusters\ProgramBpjs\Resources;
 
 use App\Enums\JenisKelaminEnum;
 use App\Enums\StatusAktif;
 use App\Enums\StatusBpjsEnum;
 use App\Enums\StatusKawinBpjsEnum;
 use App\Enums\StatusUsulanEnum;
-use App\Filament\Admin\Resources\BantuanBpjsResource\Pages;
+use App\Filament\Clusters\ProgramBpjs;
+use App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource\Pages;
 use App\Models\BantuanBpjs;
 use Awcodes\FilamentBadgeableColumn\Components\Badge;
 use Awcodes\FilamentBadgeableColumn\Components\BadgeableColumn;
@@ -46,18 +47,13 @@ class BantuanBpjsResource extends Resource
     protected static ?string $model = BantuanBpjs::class;
 
     protected static ?string $navigationIcon = null;
-
     protected static ?string $slug = 'program-bpjs';
-
     protected static ?string $label = 'Program BPJS';
-
     protected static ?string $pluralLabel = 'Program BPJS';
-
     protected static ?string $navigationLabel = 'Program BPJS';
-
-    protected static ?string $navigationGroup = 'Program Sosial';
-
+//    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
+    protected static ?string $cluster = ProgramBpjs::class;
 
     public static function form(Form $form): Form
     {

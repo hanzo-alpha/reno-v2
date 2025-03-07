@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanBpjsResource\Pages;
+namespace App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource\Pages;
 
 use App\Exports\ExportBantuanBpjs;
-use App\Filament\Admin\Resources\BantuanBpjsResource;
-use App\Filament\Admin\Resources\BantuanBpjsResource\Widgets\BantuanBpjsOverview;
+use App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource;
+use App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource\Widgets\BantuanBpjsOverview;
 use App\Imports\ImportBantuanBpjs;
 use App\Models\BantuanBpjs;
 use App\Traits\HasInputDateLimit;
@@ -117,7 +117,7 @@ class ListBantuanBpjs extends ListRecords
                 ->modalAlignment(Alignment::Center)
                 ->closeModalByClickingAway(false)
                 ->disabled($this->enableInputLimitDate('bpjs'))
-                ->successRedirectUrl(route('filament.admin.resources.program-bpjs.index'))
+                ->successRedirectUrl(route('filament.admin.program-bpjs.resources.program-bpjs.index'))
                 ->modalWidth('md'),
 
             Actions\CreateAction::make()

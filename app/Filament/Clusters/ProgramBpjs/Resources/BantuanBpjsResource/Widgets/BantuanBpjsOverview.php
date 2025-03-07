@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanBpjsResource\Widgets;
+namespace App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource\Widgets;
 
 use App\Enums\StatusUsulanEnum;
-use App\Filament\Admin\Resources\BantuanBpjsResource\Pages\ListBantuanBpjs;
+use App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource\Pages\ListBantuanBpjs;
 use App\Models\BantuanBpjs;
 use App\Traits\HasGlobalFilters;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;

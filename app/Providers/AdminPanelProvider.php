@@ -1,11 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Providers;
 
 use App\Filament\Admin\Resources\BansosDiterimaResource;
-use App\Filament\Admin\Resources\BantuanBpjsResource;
 use App\Filament\Admin\Resources\BantuanBpntResource;
 use App\Filament\Admin\Resources\BantuanPkhResource;
 use App\Filament\Admin\Resources\BantuanRastraResource;
@@ -15,10 +12,10 @@ use App\Filament\Admin\Resources\JenisPekerjaanResource;
 use App\Filament\Admin\Resources\KriteriaPpksResource;
 use App\Filament\Admin\Resources\PenandatanganResource;
 use App\Filament\Admin\Resources\PendidikanTerakhirResource;
-use App\Filament\Admin\Resources\RekapPenerimaBpjsResource;
 use App\Filament\Admin\Resources\RoleResource;
 use App\Filament\Admin\Resources\TipePpksResource;
 use App\Filament\Admin\Resources\UserResource;
+use App\Filament\Clusters\ProgramBpjs;
 use App\Filament\Clusters\ProgramPpks;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Settings\Administrasi;
@@ -97,54 +94,55 @@ class AdminPanelProvider extends PanelProvider
                 Platform::Mac => '⌘K',
                 default => null,
             })
-            ->navigation(fn(NavigationBuilder $navigationBuilder): NavigationBuilder => $navigationBuilder
-                ->items([
-                    ...Pages\Dashboard::getNavigationItems(),
-                ])
-                ->groups([
-                    NavigationGroup::make()
-                        ->label('Bantuan Sosial')
-                        ->icon('heroicon-o-cog-6-tooth')
-                        ->items([
-                            ...BantuanBpjsResource::getNavigationItems(),
-                            ...BantuanPkhResource::getNavigationItems(),
-                            ...BantuanBpntResource::getNavigationItems(),
-                            ...BantuanRastraResource::getNavigationItems(),
-                            ...ProgramPpks::getNavigationItems(),
-                            ...RekapPenerimaBpjsResource::getNavigationItems(),
-                        ]),
-                    NavigationGroup::make('Master Data')
-                        ->label('Master Data')
-                        ->icon('heroicon-o-circle-stack')
-                        ->items([
-                            ...BansosDiterimaResource::getNavigationItems(),
-                            ...HubunganKeluargaResource::getNavigationItems(),
-                            ...JenisPekerjaanResource::getNavigationItems(),
-                            ...PenandatanganResource::getNavigationItems(),
-                            ...PendidikanTerakhirResource::getNavigationItems(),
-                            ...TipePpksResource::getNavigationItems(),
-                            ...KriteriaPpksResource::getNavigationItems(),
-                            ...ItemBantuanResource::getNavigationItems(),
+            ->navigation(function (NavigationBuilder $navigationBuilder): NavigationBuilder {
+                return $navigationBuilder
+                    ->items([
+                        ...Pages\Dashboard::getNavigationItems(),
+                    ])
+                    ->groups([
+                        NavigationGroup::make()
+                            ->label('Bantuan Sosial')
+                            ->icon('heroicon-o-cog-6-tooth')
+                            ->items([
+                                ...ProgramBpjs::getNavigationItems(),
+                                ...BantuanPkhResource::getNavigationItems(),
+                                ...BantuanBpntResource::getNavigationItems(),
+                                ...BantuanRastraResource::getNavigationItems(),
+                                ...ProgramPpks::getNavigationItems(),
+                            ]),
+                        NavigationGroup::make('Master Data')
+                            ->label('Master Data')
+                            ->icon('heroicon-o-circle-stack')
+                            ->items([
+                                ...BansosDiterimaResource::getNavigationItems(),
+                                ...HubunganKeluargaResource::getNavigationItems(),
+                                ...JenisPekerjaanResource::getNavigationItems(),
+                                ...PenandatanganResource::getNavigationItems(),
+                                ...PendidikanTerakhirResource::getNavigationItems(),
+                                ...TipePpksResource::getNavigationItems(),
+                                ...KriteriaPpksResource::getNavigationItems(),
+                                ...ItemBantuanResource::getNavigationItems(),
 
-                        ]),
-                    NavigationGroup::make()
-                        ->label('Pengaturan')
-                        ->icon('heroicon-o-cog-6-tooth')
-                        ->items([
-                            ...Settings::getNavigationItems(),
-                            ...Administrasi::getNavigationItems(),
-                            ...Laporan::getNavigationItems(),
-                        ]),
-                    NavigationGroup::make()
-                        ->label('Managemen')
-                        ->icon('heroicon-o-squares-2x2')
-                        ->items([
-                            ...UserResource::getNavigationItems(),
-                            ...RoleResource::getNavigationItems(),
-                            ...ActivitylogResource::getNavigationItems(),
-                            ...MediaResource::getNavigationItems(),
-                        ]),
-                ]))
+                            ]),
+                        NavigationGroup::make()
+                            ->label('Pengaturan')
+                            ->icon('heroicon-o-cog-6-tooth')
+                            ->items([
+                                ...Settings::getNavigationItems(),
+                                ...Administrasi::getNavigationItems(),
+                                ...Laporan::getNavigationItems(),
+                            ]),
+                        NavigationGroup::make()
+                            ->label('Managemen')
+                            ->icon('heroicon-o-squares-2x2')
+                            ->items([
+                                ...UserResource::getNavigationItems(),
+                                ...RoleResource::getNavigationItems(),
+                                ...ActivitylogResource::getNavigationItems(),
+                                ...MediaResource::getNavigationItems(),
+                            ]),
+                    ]);
+            })
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
@@ -158,7 +156,7 @@ class AdminPanelProvider extends PanelProvider
                     ->myProfile(
                         hasAvatars: true,
                         slug: 'profil-saya',
-                        navigationGroup: 'Pengaturan',
+                        navigationGroup: 'Pengaturan'
                     ),
                 FilamentShieldPlugin::make(),
                 CuratorPlugin::make()

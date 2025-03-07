@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanBpjsResource\Pages;
+namespace App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource\Pages;
 
-use App\Filament\Admin\Resources\BantuanBpjsResource;
+use App\Filament\Clusters\ProgramBpjs\Resources\BantuanBpjsResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Str;
 

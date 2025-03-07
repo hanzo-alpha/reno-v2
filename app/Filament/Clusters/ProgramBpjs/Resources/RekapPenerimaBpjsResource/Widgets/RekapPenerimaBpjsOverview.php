@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\RekapPenerimaBpjsResource\Widgets;
+namespace App\Filament\Clusters\ProgramBpjs\Resources\RekapPenerimaBpjsResource\Widgets;
 
 use App\Models\RekapPenerimaBpjs;
 use App\Traits\HasGlobalFilters;
