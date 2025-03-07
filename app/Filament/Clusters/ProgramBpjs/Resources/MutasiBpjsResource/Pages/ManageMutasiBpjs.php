@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramBpjs\Resources\MutasiBpjsResource\Pages;
 
 use App\Enums\AlasanBpjsEnum;

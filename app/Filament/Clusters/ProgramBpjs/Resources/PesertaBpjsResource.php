@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramBpjs\Resources;
 
 use App\Filament\Clusters\ProgramBpjs;
 use App\Filament\Clusters\ProgramBpjs\Resources\PesertaBpjsResource\Pages;
-use App\Filament\Clusters\ProgramBpjs\Resources\PesertaBpjsResource\RelationManagers;
 use App\Imports\ImportPesertaBpjs;
 use App\Models\PesertaBpjs;
 use Filament\Forms;
@@ -30,8 +31,8 @@ class PesertaBpjsResource extends Resource
     protected static ?string $label = 'Peserta BPJS';
     protected static ?string $pluralLabel = 'Peserta BPJS';
     protected static ?string $navigationLabel = 'Peserta BPJS';
-//    protected static ?string $navigationParentItem = 'Program BPJS';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationParentItem = 'Program BPJS';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
     protected static ?string $cluster = ProgramBpjs::class;
 
