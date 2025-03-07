@@ -52,7 +52,7 @@ class BantuanRastraResource extends Resource
     protected static ?string $slug = 'program-rastra';
     protected static ?string $label = 'Program RASTRA';
     protected static ?string $pluralLabel = 'Program RASTRA';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?int $navigationSort = 1;
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
     protected static ?string $cluster = ProgramRastra::class;
@@ -625,7 +625,7 @@ class BantuanRastraResource extends Resource
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ));
-                            if (!$kab) {
+                            if ( ! $kab) {
                                 return District::where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
