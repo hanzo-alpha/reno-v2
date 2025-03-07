@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Clusters\ProgramRastra\Resources;
 
 use App\Enums\AlasanEnum;
 use App\Enums\StatusAktif;
@@ -10,16 +10,22 @@ use App\Enums\StatusDtksEnum;
 use App\Enums\StatusRastra;
 use App\Enums\StatusVerifikasiEnum;
 use App\Exports\ExportBantuanRastra;
-use App\Filament\Admin\Resources\BantuanRastraResource\Pages;
-use App\Filament\Admin\Resources\BantuanRastraResource\Widgets\BantuanRastraOverview;
+use App\Filament\Clusters\ProgramRastra;
+use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Pages;
+use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Widgets\BantuanRastraOverview;
 use App\Models\BantuanRastra;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -46,9 +52,10 @@ class BantuanRastraResource extends Resource
     protected static ?string $slug = 'program-rastra';
     protected static ?string $label = 'Program RASTRA';
     protected static ?string $pluralLabel = 'Program RASTRA';
-    protected static ?string $navigationGroup = 'Program Sosial';
-    protected static ?int $navigationSort = 4;
+//    protected static ?string $navigationGroup = 'Program Sosial';
+    protected static ?int $navigationSort = 1;
     protected static ?string $recordTitleAttribute = 'nama_lengkap';
+    protected static ?string $cluster = ProgramRastra::class;
 
     public static function table(Table $table): Table
     {
@@ -429,17 +436,17 @@ class BantuanRastraResource extends Resource
             ->schema([
                 Group::make()->schema([
                     Section::make('Data Keluarga')
-                        ->schema(BantuanRastra::getKeluargaForm())->columns(2),
+                        ->schema(static::getKeluargaForm())->columns(2),
                     Section::make('Data Alamat')
-                        ->schema(BantuanRastra::getAlamatForm())->columns(2),
+                        ->schema(static::getAlamatForm())->columns(2),
                 ])->columnSpan(['lg' => 2]),
 
                 Forms\Components\Group::make()->schema([
                     Section::make('Status')
-                        ->schema(BantuanRastra::getStatusForm()),
+                        ->schema(static::getStatusForm()),
 
                     Forms\Components\Section::make('Verifikasi')
-                        ->schema(BantuanRastra::getUploadForm()),
+                        ->schema(static::getUploadForm()),
                 ])->columnSpan(1),
             ])->columns(3);
     }
@@ -562,6 +569,221 @@ class BantuanRastraResource extends Resource
                 ])->columns(1),
 
             ])->columns(3);
+    }
+
+    public static function getKeluargaForm(): array
+    {
+        return [
+            Select::make('status_dtks')
+                ->label('DTKS')
+                ->options(StatusDtksEnum::class)
+                ->preload()
+                ->default(StatusDtksEnum::DTKS)
+                ->lazy(),
+            TextInput::make('nokk')
+                ->label('No. Kartu Keluarga (KK)')
+                ->required()
+                ->live(debounce: 500)
+                ->afterStateUpdated(function (Page $livewire, TextInput $component): void {
+                    $livewire->validateOnly($component->getStatePath());
+                })
+                ->minLength(16)
+                ->maxLength(16),
+            TextInput::make('nik')
+                ->label('No. Induk Kependudukan (NIK)')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->live(debounce: 500)
+                ->afterStateUpdated(function (Page $livewire, TextInput $component): void {
+                    $livewire->validateOnly($component->getStatePath());
+                })
+                ->minLength(16)
+                ->maxLength(16),
+            TextInput::make('nama_lengkap')
+                ->label('Nama Lengkap')
+                ->required()
+                ->maxLength(255),
+        ];
+    }
+
+    public static function getAlamatForm(): array
+    {
+        return [
+            Grid::make(2)
+                ->schema([
+                    TextInput::make('alamat')
+                        ->required()
+                        ->columnSpanFull(),
+                    Select::make('kecamatan')
+                        ->required()
+                        ->searchable()
+                        ->live(onBlur: true)
+                        ->native(false)
+                        ->options(function () {
+                            $kab = District::query()
+                                ->where('city_code', setting(
+                                    'app.kodekab',
+                                    config('custom.default.kodekab'),
+                                ));
+                            if (!$kab) {
+                                return District::where('city_code', setting(
+                                    'app.kodekab',
+                                    config('custom.default.kodekab'),
+                                ))
+                                    ->pluck('name', 'code');
+                            }
+
+                            return $kab->pluck('name', 'code');
+                        })
+                        ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
+
+                    Select::make('kelurahan')
+                        ->required()
+                        ->options(fn(callable $get) => Village::query()
+                            ->when(
+                                auth()->user()->instansi_code,
+                                fn(Builder $query) => $query->where(
+                                    'code',
+                                    auth()->user()->instansi_code,
+                                ),
+                            )
+                            ->where('district_code', $get('kecamatan'))
+                            ?->pluck('name', 'code'))
+                        ->live(onBlur: true)
+                        ->native(false)
+                        ->searchable(),
+                ]),
+
+            Grid::make(3)
+                ->schema([
+                    TextInput::make('dusun')
+                        ->label('Dusun')
+                        ->nullable(),
+                    TextInput::make('no_rt')
+                        ->label('RT')
+                        ->nullable(),
+                    TextInput::make('no_rw')
+                        ->label('RW')
+                        ->nullable(),
+                ]),
+        ];
+    }
+
+    public static function getStatusForm(): array
+    {
+        return [
+            Select::make('jenis_bantuan_id')
+                ->required()
+                ->searchable()
+                ->disabled()
+                ->hidden()
+                ->relationship(
+                    name: 'jenis_bantuan',
+                    titleAttribute: 'alias',
+                    modifyQueryUsing: fn(Builder $query) => $query->whereNotIn('id', [1, 2]),
+                )
+                ->default(5)
+                ->dehydrated(),
+
+            Select::make('status_verifikasi')
+                ->label('Status Verifikasi')
+                ->options(StatusVerifikasiEnum::class)
+                ->default(StatusVerifikasiEnum::UNVERIFIED)
+                ->preload()
+                ->visible(fn() => auth()->user()?->hasRole(superadmin_admin_roles())),
+
+            Select::make('status_rastra')
+                ->label('Status Rastra')
+                ->enum(StatusRastra::class)
+                ->options(StatusRastra::class)
+                ->default(StatusRastra::BARU)
+                ->live()
+                ->preload(),
+
+            Select::make('penggantiRastra.keluarga_id')
+                ->label('Keluarga Yang Diganti')
+                ->required()
+                ->options(BantuanRastra::query()
+                    ->where('status_rastra', StatusRastra::BARU)
+                    ->where('status_aktif', StatusAktif::AKTIF)
+                    ->pluck('nama_lengkap', 'id'))
+                ->searchable(['nama_lengkap', 'nik', 'nokk'])
+                ->lazy()
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
+                ->preload(),
+
+            Select::make('penggantiRastra.alasan_dikeluarkan')
+                ->searchable()
+                ->options(AlasanEnum::class)
+                ->enum(AlasanEnum::class)
+                ->native(false)
+                ->preload()
+                ->lazy()
+                ->required()
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
+                ->default(AlasanEnum::PINDAH),
+
+            CuratorPicker::make('penggantiRastra.media_id')
+                ->label('Upload Berita Acara Pengganti')
+                ->relationship('beritaAcara', 'id')
+                ->buttonLabel('Tambah File')
+                ->required()
+                ->preserveFilenames()
+                ->visible(fn(Get $get) => StatusRastra::PENGGANTI === $get('status_rastra'))
+                ->maxSize(2048),
+
+            TextInput::make('keterangan')
+                ->label('Keterangan')->nullable(),
+
+            ToggleButtons::make('status_aktif')
+                ->label('Status Aktif')
+                ->enum(StatusAktif::class)
+                ->options(StatusAktif::class)
+                ->default(StatusAktif::AKTIF)
+                ->inline(),
+        ];
+    }
+
+    public static function getUploadForm(): array
+    {
+        return [
+            DateTimePicker::make('created_at')
+                ->label('Tgl. Penyerahan')
+                ->disabled()
+                ->default(now())
+                ->displayFormat('d/M/Y H:i:s')
+                ->dehydrated(),
+            FileUpload::make('foto_ktp_kk')
+                ->label('Unggah Foto KTP / KK')
+                ->image()
+                ->imageEditor()
+                ->reorderable()
+                ->disk('public')
+                ->openable()
+                ->downloadable()
+                ->imageEditor()
+                ->imageEditorAspectRatios([
+                    null,
+                    '16:9',
+                    '4:3',
+                    '1:1',
+                ])
+                ->unique(ignoreRecord: true)
+                ->helperText('maks. 2MB')
+                ->maxFiles(1)
+                ->maxSize(2048)
+                ->columnSpanFull()
+                ->imagePreviewHeight('250')
+                ->previewable(true),
+
+            CuratorPicker::make('media_id')
+                ->label('Upload Berita Acara')
+                ->buttonLabel('Tambah File')
+                ->relationship('beritaAcara', 'id')
+                ->nullable()
+                ->preserveFilenames()
+                ->columnSpanFull(),
+        ];
     }
 
     public static function getWidgets(): array

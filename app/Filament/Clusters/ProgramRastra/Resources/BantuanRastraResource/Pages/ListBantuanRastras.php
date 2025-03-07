@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanRastraResource\Pages;
+namespace App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Pages;
 
 use App\Exports\ExportBantuanRastra;
-use App\Filament\Admin\Resources\BantuanRastraResource;
+use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource;
 use App\Filament\Imports\BantuanRastraImporter;
 use App\Models\BantuanRastra;
 use App\Traits\HasInputDateLimit;

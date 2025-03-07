@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Filament\Admin\Resources\BansosDiterimaResource;
 use App\Filament\Admin\Resources\BantuanBpntResource;
 use App\Filament\Admin\Resources\BantuanPkhResource;
-use App\Filament\Admin\Resources\BantuanRastraResource;
 use App\Filament\Admin\Resources\HubunganKeluargaResource;
 use App\Filament\Admin\Resources\ItemBantuanResource;
 use App\Filament\Admin\Resources\JenisPekerjaanResource;
@@ -17,6 +16,7 @@ use App\Filament\Admin\Resources\TipePpksResource;
 use App\Filament\Admin\Resources\UserResource;
 use App\Filament\Clusters\ProgramBpjs;
 use App\Filament\Clusters\ProgramPpks;
+use App\Filament\Clusters\ProgramRastra;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
@@ -107,7 +107,7 @@ class AdminPanelProvider extends PanelProvider
                                 ...ProgramBpjs::getNavigationItems(),
                                 ...BantuanPkhResource::getNavigationItems(),
                                 ...BantuanBpntResource::getNavigationItems(),
-                                ...BantuanRastraResource::getNavigationItems(),
+                                ...ProgramRastra::getNavigationItems(),
                                 ...ProgramPpks::getNavigationItems(),
                             ]),
                         NavigationGroup::make('Master Data')

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanRastraResource\Widgets;
+namespace App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Widgets;
 
 use App\Models\BantuanRastra;
 use App\Traits\HasGlobalFilters;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanRastraResource\Pages;
+namespace App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Pages;
 
 use App\Enums\StatusAktif;
 use App\Enums\StatusRastra;
 use App\Enums\StatusVerifikasiEnum;
-use App\Filament\Admin\Resources\BantuanRastraResource;
+use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource;
 use App\Models\BantuanRastra;
 use App\Models\PenggantiRastra;
 use Filament\Resources\Pages\CreateRecord;

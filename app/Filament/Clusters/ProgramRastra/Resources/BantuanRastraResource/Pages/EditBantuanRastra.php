@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\BantuanRastraResource\Pages;
+namespace App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Pages;
 
 use App\Enums\AlasanEnum;
 use App\Enums\StatusAktif;
 use App\Enums\StatusDtksEnum;
 use App\Enums\StatusRastra;
 use App\Enums\StatusVerifikasiEnum;
-use App\Filament\Admin\Resources\BantuanRastraResource;
+use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource;
 use App\Traits\HasInputDateLimit;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Filament\Actions;
@@ -17,12 +17,12 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\ViewRecord;
+use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Enums\MaxWidth;
 use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Village;
 
-class ViewBantuanRastra extends ViewRecord
+class EditBantuanRastra extends EditRecord
 {
     use HasInputDateLimit;
 
@@ -31,12 +31,9 @@ class ViewBantuanRastra extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make()->icon('heroicon-o-pencil-square'),
             Actions\Action::make('pengganti_rastra')
                 ->label('Ganti KPM Baru')
                 ->icon('heroicon-s-arrow-path-rounded-square')
-                ->color('success')
-                ->disabled($this->enableInputLimitDate('rastra'))
                 ->form([
                     Grid::make()->schema([
                         TextInput::make('nokk')
@@ -144,10 +141,13 @@ class ViewBantuanRastra extends ViewRecord
                 ->after(function (): void {
                     Notification::make()
                         ->success()
-                        ->title('Perubahan Berhasil Disimpan')
+                        ->title('Status Berhasil Diubah')
                         ->send();
                 })
+                ->disabled($this->enableInputLimitDate('rastra'))
                 ->close(),
+            Actions\ViewAction::make()->icon('heroicon-m-eye'),
+            Actions\DeleteAction::make()->icon('heroicon-m-trash'),
         ];
     }
 }
