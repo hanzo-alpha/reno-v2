@@ -29,7 +29,7 @@ class ItemBantuanResource extends Resource
     protected static ?string $slug = 'item-bantuan';
     protected static ?string $label = 'Item Bantuan RASTRA';
     protected static ?string $pluralLabel = 'Item Bantuan RASTRA';
-//    protected static ?string $navigationGroup = 'Item Bantuan RASTRA';
+    //    protected static ?string $navigationGroup = 'Item Bantuan RASTRA';
     protected static ?int $navigationSort = 4;
     protected static ?string $cluster = ProgramRastra::class;
     protected static ?string $recordTitleAttribute = 'nama_item';
