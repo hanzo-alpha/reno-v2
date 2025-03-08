@@ -20,6 +20,7 @@
         "awcodes/filament-badgeable-column": "^2.3",
         "awcodes/filament-curator": "^3.7",
         "awcodes/shout": "^2.0",
+        "aymanalhattami/filament-slim-scrollbar": "^2.1",
         "barryvdh/laravel-dompdf": "^3.1",
         "bezhansalleh/filament-shield": "^3.3",
         "charrafimed/global-search-modal": "^3.7",
