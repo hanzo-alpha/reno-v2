@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Filament\Admin\Resources\BansosDiterimaResource;
-use App\Filament\Admin\Resources\BantuanBpjsResource;
 use App\Filament\Admin\Resources\BantuanBpntResource;
 use App\Filament\Admin\Resources\BantuanPkhResource;
-use App\Filament\Admin\Resources\BantuanRastraResource;
 use App\Filament\Admin\Resources\HubunganKeluargaResource;
-use App\Filament\Admin\Resources\ItemBantuanResource;
 use App\Filament\Admin\Resources\JenisPekerjaanResource;
 use App\Filament\Admin\Resources\KriteriaPpksResource;
 use App\Filament\Admin\Resources\PenandatanganResource;
 use App\Filament\Admin\Resources\PendidikanTerakhirResource;
-use App\Filament\Admin\Resources\RekapPenerimaBpjsResource;
 use App\Filament\Admin\Resources\RoleResource;
 use App\Filament\Admin\Resources\TipePpksResource;
 use App\Filament\Admin\Resources\UserResource;
+use App\Filament\Clusters\ProgramBpjs;
 use App\Filament\Clusters\ProgramPpks;
+use App\Filament\Clusters\ProgramRastra;
 use App\Filament\Pages\Auth\Login;
+use App\Filament\Pages\Backup;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
 use App\Filament\Pages\Settings\Settings;
@@ -55,13 +54,15 @@ use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Outerweb\FilamentSettings\Filament\Plugins\FilamentSettingsPlugin;
 use Rmsramos\Activitylog\ActivitylogPlugin;
 use Rmsramos\Activitylog\Resources\ActivitylogResource;
+use Saade\FilamentLaravelLog\FilamentLaravelLogPlugin;
+use Saade\FilamentLaravelLog\Pages\ViewLog;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
@@ -102,19 +103,16 @@ class AdminPanelProvider extends PanelProvider
                     ...Pages\Dashboard::getNavigationItems(),
                 ])
                 ->groups([
-                    NavigationGroup::make()
-                        ->label('Bantuan Sosial')
+                    NavigationGroup::make('Manajemen Bantuan')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->items([
-                            ...BantuanBpjsResource::getNavigationItems(),
+                            ...ProgramBpjs::getNavigationItems(),
                             ...BantuanPkhResource::getNavigationItems(),
                             ...BantuanBpntResource::getNavigationItems(),
-                            ...BantuanRastraResource::getNavigationItems(),
+                            ...ProgramRastra::getNavigationItems(),
                             ...ProgramPpks::getNavigationItems(),
-                            ...RekapPenerimaBpjsResource::getNavigationItems(),
                         ]),
                     NavigationGroup::make('Master Data')
-                        ->label('Master Data')
                         ->icon('heroicon-o-circle-stack')
                         ->items([
                             ...BansosDiterimaResource::getNavigationItems(),
@@ -124,25 +122,23 @@ class AdminPanelProvider extends PanelProvider
                             ...PendidikanTerakhirResource::getNavigationItems(),
                             ...TipePpksResource::getNavigationItems(),
                             ...KriteriaPpksResource::getNavigationItems(),
-                            ...ItemBantuanResource::getNavigationItems(),
-
                         ]),
-                    NavigationGroup::make()
-                        ->label('Pengaturan')
+                    NavigationGroup::make('Pengaturan')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->items([
                             ...Settings::getNavigationItems(),
                             ...Administrasi::getNavigationItems(),
                             ...Laporan::getNavigationItems(),
                         ]),
-                    NavigationGroup::make()
-                        ->label('Managemen')
+                    NavigationGroup::make('Managemen Pengguna')
                         ->icon('heroicon-o-squares-2x2')
                         ->items([
                             ...UserResource::getNavigationItems(),
                             ...RoleResource::getNavigationItems(),
                             ...ActivitylogResource::getNavigationItems(),
                             ...MediaResource::getNavigationItems(),
+                            ...Backup::getNavigationItems(),
+                            ...ViewLog::getNavigationItems(),
                         ]),
                 ]))
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
@@ -187,19 +183,34 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationIcon('')
                     ->navigationCountBadge(true),
                 EasyFooterPlugin::make()
-                    ->withGithub(showLogo: true, showUrl: true)
-                    ->withSentence(new HtmlString('<img src="https://static.cdnlogo.com/logos/l/23/laravel.svg" style="margin-right:.5rem;" alt="Laravel Logo" width="20" height="20"> Laravel'))
-                    ->withLoadTime('This page loaded in'),
+                    ->withSentence(new HtmlString('<img src="/images/fresh/reno-dinsos-icon-only.png" style="margin-right:.5rem;" alt="Laravel Logo" width="20" height="20"> RENO DINSOS Kabupaten Soppeng'))
+                    ->withLoadTime('Halaman ini dimuat dalam '),
                 FilamentApexChartsPlugin::make(),
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->usingPolingInterval('10s')
+                    ->usingPage(Backup::class),
+                FilamentLaravelLogPlugin::make()
+//                    ->authorize(
+//                        fn() => auth()->user()->is_admin
+//                    )
+                    ->navigationGroup('Managemen Pengguna')
+                    ->navigationLabel('Catatan')
+                    ->navigationIcon('')
+                    ->logDirs([
+                        storage_path('logs'),     // The default value
+                    ])
+                    ->excludedFilesPatterns([
+                        '*2023*',
+                    ])
+                    ->navigationSort(1)
+                    ->slug('logs'),
                 AuthUIEnhancerPlugin::make()
                     ->emptyPanelBackgroundImageUrl(asset('images/background/login.png'))
                     ->emptyPanelBackgroundImageOpacity('50%'),
                 //                    ->emptyPanelBackgroundColor(Color::Zinc, '300')
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -6,9 +6,9 @@ namespace App\Filament\Widgets;
 
 use App\Filament\Admin\Resources\BantuanBpntResource\Widgets\BantuanBpntOverview;
 use App\Filament\Admin\Resources\BantuanPkhResource\Widgets\BantuanPkhOverview;
-use App\Filament\Admin\Resources\BantuanPpksResource\Widgets\BantuanPpksOverview;
-use App\Filament\Admin\Resources\BantuanRastraResource\Widgets\BantuanRastraOverview;
-use App\Filament\Admin\Resources\RekapPenerimaBpjsResource\Widgets\RekapPenerimaBpjsOverview;
+use App\Filament\Clusters\ProgramBpjs\Resources\RekapPenerimaBpjsResource\Widgets\RekapPenerimaBpjsOverview;
+use App\Filament\Clusters\ProgramPpks\Resources\BantuanPpksResource\Widgets\BantuanPpksOverview;
+use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Widgets\BantuanRastraOverview;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Kenepa\MultiWidget\MultiWidget;

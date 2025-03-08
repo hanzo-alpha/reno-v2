@@ -26,7 +26,7 @@ class ListBantuanPpks extends ListRecords
 
     public function getTabs(): array
     {
-        if (null !== auth()->user()->instansi_id) {
+        if (null !== auth()->user()->instansi_code) {
             return [];
         }
 

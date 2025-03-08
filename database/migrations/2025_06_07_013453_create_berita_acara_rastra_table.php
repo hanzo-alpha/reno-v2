@@ -18,8 +18,8 @@ return new class () extends Migration {
             $table->date('tgl_ba')->nullable()->default(today());
             $table->string('kelurahan')->nullable();
             $table->string('kecamatan')->nullable();
-            $table->foreignId('barang_id');
-            $table->foreignId('penandatangan_id');
+            $table->foreignId('item_bantuan_id')->index()->nullable();
+            $table->foreignId('penandatangan_id')->index()->nullable();
             $table->string('keterangan')->nullable();
             $table->json('upload_ba')->nullable();
             $table->timestamps();
