@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Awcodes\Curator\CuratorPlugin;
@@ -77,7 +79,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/app/theme.css')
             ->authMiddleware([
-//                Authenticate::class,
+                //                Authenticate::class,
             ]);
     }
 }

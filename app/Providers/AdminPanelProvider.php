@@ -200,7 +200,7 @@ class AdminPanelProvider extends PanelProvider
                         storage_path('logs'),     // The default value
                     ])
                     ->excludedFilesPatterns([
-                        '*2023*'
+                        '*2023*',
                     ])
                     ->navigationSort(1)
                     ->slug('logs'),
