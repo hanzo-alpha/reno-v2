@@ -19,6 +19,7 @@ use App\Filament\Clusters\ProgramBpjs;
 use App\Filament\Clusters\ProgramPpks;
 use App\Filament\Clusters\ProgramRastra;
 use App\Filament\Pages\Auth\Login;
+use App\Filament\Pages\Backup;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
 use App\Filament\Pages\Settings\Settings;
@@ -53,13 +54,15 @@ use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Outerweb\FilamentSettings\Filament\Plugins\FilamentSettingsPlugin;
 use Rmsramos\Activitylog\ActivitylogPlugin;
 use Rmsramos\Activitylog\Resources\ActivitylogResource;
+use Saade\FilamentLaravelLog\FilamentLaravelLogPlugin;
+use Saade\FilamentLaravelLog\Pages\ViewLog;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
@@ -134,6 +137,8 @@ class AdminPanelProvider extends PanelProvider
                             ...RoleResource::getNavigationItems(),
                             ...ActivitylogResource::getNavigationItems(),
                             ...MediaResource::getNavigationItems(),
+                            ...Backup::getNavigationItems(),
+                            ...ViewLog::getNavigationItems(),
                         ]),
                 ]))
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
@@ -181,6 +186,24 @@ class AdminPanelProvider extends PanelProvider
                     ->withSentence(new HtmlString('<img src="/images/fresh/reno-dinsos-icon-only.png" style="margin-right:.5rem;" alt="Laravel Logo" width="20" height="20"> RENO DINSOS Kabupaten Soppeng'))
                     ->withLoadTime('Halaman ini dimuat dalam '),
                 FilamentApexChartsPlugin::make(),
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->usingPolingInterval('10s')
+                    ->usingPage(Backup::class),
+                FilamentLaravelLogPlugin::make()
+//                    ->authorize(
+//                        fn() => auth()->user()->is_admin
+//                    )
+                    ->navigationGroup('Managemen Pengguna')
+                    ->navigationLabel('Catatan')
+                    ->navigationIcon('')
+                    ->logDirs([
+                        storage_path('logs'),     // The default value
+                    ])
+                    ->excludedFilesPatterns([
+                        '*2023*'
+                    ])
+                    ->navigationSort(1)
+                    ->slug('logs'),
                 AuthUIEnhancerPlugin::make()
                     ->emptyPanelBackgroundImageUrl(asset('images/background/login.png'))
                     ->emptyPanelBackgroundImageOpacity('50%'),
