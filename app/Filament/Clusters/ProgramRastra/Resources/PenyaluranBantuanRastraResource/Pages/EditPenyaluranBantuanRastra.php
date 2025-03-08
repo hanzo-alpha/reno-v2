@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Filament\Clusters\ProgramRastra\Resources\PenyaluranBantuanRastraResource\Pages;
+
+use App\Filament\Clusters\ProgramRastra\Resources\PenyaluranBantuanRastraResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Database\Eloquent\Model;
+
+class EditPenyaluranBantuanRastra extends EditRecord
+{
+    protected static string $resource = PenyaluranBantuanRastraResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\Action::make('pdf')
+                ->label('Print Dokumentasi')
+                ->color('success')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->url(fn(Model $record) => route('cetak-dokumentasi.rastra',
+                    ['id' => $record, 'm' => $this->getModel()]))
+                ->openUrlInNewTab(),
+            Actions\DeleteAction::make()
+                ->icon('heroicon-o-trash'),
+        ];
+    }
+}
