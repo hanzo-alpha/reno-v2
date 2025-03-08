@@ -8,7 +8,6 @@ use App\Filament\Admin\Resources\BansosDiterimaResource;
 use App\Filament\Admin\Resources\BantuanBpntResource;
 use App\Filament\Admin\Resources\BantuanPkhResource;
 use App\Filament\Admin\Resources\HubunganKeluargaResource;
-use App\Filament\Admin\Resources\ItemBantuanResource;
 use App\Filament\Admin\Resources\JenisPekerjaanResource;
 use App\Filament\Admin\Resources\KriteriaPpksResource;
 use App\Filament\Admin\Resources\PenandatanganResource;
@@ -122,8 +121,6 @@ class AdminPanelProvider extends PanelProvider
                             ...PendidikanTerakhirResource::getNavigationItems(),
                             ...TipePpksResource::getNavigationItems(),
                             ...KriteriaPpksResource::getNavigationItems(),
-                            ...ItemBantuanResource::getNavigationItems(),
-
                         ]),
                     NavigationGroup::make()
                         ->label('Pengaturan')

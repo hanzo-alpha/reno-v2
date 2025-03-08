@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Clusters\ProgramRastra\Resources;
 
-use App\Filament\Admin\Resources\ItemBantuanResource\Pages;
+use App\Filament\Clusters\ProgramRastra;
+use App\Filament\Clusters\ProgramRastra\Resources\ItemBantuanResource\Pages;
 use App\Models\ItemBantuan;
 use App\Supports\Helpers;
 use Awcodes\FilamentBadgeableColumn\Components\Badge;
@@ -25,17 +26,12 @@ class ItemBantuanResource extends Resource
     protected static ?string $model = ItemBantuan::class;
 
     protected static ?string $navigationIcon = null;
-
     protected static ?string $slug = 'item-bantuan';
-
-    protected static ?string $label = 'Item Bantuan';
-
-    protected static ?string $pluralLabel = 'Item Bantuan';
-
-    protected static ?string $navigationGroup = 'Dashboard Bantuan';
-
-    protected static ?int $navigationSort = 9;
-
+    protected static ?string $label = 'Item Bantuan RASTRA';
+    protected static ?string $pluralLabel = 'Item Bantuan RASTRA';
+//    protected static ?string $navigationGroup = 'Item Bantuan RASTRA';
+    protected static ?int $navigationSort = 4;
+    protected static ?string $cluster = ProgramRastra::class;
     protected static ?string $recordTitleAttribute = 'nama_item';
 
     public static function form(Form $form): Form
@@ -103,7 +99,7 @@ class ItemBantuanResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc')
             ->emptyStateIcon('heroicon-o-information-circle')
-            ->emptyStateHeading('Belum ada barang')
+            ->emptyStateHeading('Belum ada item bantuan')
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make()
                     ->label('Tambah Item Bantuan')

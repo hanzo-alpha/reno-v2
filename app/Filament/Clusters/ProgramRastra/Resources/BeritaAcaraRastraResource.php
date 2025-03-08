@@ -10,12 +10,10 @@ use App\Models\BeritaAcaraRastra;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Supports\Helpers;
-use Awcodes\Shout\Components\Shout;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,11 +28,11 @@ class BeritaAcaraRastraResource extends Resource
 
     protected static ?string $navigationIcon = null;
     protected static ?string $slug = 'berita-acara';
-    protected static ?string $label = 'Berita Acara Rastra';
-    protected static ?string $pluralLabel = 'Berita Acara Rastra';
+    protected static ?string $label = 'Berita Acara RASTRA';
+    protected static ?string $pluralLabel = 'Berita Acara RASTRA';
 //    protected static ?string $navigationParentItem = 'Program Rastra';
 //    protected static ?string $navigationGroup = 'Program Sosial';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
     protected static ?string $recordTitleAttribute = 'judul_ba';
 
     protected static ?string $cluster = ProgramRastra::class;
@@ -133,31 +131,33 @@ class BeritaAcaraRastraResource extends Resource
     {
         return $form
             ->schema([
-                Shout::make('so-important')
-                    ->content('Sebelum mengisi form berita acara, harap mengisi terlebih dahulu penandatangan. Silahkan ke menu Dashboard Bantuan -> Penandatangan')
-                    ->color(Color::Blue)
-                    ->icon('heroicon-o-information-circle')
-                    ->columnSpanFull(),
+//                Shout::make('so-important')
+//                    ->content('Sebelum mengisi form berita acara, harap mengisi terlebih dahulu penandatangan. Silahkan ke menu Dashboard Bantuan -> Penandatangan')
+//                    ->color(Color::Blue)
+//                    ->icon('heroicon-o-information-circle')
+//                    ->columnSpanFull(),
                 Forms\Components\Section::make()
+                    ->inlineLabel()
+                    ->description('Sebelum mengisi form berita acara, harap mengisi terlebih dahulu penandatangan pada menu Dashboard Bantuan, Penandatangan serta Item Bantuan Rastra')
+                    ->columns(1)
                     ->schema([
                         Forms\Components\TextInput::make('nomor_ba')
                             ->label('Nomor Berita Acara')
-                            ->helperText(str('**Nomor Berita Acara** pada laporan Berita Acara.')
-                                ->inlineMarkdown()
-                                ->toHtmlString())
+                            ->hintIcon('heroicon-m-information-circle',
+                                tooltip: 'Nomor Berita Acara pada laporan Berita Acara.')
                             ->required()
                             ->default(Helpers::generateNoSuratBeritaAcara())
                             ->maxLength(255),
                         Forms\Components\TextInput::make('judul_ba')
-                            ->helperText(str('**Judul Berita Acara** dalam laporan Berita Acara.')
-                                ->inlineMarkdown()
-                                ->toHtmlString())
                             ->label('Judul Berita Acara')
+                            ->hintIcon('heroicon-m-information-circle',
+                                tooltip: 'Judul Berita Acara pada laporan Berita Acara.')
                             ->required()
                             ->default(Str::upper(setting('ba.kop_ba', 'Berita Acara Serah Terima Barang')))
                             ->maxLength(255),
                         Forms\Components\DatePicker::make('tgl_ba')
-                            ->helperText(str('**Tanggal** terbit berita acara pada laporan.')->inlineMarkdown()->toHtmlString())
+                            ->hintIcon('heroicon-m-information-circle',
+                                tooltip: 'Tanggal Terbit Laporan Berita Acara.')
                             ->label('Tanggal Berita Acara')
                             ->required()
                             ->default(today())
@@ -188,19 +188,9 @@ class BeritaAcaraRastraResource extends Resource
                             ->noSearchResultsMessage('Kecamatan tidak ditemukan')
                             ->searchPrompt('Cari Kecamatan')
                             ->options(function () {
-                                $kab = District::query()->where(
-                                    'city_code',
-                                    setting('app.kodekab', config('custom.default.kodekab')),
-                                );
-                                if (!$kab) {
-                                    return District::where(
-                                        'city_code',
-                                        setting('app.kodekab', config('custom.default.kodekab')),
-                                    )
-                                        ->pluck('name', 'code');
-                                }
-
-                                return $kab->pluck('name', 'code');
+                                return District::where('city_code',
+                                    setting('app.kodekab', config('custom.default.kodekab')))
+                                    ->pluck('name', 'code');
                             })
                             ->afterStateUpdated(fn(callable $set) => $set('kelurahan', null)),
 
@@ -208,9 +198,10 @@ class BeritaAcaraRastraResource extends Resource
                             ->required()
                             ->noSearchResultsMessage('Kelurahan tidak ditemukan')
                             ->searchPrompt('Cari Kelurahan')
-                            ->options(fn(callable $get) => Village::query()->where('district_code',
-                                $get('kecamatan'))
-                                ?->pluck('name', 'code'))
+                            ->options(function (callable $get) {
+                                return Village::query()->where('district_code', $get('kecamatan'))?->pluck('name',
+                                    'code');
+                            })
                             ->searchable()
                             ->live(onBlur: true),
                         Forms\Components\Select::make('item_bantuan_id')
@@ -240,7 +231,7 @@ class BeritaAcaraRastraResource extends Resource
                             ->nullable()
                             ->columnSpanFull()
                             ->default(null),
-                    ])->columns(2),
+                    ]),
 
             ]);
     }
