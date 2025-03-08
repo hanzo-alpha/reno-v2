@@ -26,7 +26,7 @@ class RekapPenerimaBpjsResource extends Resource
 {
     protected static ?string $model = RekapPenerimaBpjs::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?string $slug = 'rekap-penerima-pbi';
     protected static ?string $label = 'Rekap Penerima BPJS';
     protected static ?string $pluralLabel = 'Rekap Penerima PBI APBD';

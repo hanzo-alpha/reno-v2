@@ -23,7 +23,7 @@ class MutasiBpjsResource extends Resource
 {
     protected static ?string $model = MutasiBpjs::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?string $slug = 'mutasi-bpjs';
     protected static ?string $label = 'Mutasi BPJS';
     protected static ?string $pluralLabel = 'Mutasi BPJS';

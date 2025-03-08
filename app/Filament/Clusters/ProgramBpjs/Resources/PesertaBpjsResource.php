@@ -25,7 +25,7 @@ class PesertaBpjsResource extends Resource
 {
     protected static ?string $model = PesertaBpjs::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?int $navigationSort = 2;
     protected static ?string $slug = 'peserta-bpjs';
     protected static ?string $label = 'Peserta BPJS';

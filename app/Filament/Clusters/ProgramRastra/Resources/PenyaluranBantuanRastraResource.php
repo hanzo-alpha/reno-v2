@@ -28,7 +28,7 @@ class PenyaluranBantuanRastraResource extends Resource
 {
     protected static ?string $model = PenyaluranBantuanRastra::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?string $slug = 'penyaluran-bantuan-rastra';
     protected static ?string $label = 'Penyaluran RASTRA';
     protected static ?string $pluralLabel = 'Penyaluran RASTRA';

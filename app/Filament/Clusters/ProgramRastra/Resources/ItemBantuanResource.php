@@ -25,7 +25,7 @@ class ItemBantuanResource extends Resource
 {
     protected static ?string $model = ItemBantuan::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?string $slug = 'item-bantuan';
     protected static ?string $label = 'Item Bantuan RASTRA';
     protected static ?string $pluralLabel = 'Item Bantuan RASTRA';

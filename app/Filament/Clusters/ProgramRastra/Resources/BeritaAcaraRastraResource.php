@@ -25,7 +25,7 @@ class BeritaAcaraRastraResource extends Resource
 {
     protected static ?string $model = BeritaAcaraRastra::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?string $slug = 'berita-acara';
     protected static ?string $label = 'Berita Acara RASTRA';
     protected static ?string $pluralLabel = 'Berita Acara RASTRA';

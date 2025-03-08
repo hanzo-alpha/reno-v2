@@ -48,7 +48,7 @@ class BantuanRastraResource extends Resource
 {
     protected static ?string $model = BantuanRastra::class;
 
-    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-down-right';
     protected static ?string $slug = 'program-rastra';
     protected static ?string $label = 'Program RASTRA';
     protected static ?string $pluralLabel = 'Program RASTRA';
