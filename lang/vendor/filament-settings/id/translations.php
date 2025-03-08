@@ -11,6 +11,6 @@ return [
         'navigation_label' => 'Umum',
     ],
     'notifications' => [
-        'saved' => 'Saved',
+        'saved' => 'Berhasil Disimpan',
     ],
 ];

@@ -100,8 +100,7 @@ class AdminPanelProvider extends PanelProvider
                     ...Pages\Dashboard::getNavigationItems(),
                 ])
                 ->groups([
-                    NavigationGroup::make()
-                        ->label('Bantuan Sosial')
+                    NavigationGroup::make('Manajemen Bantuan')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->items([
                             ...ProgramBpjs::getNavigationItems(),
@@ -111,7 +110,6 @@ class AdminPanelProvider extends PanelProvider
                             ...ProgramPpks::getNavigationItems(),
                         ]),
                     NavigationGroup::make('Master Data')
-                        ->label('Master Data')
                         ->icon('heroicon-o-circle-stack')
                         ->items([
                             ...BansosDiterimaResource::getNavigationItems(),
@@ -122,16 +120,14 @@ class AdminPanelProvider extends PanelProvider
                             ...TipePpksResource::getNavigationItems(),
                             ...KriteriaPpksResource::getNavigationItems(),
                         ]),
-                    NavigationGroup::make()
-                        ->label('Pengaturan')
+                    NavigationGroup::make('Pengaturan')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->items([
                             ...Settings::getNavigationItems(),
                             ...Administrasi::getNavigationItems(),
                             ...Laporan::getNavigationItems(),
                         ]),
-                    NavigationGroup::make()
-                        ->label('Managemen')
+                    NavigationGroup::make('Managemen Pengguna')
                         ->icon('heroicon-o-squares-2x2')
                         ->items([
                             ...UserResource::getNavigationItems(),
@@ -182,9 +178,8 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationIcon('')
                     ->navigationCountBadge(true),
                 EasyFooterPlugin::make()
-                    ->withGithub(showLogo: true, showUrl: true)
-                    ->withSentence(new HtmlString('<img src="https://static.cdnlogo.com/logos/l/23/laravel.svg" style="margin-right:.5rem;" alt="Laravel Logo" width="20" height="20"> Laravel'))
-                    ->withLoadTime('This page loaded in'),
+                    ->withSentence(new HtmlString('<img src="/images/fresh/reno-dinsos-icon-only.png" style="margin-right:.5rem;" alt="Laravel Logo" width="20" height="20"> RENO DINSOS Kabupaten Soppeng'))
+                    ->withLoadTime('Halaman ini dimuat dalam '),
                 FilamentApexChartsPlugin::make(),
                 AuthUIEnhancerPlugin::make()
                     ->emptyPanelBackgroundImageUrl(asset('images/background/login.png'))
@@ -192,9 +187,7 @@ class AdminPanelProvider extends PanelProvider
                 //                    ->emptyPanelBackgroundColor(Color::Zinc, '300')
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
