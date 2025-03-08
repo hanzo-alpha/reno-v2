@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramRastra\Resources\PenyaluranBantuanRastraResource\Pages;
 
 use App\Filament\Clusters\ProgramRastra\Resources\PenyaluranBantuanRastraResource;
@@ -18,8 +20,10 @@ class EditPenyaluranBantuanRastra extends EditRecord
                 ->label('Print Dokumentasi')
                 ->color('success')
                 ->icon('heroicon-o-arrow-down-tray')
-                ->url(fn(Model $record) => route('cetak-dokumentasi.rastra',
-                    ['id' => $record, 'm' => $this->getModel()]))
+                ->url(fn(Model $record) => route(
+                    'cetak-dokumentasi.rastra',
+                    ['id' => $record, 'm' => $this->getModel()],
+                ))
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make()
                 ->icon('heroicon-o-trash'),

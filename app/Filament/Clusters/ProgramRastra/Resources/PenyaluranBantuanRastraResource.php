@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramRastra\Resources;
 
 use App\Enums\StatusAktif;
 use App\Enums\StatusPenyaluran;
 use App\Filament\Clusters\ProgramRastra;
 use App\Filament\Clusters\ProgramRastra\Resources\PenyaluranBantuanRastraResource\Pages;
-use App\Filament\Clusters\ProgramRastra\Resources\PenyaluranBantuanRastraResource\RelationManagers;
 use App\Models\BantuanRastra;
 use App\Models\PenyaluranBantuanRastra;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
@@ -31,8 +32,8 @@ class PenyaluranBantuanRastraResource extends Resource
     protected static ?string $slug = 'penyaluran-bantuan-rastra';
     protected static ?string $label = 'Penyaluran RASTRA';
     protected static ?string $pluralLabel = 'Penyaluran RASTRA';
-//    protected static ?string $navigationParentItem = 'Program Rastra';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationParentItem = 'Program Rastra';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?int $navigationSort = 3;
     protected static ?string $cluster = ProgramRastra::class;
 
@@ -97,11 +98,9 @@ class PenyaluranBantuanRastraResource extends Resource
                         Forms\Components\Select::make('kelurahan')
                             ->label('Kelurahan')
                             ->native(false)
-                            ->options(function () {
-                                return Village::query()
-                                    ->whereIn('district_code', config('custom.kode_kecamatan'))
-                                    ->pluck('name', 'code');
-                            })
+                            ->options(fn() => Village::query()
+                                ->whereIn('district_code', config('custom.kode_kecamatan'))
+                                ->pluck('name', 'code'))
                             ->searchable()
                             ->preload(),
                     ])
@@ -149,8 +148,10 @@ class PenyaluranBantuanRastraResource extends Resource
                             ->required()
                             ->relationship('bantuan_rastra', 'nama_lengkap', modifyQueryUsing: fn(
                                 Builder $query,
-                            ) => $query->when(auth()->user()->instansi_code,
-                                fn(Builder $query) => $query->where('kelurahan', auth()->user()->instansi_code))
+                            ) => $query->when(
+                                auth()->user()->instansi_code,
+                                fn(Builder $query) => $query->where('kelurahan', auth()->user()->instansi_code),
+                            )
                                 ->where('status_aktif', '=', StatusAktif::AKTIF))
                             ->native(false)
                             ->searchable(['nama_lengkap', 'nik', 'nokk'])
@@ -281,7 +282,7 @@ class PenyaluranBantuanRastraResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

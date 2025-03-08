@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramRastra\Resources\BeritaAcaraRastraResource\Pages;
 
 use App\Filament\Clusters\ProgramRastra\Resources\BeritaAcaraRastraResource;
