@@ -31,7 +31,7 @@ class PenggantiRastraResource extends Resource
     protected static ?string $label = 'Pengganti RASTRA';
     protected static ?string $pluralLabel = 'Pengganti RASTRA';
     protected static ?string $navigationLabel = 'Pengganti RASTRA';
-//    protected static ?string $navigationGroup = 'Program Sosial';
+    //    protected static ?string $navigationGroup = 'Program Sosial';
     protected static ?string $recordTitleAttribute = 'nama_pengganti';
     protected static ?int $navigationSort = 2;
     protected static ?string $cluster = ProgramRastra::class;
@@ -56,7 +56,7 @@ class PenggantiRastraResource extends Resource
                         ->limit(50)->pluck('nik', 'id')->toArray())
                     ->getOptionLabelFromRecordUsing(fn(
                         $record,
-                    ) => '<strong>'.$record?->nik.'</strong><br>'.$record?->nama_lengkap)->allowHtml()
+                    ) => '<strong>' . $record?->nik . '</strong><br>' . $record?->nama_lengkap)->allowHtml()
                     ->lazy()
                     ->optionsLimit(15)
                     ->searchingMessage('Sedang mencari...')
