@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramPpks\Resources;
 
 use App\Enums\StatusPenyaluran;
 use App\Filament\Clusters\ProgramPpks;
 use App\Filament\Clusters\ProgramPpks\Resources\PenyaluranBantuanPpksResource\Pages;
-use App\Filament\Clusters\ProgramPpks\Resources\PenyaluranBantuanPpksResource\RelationManagers;
 use App\Models\BantuanPpks;
 use App\Models\PenyaluranBantuanPpks;
 use Cheesegrits\FilamentGoogleMaps\Fields\Geocomplete;
@@ -244,7 +245,7 @@ class PenyaluranBantuanPpksResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 
