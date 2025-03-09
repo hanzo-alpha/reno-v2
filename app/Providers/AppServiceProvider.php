@@ -16,10 +16,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
-use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Determine if HTTPS should be enforced
         $enforceHttps = $this->app->environment(['production', 'staging'])
-            && !$this->app->runningUnitTests();
+            && ! $this->app->runningUnitTests();
 
         // Force HTTPS for all generated URLs
         URL::forceHttps($enforceHttps);
@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
                 return $response->withHeaders([
                     'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains',
                     'Content-Security-Policy' => 'upgrade-insecure-requests',
-                    'X-Content-Type-Options' => 'nosniff'
+                    'X-Content-Type-Options' => 'nosniff',
                 ]);
             });
         }
