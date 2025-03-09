@@ -1,0 +1,222 @@
+/* ====
+ --------- (5.10) award section styles start ---------
+ ==== */
+.award {
+    padding: 100px 0px;
+    position: relative;
+    z-index: 1;
+
+    .award__single {
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+            .content {
+                transform: translateY(0px);
+            }
+        }
+
+        .thumb {
+            a {
+                width: 100%;
+                border-radius: 20px;
+                overflow: hidden;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 20px;
+                min-height: 300px;
+                max-height: 410px;
+                transition: var(--transition);
+            }
+        }
+
+        .content {
+            padding: 40px 20px;
+            border-radius: 11px;
+            background: rgba(10, 32, 28, 0.51);
+            backdrop-filter: blur(10.5px);
+            position: absolute;
+            bottom: 30px;
+            margin-inline: 20px;
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            width: calc(100% - 40px);
+            max-width: 460px;
+            justify-content: space-between;
+            gap: 16px;
+            transform: translateY(150%);
+            transition: var(--transition);
+
+            h5 {
+                font-weight: 700;
+                color: var(--white);
+
+                &:hover {
+                    color: var(--base-color);
+                }
+            }
+
+            p {
+                color: var(--white);
+                font-size: 14px;
+            }
+
+            .award__thumb {
+                a {
+                    @include box(50px);
+                    background-color: var(--base-color);
+                    color: var(--black);
+
+                    &:hover {
+                        background-color: var(--white);
+                        color: var(--black);
+                    }
+
+                    i {
+                        font-size: 20px;
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+        }
+    }
+
+    .spade {
+        position: absolute;
+        bottom: 5%;
+        inset-inline-start: 20%;
+        z-index: -1;
+
+        img {
+            max-width: 20vw;
+            min-width: 60px;
+            animation: pulse 4s infinite ease-in-out;
+        }
+    }
+}
+
+// gallery slider
+
+.gallery__inner {
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery__slider {
+    display: flex;
+    animation: marquee 16s linear infinite;
+    animation-play-state: running;
+}
+
+.gallery__slider:hover {
+    animation-play-state: paused;
+}
+
+.gallery__single {
+    flex: 0 0 auto;
+    width: calc(100% / 1.3);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0px;
+        background-color: #091f1b80;
+        width: 100%;
+        height: 0%;
+        z-index: -1;
+        transition: var(--transition);
+    }
+
+    &:hover {
+        a {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        &::after {
+            height: 100%;
+        }
+
+        img {
+            transform: scale(1.1);
+        }
+    }
+
+    img {
+        width: 100%;
+        min-height: 300px;
+        z-index: -2;
+        position: relative;
+        transition: var(--transition);
+    }
+
+    a {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        @include box(60px);
+        background-color: var(--base-color);
+        color: var(--black);
+        font-size: 24px;
+
+        &:hover {
+            background-color: var(--white);
+            color: var(--black);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .gallery__single {
+        width: calc(100% / 3);
+    }
+}
+
+@media (min-width: 992px) {
+    .gallery__single {
+        width: calc(100% / 4);
+    }
+}
+
+@media (min-width: 1200px) {
+    .gallery__single {
+        width: calc(100% / 5);
+    }
+}
+
+@media (min-width: 1600px) {
+    .gallery__single {
+        width: calc(100% / 6);
+    }
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marquee-rtl {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* ====
+ --------- (5.10) award section styles end ---------
+ ==== */

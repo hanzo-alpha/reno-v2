@@ -1,0 +1,123 @@
+/* ====
+ --------- (5.19) error section styles start ---------
+ ==== */
+.error {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+
+    .thumb {
+        margin-bottom: 40px;
+
+        img {
+            max-width: 500px;
+            width: 100%;
+        }
+    }
+
+    h3 {
+        font-weight: 900;
+        color: var(--black);
+        text-align: center !important;
+    }
+
+    p {
+        font-weight: 500;
+        margin-top: 20px;
+        font-size: 18px;
+        line-height: 30px;
+        color: var(--black);
+        max-width: 600px;
+        margin-inline: auto;
+    }
+
+    .btn--primary {
+        padding: 18px 40px;
+        border-radius: 60px;
+        font-weight: 700;
+        gap: 8px;
+
+        &::before,
+        &::after {
+            border-radius: 0px;
+        }
+
+        i {
+            transform: rotate(-45deg);
+            transition: transform 0.5s ease, color 0s ease;
+            font-size: 18px;
+        }
+
+        &:hover {
+            i {
+                transform: rotate(0deg);
+            }
+        }
+    }
+
+    .spade {
+        position: absolute;
+        bottom: -5%;
+        inset-inline-start: 10%;
+        z-index: -1;
+
+        img {
+            max-width: 20vw;
+            min-width: 60px;
+            animation: pulse 4s infinite ease-in-out;
+        }
+    }
+
+    .spade-green {
+        position: absolute;
+        top: 18%;
+        inset-inline-end: 3%;
+        z-index: -1;
+
+        img {
+            max-width: 5vw;
+            min-width: 30px;
+            animation: pulse 4s infinite ease-in-out;
+        }
+    }
+}
+
+.error__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+    padding: 100px 0px;
+}
+
+@media only screen and (max-width: 767.98px) {
+    .error {
+        p {
+            max-width: 400px;
+            font-size: 17px;
+        }
+    }
+}
+
+.rtl {
+    .error {
+        direction: ltr;
+    }
+}
+
+.dark-body {
+    .error {
+        background: radial-gradient(#224646, #182828) repeat;
+
+        p {
+            color: var(--white);
+        }
+    }
+}
+
+/* ====
+ --------- (5.19) error section styles end ---------
+ ==== */
