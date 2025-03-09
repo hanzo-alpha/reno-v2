@@ -1,0 +1,342 @@
+/* ====
+ --------- (5.20) coming soon section styles start ---------
+ ==== */
+.soon {
+    padding: 100px 0px;
+    height: auto;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--black);
+
+    .content {
+        text-align: center;
+
+        h4 {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-align: center !important;
+        }
+
+        p {
+            color: #e7e0e0;
+            font-weight: 500;
+            font-size: 18px;
+
+            &:nth-last-of-type(1) {
+                margin-top: 4px;
+            }
+        }
+    }
+}
+
+.soon__inner {
+    position: relative;
+    z-index: 2;
+}
+
+.soon__logo {
+    text-align: center;
+
+    img {
+        width: 100%;
+        max-width: 230px;
+    }
+}
+
+.time-counter {
+    position: relative;
+}
+
+.time-countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: max-content;
+}
+
+.counter-column {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 180px;
+    height: 180px;
+    font-size: 20px;
+    line-height: 1em;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    z-index: 7;
+    border-radius: 20px;
+    margin: 0 15px 20px;
+    background-color: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+}
+
+.count {
+    position: relative;
+    display: block;
+    font-size: 72px;
+    line-height: 1;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+
+.form-group {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
+
+    input {
+        flex-grow: 1;
+        width: 100%;
+        padding: 21px 24px;
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    button {
+        min-width: min-content;
+        padding: 24px 30px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+    }
+}
+
+.soon-bg {
+    position: absolute;
+    inset: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: #00000099;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .parallax-image-wrap,
+    .parallax-image-inner {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0px;
+    }
+}
+
+.countdown-wrapper {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-block: 60px;
+}
+
+.clock {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background-color: #0a0a0a60;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -20%;
+        right: -20%;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(
+                circle at top right,
+                rgba(255, 255, 255, 0.4),
+                rgba(25, 25, 25, 0.1) 75%
+        );
+        pointer-events: none;
+        z-index: -1;
+    }
+}
+
+.hand {
+    position: absolute;
+    background-color: #fff;
+    transform-origin: bottom;
+    border-radius: 99px;
+}
+
+.hour-hand {
+    width: 15px;
+    height: 175px;
+    top: 75px;
+    background-color: #bdbaba;
+}
+
+.minute-hand {
+    width: 12px;
+    height: 175px;
+    top: 75px;
+    background-color: #5a5a5a;
+}
+
+.second-hand {
+    position: absolute;
+    width: 6px;
+    height: 200px;
+    top: 50px;
+    background-color: #9d9a95;
+    transform-origin: bottom;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 50px;
+        top: 187px;
+        background-color: #9d9a95;
+        border-radius: 99px;
+        transform-origin: top;
+    }
+}
+
+.center-dot {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.center-dot-orange {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: black;
+    border-radius: 50%;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hour-markers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hour-marker {
+    position: absolute;
+    color: #fff;
+    transform: rotate(0deg) translateY(-216.25px);
+    transform-origin: center;
+
+    span {
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        color: rgb(143, 137, 137);
+    }
+}
+
+.minute-marker {
+    position: absolute;
+    width: calc(500px * 0.004);
+    height: calc(500px * 0.0225);
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: rotate(0deg) translateY(-216.25px);
+    transform-origin: center;
+    display: none;
+}
+
+@media only screen and (max-width: 991.98px) {
+    .soon {
+        padding: 100px 0px;
+
+        .counter-column {
+            width: calc(50% - 30px);
+        }
+
+        .logo {
+            img {
+                max-width: 180px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 499.98px) {
+    .soon {
+        .time-countdown {
+            flex-direction: column;
+            position: relative;
+            transform: none;
+            inset: unset;
+        }
+
+        .counter-column {
+            width: 180px;
+            height: 180px;
+        }
+
+        .countdown-wrapper {
+            height: auto;
+
+            .clock {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .form-group {
+            flex-direction: column;
+            gap: 16px;
+
+            button {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.rtl {
+    .soon {
+        direction: ltr;
+    }
+}
+
+/* ====
+ --------- (5.20) coming soon section styles end ---------
+ ==== */

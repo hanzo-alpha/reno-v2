@@ -1,0 +1,139 @@
+/* ====
+ --------- (5.14) counter section styles start ---------
+ ==== */
+.counter {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    padding: 100px 0px;
+
+    .counter__inner {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        row-gap: 60px;
+        justify-content: space-around;
+    }
+
+    .divider {
+        border-right: 1px dashed var(--base-color);
+        display: none;
+    }
+
+    .counter__single {
+        text-align: center;
+        width: 100%;
+
+        &:hover {
+            .thumb {
+                border-color: var(--base-color);
+                background-color: var(--base-color);
+
+                i {
+                    color: var(--black);
+                }
+            }
+        }
+
+        div {
+            line-height: inherit !important;
+        }
+
+        h2 {
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        h5 {
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: -8px;
+        }
+
+        .prefix {
+            margin-top: -10px;
+            margin-left: 10px;
+        }
+
+        .thumb {
+            @include box(90px);
+            border: 1px solid var(--white);
+            transition: var(--transition);
+            margin-inline: auto;
+            margin-bottom: 30px;
+
+            i {
+                font-size: 30px;
+                color: var(--white);
+                transition: inherit;
+            }
+        }
+    }
+
+    .poor {
+        position: absolute;
+        inset: 0px;
+        height: 100%;
+        width: 100%;
+        z-index: -3;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            background: linear-gradient(
+                    -104deg,
+                    rgba(12, 26, 23, 0) 1.9%,
+                    rgba(9, 31, 27, 0.08) 16.64%,
+                    rgba(9, 31, 27, 0.17) 28.59%,
+                    rgba(9, 31, 27, 0.37) 38.19%,
+                    rgba(9, 31, 27, 0.67) 56.36%,
+                    #091f1b 61.29%,
+                    #091f1b 95.2%,
+                    rgba(9, 31, 27, 0.91) 103.44%
+            );
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .parallax-image-wrap,
+        .parallax-image-inner {
+            position: absolute;
+            inset: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+        }
+
+        .parallax-image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .shape-left {
+        position: absolute;
+        inset-inline-start: 0px;
+        top: -50px;
+        bottom: 0px;
+        z-index: -2;
+
+        img {
+            animation: moveTopBottom 4s ease-in-out infinite;
+            max-width: 20vw;
+            min-width: 50px;
+        }
+    }
+}
+
+/* ====
+ --------- (5.14) counter section styles end ---------
+ ==== */

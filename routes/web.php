@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\PdfController;
+use App\Livewire\Frontend\Index;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', fn() => view('welcome'));
+Route::get('/', Index::class)->name('index');
 
 Route::middleware(['auth'])->group(function (): void {
     Route::controller(PdfController::class)->group(function (): void {

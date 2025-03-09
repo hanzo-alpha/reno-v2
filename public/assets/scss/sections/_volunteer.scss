@@ -1,0 +1,145 @@
+/* ====
+ --------- (5.18) volunteer section styles start ---------
+ ==== */
+
+.volunteer {
+    padding: 100px 0px;
+
+    .warning {
+        padding: 16px 20px;
+        border-radius: 10px;
+        border: 1px solid #d8dde1;
+        background: #fdf8ea;
+        position: relative;
+        margin: 30px 0px 40px;
+
+        p {
+            line-height: 1.5;
+        }
+
+        strong {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .line {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            top: 0px;
+            bottom: 0px;
+            left: 50px;
+            background-color: var(--secondary-color);
+            display: none;
+
+            i {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 20px;
+                color: var(--base-color);
+            }
+        }
+    }
+
+    .cause__progress {
+        margin-bottom: 14px;
+
+        &:nth-last-of-type(1) {
+            margin-bottom: 0px;
+        }
+
+        p {
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 4px;
+        }
+    }
+
+    .progress-bar {
+        overflow: visible;
+    }
+
+    .progress-bar-percent {
+        background-color: var(--quaternary-color);
+    }
+
+    .percent-value {
+        position: absolute;
+        bottom: calc(100% + 4px);
+        inset-inline-end: 0px;
+        color: var(--black);
+        font-weight: 700;
+    }
+
+    .team-details__list {
+        margin-top: 40px !important;
+
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            row-gap: 8px;
+            flex-wrap: wrap;
+
+            li {
+                width: 100%;
+                font-weight: 700;
+                color: var(--black);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                i {
+                    color: var(--quaternary-color);
+
+                    &::before {
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+
+    .volunteer__form {
+        padding: 60px 20px;
+        border-radius: 17px;
+        border: 1px solid rgba(0, 0, 0, 0.17);
+
+        h4 {
+            font-weight: 700;
+            color: var(--black);
+            margin-top: -8px;
+        }
+
+        p {
+            max-width: 400px;
+            margin-top: 8px;
+        }
+    }
+
+    .form-cta {
+        .btn--primary {
+            width: max-content;
+            border-radius: 40px;
+
+            &::before,
+            &::after {
+                width: 52%;
+                border-radius: 0px;
+            }
+
+            &:hover {
+                &::before,
+                &::after {
+                    width: 0%;
+                }
+            }
+        }
+    }
+}
+
+/* ====
+ --------- (5.18) volunteer section styles end ---------
+ ==== */

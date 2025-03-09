@@ -1,0 +1,419 @@
+/* ====
+ --------- (5.04) cause slider section styles start ---------
+ ==== */
+.cause {
+    padding: 100px 0px;
+    background-color: #edeeef;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    .section__header {
+        margin-bottom: 0px !important;
+
+        h2 {
+            margin-bottom: 0px !important;
+        }
+    }
+
+    .slider-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+
+    .cause__slider-wrapper {
+        margin-top: 35px;
+    }
+
+    .cause__slider-single {
+        padding: 12px;
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+        border-radius: 15px;
+
+        &:hover {
+            .thumb {
+                img {
+                    transform: scale(1.2) rotate(10deg);
+                }
+
+                .tag {
+                    a {
+                        background-color: var(--secondary-color);
+                        color: var(--white);
+                    }
+                }
+            }
+
+            .cause__cta {
+                a {
+                    color: var(--white);
+
+                    &::before,
+                    &::after {
+                        width: 0% !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .thumb {
+        position: relative;
+        margin-bottom: 30px;
+
+        a {
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+
+            img {
+                height: 200px;
+                width: 100%;
+                border-radius: 15px;
+                transition: var(--transition);
+                transform: scale(1);
+            }
+        }
+
+        .tag {
+            position: absolute;
+            top: 10px;
+            inset-inline-start: 10px;
+
+            a {
+                padding: 8px 24px;
+                background-color: var(--base-color);
+                border-radius: 30px;
+                color: var(--black);
+
+                &:hover {
+                    background-color: var(--secondary-color);
+                    color: var(--white);
+                }
+            }
+        }
+    }
+
+    .content {
+        padding-inline: 20px;
+
+        h6 {
+            margin-top: -8px;
+            margin-bottom: 8px;
+            font-weight: 800;
+            color: var(--secondary-color);
+
+            &:hover {
+                color: var(--hover-color);
+            }
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+
+    .cause__slider-cta {
+        padding: 20px;
+        border-radius: 10px;
+        background: rgba(157, 153, 139, 0.1);
+        margin-top: 24px;
+
+        .cause-progress__intro {
+            p {
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+                color: var(--secondary-color);
+                font-weight: 600;
+            }
+        }
+
+        .cause-progress__goal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+
+            p {
+                color: var(--secondary-color);
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            .goal {
+                color: var(--hover-color);
+                font-weight: 800;
+            }
+        }
+    }
+
+    .cause-progress__bar {
+        margin: 5px 0px 10px;
+    }
+
+    .cause__cta {
+        margin-top: 20px;
+
+        a {
+            font-size: 14px;
+            line-height: 1;
+            border: 1px solid var(--secondary-color);
+            background-color: var(--secondary-color);
+            color: var(--secondary-color);
+
+            &::before,
+            &::after {
+                background-color: var(--white);
+            }
+
+            &:hover {
+                color: var(--white);
+            }
+        }
+    }
+
+    .pagination-one {
+        margin-top: 40px;
+    }
+
+    .swiper-slide-active {
+        .thumb {
+            img {
+                transform: scale(1.3) rotate(5deg);
+            }
+
+            .tag {
+                a {
+                    background-color: var(--secondary-color);
+                    color: var(--white);
+                }
+            }
+        }
+
+        .cause__cta {
+            a {
+                color: var(--white);
+
+                &::before,
+                &::after {
+                    width: 0% !important;
+                }
+            }
+        }
+    }
+
+    .spade {
+        position: absolute;
+        top: 75%;
+        inset-inline-start: 5%;
+        z-index: -1;
+
+        img {
+            max-width: 5vw;
+            min-width: 30px;
+            animation: pulse 4s infinite ease-in-out;
+        }
+    }
+}
+
+// cause two
+.cause-two {
+    overflow: hidden;
+    padding-top: 0px;
+
+    .row > * {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .cause-two__slider-single {
+        position: relative;
+        z-index: 5;
+
+        img {
+            width: 100%;
+            height: 600px;
+        }
+
+        .cause-thumb {
+            position: relative;
+
+            a {
+                @include box(120px);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                background-color: var(--quaternary-color);
+                color: var(--white);
+                pointer-events: none;
+                visibility: hidden;
+                opacity: 0;
+                z-index: 99 !important;
+
+                i {
+                    transform: rotate(-45deg);
+                    font-size: 36px;
+                }
+
+                &:hover {
+                    background-color: var(--base-color);
+                    color: var(--black);
+                }
+            }
+        }
+    }
+
+    .swiper-slide-active {
+        .cause-two__slider-single {
+            .cause-thumb {
+                a {
+                    transform: translate(-50%, -50%) scale(1);
+                    pointer-events: all;
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .cause-two__inner {
+        width: 100%;
+        margin-inline: auto;
+        position: relative;
+        z-index: 3;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 500vw;
+            height: 500vw;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 80%;
+            border-radius: 50%;
+            background-color: var(--white);
+            z-index: 3;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 500vw;
+            height: 500vw;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 80%;
+            border-radius: 50%;
+            background-color: var(--white);
+            z-index: 3;
+        }
+    }
+
+    .cause-two__content-slider {
+        position: relative;
+        z-index: 9;
+        top: -90px;
+        margin-bottom: -90px;
+        pointer-events: none !important;
+
+        .swiper-slide {
+            pointer-events: none !important;
+        }
+
+        .swiper-slide-active {
+            .cause-content {
+                transform: translateY(0%) !important;
+            }
+        }
+    }
+
+    .cause-content {
+        text-align: center;
+        max-width: 580px;
+        margin-inline: auto;
+        transform: translateY(100%) !important;
+        transition: var(--transition) !important;
+        transition-delay: 0.3s !important;
+
+        h4 {
+            font-weight: 800;
+            color: var(--secondary-color);
+        }
+    }
+
+    .slider-navigation {
+        position: absolute;
+        z-index: 9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 20px;
+        display: none;
+        pointer-events: none;
+
+        button {
+            pointer-events: all;
+        }
+    }
+}
+
+// cause alter styles
+.cause-alt {
+    .cause-inner__wrapper {
+        position: relative;
+    }
+
+    .slider-navigation {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 40px;
+        justify-content: center;
+    }
+}
+
+// cuase three styles
+.cause-three {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background-color: var(--white);
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        height: 50%;
+        background-color: #efefef;
+        z-index: -1;
+    }
+}
+
+.cause-three-alt {
+    background-color: var(--white);
+
+    .mb-60 {
+        margin-bottom: 35px !important;
+    }
+}
+
+/* ====
+ --------- (5.04) cause slider section styles end ---------
+ ==== */

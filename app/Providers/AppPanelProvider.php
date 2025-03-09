@@ -28,7 +28,7 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('app')
-            ->path('')
+            ->path('app')
             ->topNavigation()
             ->topbar()
             ->colors([
@@ -51,11 +51,11 @@ class AppPanelProvider extends PanelProvider
                     ->navigationCountBadge()
                     ->defaultListView('grid'),
                 FilamentLaravelLogPlugin::make()
-                    ->authorize(fn(): bool => auth()->user()->is_admin)
-//                    ->navigationGroup('Managemen Pengguna')
-//                    ->navigationLabel('Logs')
-//                    ->navigationIcon('heroicon-o-bug-ant')
-//                    ->navigationSort(1)
+//                    ->authorize(fn(): bool => auth()->user()->is_admin)
+                    ->navigationGroup('Managemen Pengguna')
+                    ->navigationLabel('Logs')
+                    ->navigationIcon('heroicon-o-bug-ant')
+                    ->navigationSort(1)
                     ->slug('logs'),
             ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
@@ -77,7 +77,7 @@ class AppPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->viteTheme('resources/css/app/theme.css')
+            ->viteTheme('resources/css/filament/app/theme.css')
             ->authMiddleware([
                 //                Authenticate::class,
             ]);

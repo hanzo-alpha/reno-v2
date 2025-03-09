@@ -1,0 +1,159 @@
+/* ====
+ --------- (3.01) buttons styles start ---------
+ ==== */
+
+.btn--primary {
+    padding: 13px 24px;
+    background-color: var(--base-color);
+    color: var(--black);
+    position: relative;
+    font-weight: 800;
+    z-index: 1;
+    gap: 16px;
+    overflow: hidden;
+
+    svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    path {
+        fill: black;
+        transition: var(--transition);
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        inset-inline-start: 0px;
+        width: 50%;
+        height: 100%;
+        border-radius: inherit;
+        background-color: var(--base-color);
+        transition: var(--transition);
+        z-index: -1;
+    }
+
+    &::after {
+        inset-inline-start: unset;
+        inset-inline-end: 0px;
+    }
+
+    &:hover {
+        color: var(--white);
+        background-color: var(--quaternary-color);
+
+        path {
+            fill: white;
+        }
+
+        &::before,
+        &::after {
+            width: 0%;
+        }
+    }
+}
+
+.btn--secondary {
+    padding: 13px 30px;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    position: relative;
+    font-weight: 700;
+    z-index: 1;
+    gap: 14px;
+    overflow: hidden;
+    border-radius: 60px;
+
+    svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    path {
+        fill: white;
+        transition: var(--transition);
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        inset-inline-start: 0px;
+        width: 50%;
+        height: 100%;
+        border-radius: 0px;
+        background-color: var(--secondary-color);
+        transition: var(--transition);
+        z-index: -1;
+    }
+
+    &::after {
+        inset-inline-start: unset;
+        inset-inline-end: 0px;
+    }
+
+    &:hover {
+        color: var(--secondary-color);
+        background-color: var(--base-color);
+
+        path {
+            fill: var(--secondary-color);
+        }
+
+        &::before,
+        &::after {
+            width: 0%;
+        }
+    }
+}
+
+.btn--tertiary {
+    padding: 13px 24px;
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--white);
+    position: relative;
+    font-weight: 800;
+    z-index: 1;
+    gap: 16px;
+    overflow: hidden;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        inset-inline-start: 0px;
+        width: 50%;
+        height: 100%;
+        border-radius: inherit;
+        background-color: rgba(255, 255, 255, 0.04);
+        transition: var(--transition);
+        z-index: -1;
+    }
+
+    &::after {
+        inset-inline-start: unset;
+        inset-inline-end: 0px;
+    }
+
+    &:hover {
+        color: var(--black);
+        background-color: var(--base-color);
+
+        &::before,
+        &::after {
+            width: 0%;
+        }
+    }
+}
+
+/* ====
+ --------- (3.01) buttons styles end ---------
+ ==== */

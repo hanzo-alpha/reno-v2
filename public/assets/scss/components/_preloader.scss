@@ -1,0 +1,66 @@
+/* ====
+ --------- (3.03) preloader styles start ---------
+ ==== */
+
+.preloader {
+    background-color: var(--black);
+    position: fixed;
+    z-index: 99999;
+    height: 100vh;
+    width: 100vw;
+    inset: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+
+    i {
+        @include box(100px);
+        background-color: var(--base-color);
+        font-size: 40px;
+        color: var(--black);
+        transform-origin: center;
+        animation: flipY 3s linear infinite;
+    }
+
+    p {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 5px;
+        background: linear-gradient(90deg, #ffcc00, #00ccff, #ff6600, #ffcc00);
+        background-size: 300%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent !important;
+        animation: moveBg 5s ease-in-out infinite;
+    }
+}
+
+@keyframes flipY {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes moveBg {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ====
+ --------- (3.03) preloader styles end ---------
+ ==== */
