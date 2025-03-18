@@ -43,7 +43,7 @@ return [
     'is_tenant_aware' => true,
     'tenant_ownership_relationship_name' => 'tenant',
     'max_size' => 5000,
-    'model' => \Awcodes\Curator\Models\Media::class,
+    'model' => \App\Models\Media::class,
     'min_size' => 0,
     'path_generator' => null,
     'resources' => [

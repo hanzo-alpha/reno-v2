@@ -3,7 +3,7 @@
 <head>
     @include('components.layouts.landing.meta')
     <!-- #title -->
-    <title>Charifund | Nonprofit NGO Fundraising HTML5 Template</title>
+    <title>{{ config('app.name') }} | Sistem Informasi Manajemen Bantuan Sosial</title>
 
     @include('components.layouts.landing.styles')
 

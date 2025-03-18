@@ -24,7 +24,6 @@ use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
 use App\Filament\Pages\Settings\Settings;
 use Awcodes\Curator\CuratorPlugin;
-use Awcodes\Curator\Resources\MediaResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
@@ -136,7 +135,7 @@ class AdminPanelProvider extends PanelProvider
                             ...UserResource::getNavigationItems(),
                             ...RoleResource::getNavigationItems(),
                             ...ActivitylogResource::getNavigationItems(),
-                            ...MediaResource::getNavigationItems(),
+                            ...\App\Filament\Admin\Resources\MediaResource::getNavigationItems(),
                             ...Backup::getNavigationItems(),
                             ...ViewLog::getNavigationItems(),
                         ]),
@@ -163,6 +162,7 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationIcon(fn() => null)
                     ->navigationGroup('Pengaturan')
                     ->navigationCountBadge()
+                    ->resource(\App\Filament\Admin\Resources\MediaResource::class)
                     ->defaultListView('grid'),
                 PhosphorIconReplacement::make(),
                 GlobalSearchModalPlugin::make()

@@ -11,20 +11,21 @@
                             <div class="row">
                                 <div class="col-12 col-md-9 col-lg-7 col-xxl-6">
                                     <div class="banner-two__slider-content">
-                                    <span class="sub-title"><i class="icon-donation"></i>Start donating poor
-                                    people</span>
+                                    <span class="sub-title"><i class="icon-donation"></i>
+                                        Start donating poor people
+                                    </span>
                                         <h1>Giving help <br>
                                             To Those <span class="bottom-line">peoples</span>
                                             Who Need It.
                                         </h1>
-                                        <div class="banner__content-cta cta">
-                                            <a href="our-causes.html" aria-label="about us" title="about us"
-                                               class="btn--tertiary">Discover More <i
-                                                    class="fa-solid fa-arrow-right"></i></a>
-                                            <a href="contact-us.html" aria-label="contact us" title="contact us"
-                                               class="btn--primary">Get A Quote <i
-                                                    class="fa-solid fa-arrow-right"></i></a>
-                                        </div>
+                                        {{--                                        <div class="banner__content-cta cta">--}}
+                                        {{--                                            <a href="our-causes.html" aria-label="about us" title="about us"--}}
+                                        {{--                                               class="btn--tertiary">Discover More <i--}}
+                                        {{--                                                    class="fa-solid fa-arrow-right"></i></a>--}}
+                                        {{--                                            <a href="contact-us.html" aria-label="contact us" title="contact us"--}}
+                                        {{--                                               class="btn--primary">Get A Quote <i--}}
+                                        {{--                                                    class="fa-solid fa-arrow-right"></i></a>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +239,7 @@
                                                 <i class="icon-education"></i>
                                             </div>
                                             <div class="difference__single-content">
-                                                <h5><a href="cause-details.html">Child Education</a></h5>
+                                                <h5><a href="cause-details.html">Bantuan BPJS</a></h5>
                                                 <p>Set up a secure and user-friendly online donation platform that
                                                     accepts multiple
                                                 </p>
@@ -254,7 +255,7 @@
                                                 <i class="icon-food"></i>
                                             </div>
                                             <div class="difference__single-content">
-                                                <h5><a href="cause-details.html">Healthy Food</a></h5>
+                                                <h5><a href="cause-details.html">Bantuan BPNT</a></h5>
                                                 <p>Set up a secure and user-friendly online donation platform that
                                                     accepts multiple
                                                 </p>
@@ -270,7 +271,7 @@
                                                 <i class="icon-health"></i>
                                             </div>
                                             <div class="difference__single-content">
-                                                <h5><a href="cause-details.html">Medical Care</a></h5>
+                                                <h5><a href="cause-details.html">Bantuan PKH</a></h5>
                                                 <p>Set up a secure and user-friendly online donation platform that
                                                     accepts multiple
                                                 </p>
@@ -286,7 +287,7 @@
                                                 <i class="icon-education"></i>
                                             </div>
                                             <div class="difference__single-content">
-                                                <h5><a href="cause-details.html">Child Education</a></h5>
+                                                <h5><a href="cause-details.html">Bantuan RASTRA</a></h5>
                                                 <p>Set up a secure and user-friendly online donation platform that
                                                     accepts multiple
                                                 </p>
@@ -302,7 +303,7 @@
                                                 <i class="icon-food"></i>
                                             </div>
                                             <div class="difference__single-content">
-                                                <h5><a href="cause-details.html">Healthy Food</a></h5>
+                                                <h5><a href="cause-details.html">Bantuan PPKS</a></h5>
                                                 <p>Set up a secure and user-friendly online donation platform that
                                                     accepts multiple
                                                 </p>
@@ -310,22 +311,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <div class="difference__single-wrapper">
-                                        <div class="difference__single difference__single-third "
-                                             data-background="assets/images/difference/bg-three.png">
-                                            <div class="difference__single-thumb">
-                                                <i class="icon-health"></i>
-                                            </div>
-                                            <div class="difference__single-content">
-                                                <h5><a href="cause-details.html">Medical Care</a></h5>
-                                                <p>Set up a secure and user-friendly online donation platform that
-                                                    accepts multiple
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--                                <div class="swiper-slide">--}}
+                                {{--                                    <div class="difference__single-wrapper">--}}
+                                {{--                                        <div class="difference__single difference__single-third "--}}
+                                {{--                                             data-background="assets/images/difference/bg-three.png">--}}
+                                {{--                                            <div class="difference__single-thumb">--}}
+                                {{--                                                <i class="icon-health"></i>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="difference__single-content">--}}
+                                {{--                                                <h5><a href="cause-details.html">Medical Care</a></h5>--}}
+                                {{--                                                <p>Set up a secure and user-friendly online donation platform that--}}
+                                {{--                                                    accepts multiple--}}
+                                {{--                                                </p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>

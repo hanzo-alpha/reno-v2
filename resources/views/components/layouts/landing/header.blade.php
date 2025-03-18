@@ -12,52 +12,14 @@
                         <div class="navbar__menu-wrapper">
                             <div class="navbar__menu d-none d-xl-block">
                                 <ul class="navbar__list">
-                                    <li class="navbar__item navbar__item--has-children nav-fade">
-                                        <a href="#" aria-label="dropdown menu"
-                                           class="navbar__dropdown-label dropdown-label-alter">Home</a>
-                                        <ul class="navbar__sub-menu mega-menu">
-                                            <li>
-                                                <div class="mega-content-wrapper">
-                                                    <img src="{{ asset('assets/images/home-one.png') }}" alt="Image">
-                                                    <div class="mega-content">
-                                                        <a href="index.html" class="btn--primary">Multipage</a>
-                                                        <a href="index-one-page.html" class="btn--secondary">One
-                                                            Page</a>
-                                                    </div>
-                                                </div>
-                                                <a href="index.html">Home One</a>
-                                            </li>
-                                            <li>
-                                                <div class="mega-content-wrapper">
-                                                    <img src="{{ asset('assets/images/home-two.png') }}" alt="Image">
-                                                    <div class="mega-content">
-                                                        <a href="index-two.html"
-                                                           class="btn--primary">Multipage</a>
-                                                        <a href="index-two-one-page.html"
-                                                           class="btn--secondary">One Page</a>
-                                                    </div>
-                                                </div>
-                                                <a href="index-two.html">Home Two</a>
-                                            </li>
-                                            <li>
-                                                <div class="mega-content-wrapper">
-                                                    <img src="{{ asset('assets/images/home-three.png') }}" alt="Image">
-                                                    <div class="mega-content">
-                                                        <a href="index-three.html"
-                                                           class="btn--primary">Multipage</a>
-                                                        <a href="index-three-one-page.html"
-                                                           class="btn--secondary">One Page</a>
-                                                    </div>
-                                                </div>
-                                                <a href="index-three.html">Home Three</a>
-                                            </li>
-                                        </ul>
+                                    <li class="navbar__item nav-fade">
+                                        <a href="/">Home</a>
                                     </li>
                                     <li class="navbar__item nav-fade">
-                                        <a href="#aboutSection">About Us</a>
+                                        <a href="#aboutSection">Tentang Kami</a>
                                     </li>
                                     <li class="navbar__item nav-fade">
-                                        <a href="#causeSection">Causes</a>
+                                        <a href="#causeSection">Cek Bantuan</a>
                                     </li>
                                     <li class="navbar__item nav-fade">
                                         <a href="#eventSection">Event</a>
@@ -75,8 +37,8 @@
                                     <i class="icon-support"></i>
                                 </div>
                                 <div class="contact-content">
-                                    <p>Call Us Now</p>
-                                    <a href="tel:01-793-7938">(+01)-793-7938 </a>
+                                    <p>Hubungi Kami</p>
+                                    <a href="tel:01-793-7938">(+62)-7933-7938-2344 </a>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +50,8 @@
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </button>
                                 </div>
-                                <a href="donate-us.html" class="btn--primary d-none d-md-flex">Donate Now <i
+                                <a href="{{ route('filament.admin.auth.login') }}"
+                                   class="btn--primary d-none d-md-flex">Daftar Sekarang <i
                                         class="fa-solid fa-arrow-right"></i></a>
                             </div>
                             <button class="open-offcanvas-nav d-flex d-xl-none" aria-label="toggle mobile menu"

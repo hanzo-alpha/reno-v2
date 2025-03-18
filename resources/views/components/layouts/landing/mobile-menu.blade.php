@@ -16,19 +16,21 @@
                     class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="mobile-menu__social social nav-fade">
-            <a href="https://www.facebook.com/" target="_blank" aria-label="share us on facebook"
-               title="facebook">
+            <a href="https://www.facebook.com/" target="_blank"
+               aria-label="share us on facebook" title="facebook">
                 <i class="fa-brands fa-facebook-f"></i>
             </a>
-            <a href="https://vimeo.com/" target="_blank" aria-label="share us on vimeo" title="vimeo">
-                <i class="fa-brands fa-vimeo-v"></i>
+            <a href="https://tiktok.com/" target="_blank" aria-label="share us on tiktok"
+               title="tiktok">
+                <i class="fa-brands fa-tiktok"></i>
             </a>
-            <a href="https://x.com/" target="_blank" aria-label="share us on twitter" title="twitter">
+            <a href="https://x.com/" target="_blank" aria-label="share us on twitter"
+               title="twitter">
                 <i class="fa-brands fa-twitter"></i>
             </a>
-            <a href="https://www.linkedin.com/" target="_blank" aria-label="share us on linkedin"
-               title="linkedin">
-                <i class="fa-brands fa-linkedin-in"></i>
+            <a href="https://www.youtube.com/" target="_blank"
+               aria-label="share us on youtube" title="linkedin">
+                <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
     </nav>
