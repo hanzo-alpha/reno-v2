@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\MediaResource\Pages;
-use App\Filament\Admin\Resources\MediaResource\RelationManagers;
 use App\Models\Media;
 use Awcodes\Curator\Components\Forms\CuratorEditor;
 use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
+
+use function Awcodes\Curator\is_media_resizable;
+
 use Awcodes\Curator\Resources\MediaResource as CuratorMediaResource;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -15,7 +19,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use function Awcodes\Curator\is_media_resizable;
 
 class MediaResource extends CuratorMediaResource
 {
@@ -35,18 +38,18 @@ class MediaResource extends CuratorMediaResource
                                 static::getUploaderField()
                                     ->required()
                                     ->live()
-                                    ->afterStateUpdated(function (Forms\Set $set, Uploader $component, $state) {
+                                    ->afterStateUpdated(function (Forms\Set $set, Uploader $component, $state): void {
                                         $name = $component->getSuggestedFileName($state);
                                         $set('name', $name);
                                     })
                                     ->getUploadedFileNameForStorageUsing(function (
                                         Forms\Get $get,
                                         Uploader $component,
-                                        $file
+                                        $file,
                                     ) {
                                         $name = $get('name');
 
-                                        return !empty($name) ? Str::slug($name) : $component->getSuggestedFileName($file);
+                                        return ! empty($name) ? Str::slug($name) : $component->getSuggestedFileName($file);
                                     }),
                             ]),
                         Forms\Components\Tabs::make('image')
@@ -58,12 +61,13 @@ class MediaResource extends CuratorMediaResource
                                             ->view('curator::components.forms.preview')
                                             ->hiddenLabel()
                                             ->dehydrated(false)
-                                            ->afterStateHydrated(function ($component, $state, $record) {
+                                            ->afterStateHydrated(function ($component, $state, $record): void {
                                                 $component->state($record);
                                             }),
                                     ]),
                                 Forms\Components\Tabs\Tab::make(trans('curator::forms.sections.curation'))
-                                    ->visible(fn($record
+                                    ->visible(fn(
+                                        $record,
                                     ) => is_media_resizable($record->type) && config('curator.tabs.display_curation'))
                                     ->schema([
                                         Forms\Components\Repeater::make('curations')
@@ -94,7 +98,7 @@ class MediaResource extends CuratorMediaResource
                                     ->hiddenLabel()
                                     ->dehydrated(false)
                                     ->columnSpan('full')
-                                    ->afterStateHydrated(function ($component, $state, $record) {
+                                    ->afterStateHydrated(function ($component, $state, $record): void {
                                         $component->state($record);
                                     }),
                             ]),
@@ -119,7 +123,7 @@ class MediaResource extends CuratorMediaResource
                     ->schema([
                         Forms\Components\Section::make(trans('curator::forms.sections.meta'))
                             ->schema(
-                                static::getAdditionalInformationFormSchema()
+                                static::getAdditionalInformationFormSchema(),
                             ),
                     ])->columnSpan([
                         'md' => 'full',
@@ -152,7 +156,7 @@ class MediaResource extends CuratorMediaResource
         return [
             Forms\Components\TextInput::make('name')
                 ->label(trans('curator::forms.fields.name'))
-                ->required(fn($operation): bool => $operation == 'edit')
+                ->required(fn($operation): bool => 'edit' === $operation)
                 ->dehydrateStateUsing(function ($component, $state) {
                     $slugged = Str::slug($state);
                     $component->state($slugged);
@@ -162,7 +166,7 @@ class MediaResource extends CuratorMediaResource
             Forms\Components\TextInput::make('alt')
                 ->label(trans('curator::forms.fields.alt'))
                 ->hint(fn(
-                ): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link text-primary-500" target="_blank">'.trans('curator::forms.fields.alt_hint').'</a>')),
+                ): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link text-primary-500" target="_blank">' . trans('curator::forms.fields.alt_hint') . '</a>')),
             Forms\Components\TextInput::make('title')
                 ->label(trans('curator::forms.fields.title')),
             Forms\Components\Textarea::make('caption')
@@ -183,7 +187,7 @@ class MediaResource extends CuratorMediaResource
 
         return $table
             ->columns(
-                $livewire->layoutView === 'grid'
+                'grid' === $livewire->layoutView
                     ? static::getDefaultGridTableColumns()
                     : static::getDefaultTableColumns(),
             )
@@ -196,7 +200,7 @@ class MediaResource extends CuratorMediaResource
             ])
             ->defaultSort('created_at', 'desc')
             ->contentGrid(function () use ($livewire) {
-                if ($livewire->layoutView === 'grid') {
+                if ('grid' === $livewire->layoutView) {
                     return [
                         'md' => 2,
                         'lg' => 3,
@@ -271,7 +275,7 @@ class MediaResource extends CuratorMediaResource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\MediaResource\Pages;
 
 use App\Filament\Admin\Resources\MediaResource;
@@ -9,10 +11,10 @@ class ListMedia extends CuratorListMedia
 {
     protected static string $resource = MediaResource::class;
 
-//    protected function getHeaderActions(): array
-//    {
-//        return [
-//            Actions\CreateAction::make(),
-//        ];
-//    }
+    //    protected function getHeaderActions(): array
+    //    {
+    //        return [
+    //            Actions\CreateAction::make(),
+    //        ];
+    //    }
 }
