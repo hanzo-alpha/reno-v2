@@ -40,7 +40,7 @@ class KriteriaPpksResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('tipe_ppks_id')
-                    ->relationship('tipe_ppks', 'nama_tipe')
+                    ->relationship('tipePpks', 'nama_tipe')
                     ->searchable()
                     ->label('Tipe PPKS')
                     ->required()
@@ -77,8 +77,8 @@ class KriteriaPpksResource extends Resource
                     ->label('Kriteria Tipe PPKS')
                     ->searchable()
                     ->suffixBadges([
-                        Badge::make('tipe_ppks.nama_tipe')
-                            ->label(fn(Model $record) => $record->tipe_ppks()->first()->nama_tipe),
+                        Badge::make('tipePpks.nama_tipe')
+                            ->label(fn(Model $record) => $record->tipePpks()?->first()?->nama_tipe),
                     ]),
             ])
             ->filters([

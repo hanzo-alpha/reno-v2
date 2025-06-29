@@ -21,7 +21,7 @@ var Re=Object.create;var be=Object.defineProperty;var Te=Object.getOwnPropertyDe
 .ace-tm .ace_cursor {
   color: black;
 }
-
+        
 .ace-tm .ace_invisible {
   color: rgb(191, 191, 191);
 }
@@ -464,7 +464,7 @@ var Re=Object.create;var be=Object.defineProperty;var Te=Object.getOwnPropertyDe
     opacity: 1;
 }
 .ace_composition_placeholder { color: transparent }
-.ace_composition_marker {
+.ace_composition_marker { 
     border-bottom: 1px solid;
     position: absolute;
     border-radius: 0;
@@ -528,7 +528,7 @@ var Re=Object.create;var be=Object.defineProperty;var Te=Object.getOwnPropertyDe
 .ace_hidpi .ace_gutter {
     contain: strict;
 }
-.ace_hidpi .ace_text-layer > .ace_line,
+.ace_hidpi .ace_text-layer > .ace_line, 
 .ace_hidpi .ace_text-layer > .ace_line_group {
     contain: strict;
 }
@@ -588,7 +588,7 @@ var Re=Object.create;var be=Object.defineProperty;var Te=Object.getOwnPropertyDe
     animation-timing-function: ease-in-out;
     animation-name: blink-ace-animate-smooth;
 }
-
+    
 @keyframes blink-ace-animate {
     from, to { opacity: 1; }
     60% { opacity: 0; }
@@ -726,13 +726,13 @@ var Re=Object.create;var be=Object.defineProperty;var Te=Object.getOwnPropertyDe
     background-position: center;
 
     border-radius: 3px;
-
+    
     border: 1px solid transparent;
     cursor: pointer;
 }
 
 .ace_folding-enabled .ace_fold-widget {
-    display: inline-block;
+    display: inline-block;   
 }
 
 .ace_fold-widget.ace_end {
@@ -931,17 +931,17 @@ ace-builds/src-noconflict/ace.js:
   ==========================================================================
   SproutCore -- JavaScript Application Framework
   copyright 2006-2009, Sprout Systems Inc., Apple Inc. and contributors.
-
+  
   Permission is hereby granted, free of charge, to any person obtaining a
   copy of this software and associated documentation files (the "Software"),
   to deal in the Software without restriction, including without limitation
   the rights to use, copy, modify, merge, publish, distribute, sublicense,
   and/or sell copies of the Software, and to permit persons to whom the
   Software is furnished to do so, subject to the following conditions:
-
+  
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-
+  
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -949,12 +949,12 @@ ace-builds/src-noconflict/ace.js:
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
   DEALINGS IN THE SOFTWARE.
-
+  
   SproutCore and the SproutCore logo are trademarks of Sprout Systems, Inc.
-
+  
   For more information about SproutCore, visit http://www.sproutcore.com
-
-
+  
+  
   ==========================================================================
   @license *)
 */

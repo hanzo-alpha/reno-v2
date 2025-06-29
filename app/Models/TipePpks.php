@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -26,7 +27,7 @@ class TipePpks extends Model
         return $this->hasMany(KriteriaPpks::class);
     }
 
-    public function bantuanPpks(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function bantuanPpks(): BelongsTo
     {
         return $this->belongsTo(BantuanPpks::class);
     }

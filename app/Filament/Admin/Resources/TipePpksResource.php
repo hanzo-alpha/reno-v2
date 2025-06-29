@@ -8,14 +8,12 @@ use App\Filament\Admin\Resources\TipePpksResource\Pages;
 use App\Models\TipePpks;
 use Awcodes\FilamentBadgeableColumn\Components\Badge;
 use Awcodes\FilamentBadgeableColumn\Components\BadgeableColumn;
-use Awcodes\TableRepeater\Components\TableRepeater;
-use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Icetalker\FilamentTableRepeater\Forms\Components\TableRepeater;
 
 class TipePpksResource extends Resource
 {
@@ -54,25 +52,14 @@ class TipePpksResource extends Resource
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 TableRepeater::make('kriteria_ppks')
-                    ->label('Kriteria PPKS')
-                    ->relationship()
-                    ->headers([
-                        Header::make('Nama Kriteria')
-                            ->align(Alignment::Center),
-                    ])
-                    ->renderHeader(true)
-                    ->showLabels()
-                    ->streamlined()
-                    ->emptyLabel('Tidak ada kriteria PPKS.')
-                    ->simple(
+                    ->relationship('kriteriaPpks')
+                    ->schema([
                         Forms\Components\TextInput::make('nama_kriteria')
-                            ->label('Nama Kriteria')
                             ->unique(ignoreRecord: true)
                             ->required(),
-                    )
+                    ])
+                    ->minItems(1)
                     ->addActionLabel('Tambah Kriteria PPKS')
-                    ->reorderableWithButtons()
-                    ->collapsible()
                     ->columnSpan('full'),
             ]);
     }

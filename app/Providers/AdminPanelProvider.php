@@ -10,6 +10,7 @@ use App\Filament\Admin\Resources\BantuanPkhResource;
 use App\Filament\Admin\Resources\HubunganKeluargaResource;
 use App\Filament\Admin\Resources\JenisPekerjaanResource;
 use App\Filament\Admin\Resources\KriteriaPpksResource;
+use App\Filament\Admin\Resources\MediaResource;
 use App\Filament\Admin\Resources\PenandatanganResource;
 use App\Filament\Admin\Resources\PendidikanTerakhirResource;
 use App\Filament\Admin\Resources\RoleResource;
@@ -23,11 +24,16 @@ use App\Filament\Pages\Backup;
 use App\Filament\Pages\Settings\Administrasi;
 use App\Filament\Pages\Settings\Laporan;
 use App\Filament\Pages\Settings\Settings;
+use App\Filament\Reports\BeritaAcara;
 use Awcodes\Curator\CuratorPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
+use Croustibat\FilamentJobsMonitor\Resources\QueueMonitorResource;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
+use EightyNine\Reports\ReportsPlugin;
+use Filafly\Icons\Phosphor\PhosphorIcons;
 use Filafly\PhosphorIconReplacement;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -111,6 +117,11 @@ class AdminPanelProvider extends PanelProvider
                             ...ProgramRastra::getNavigationItems(),
                             ...ProgramPpks::getNavigationItems(),
                         ]),
+                    NavigationGroup::make('Laporan')
+                        ->icon('heroicon-o-document-text')
+                        ->items([
+                            ...BeritaAcara::getNavigationItems(),
+                        ]),
                     NavigationGroup::make('Master Data')
                         ->icon('heroicon-o-circle-stack')
                         ->items([
@@ -135,7 +146,8 @@ class AdminPanelProvider extends PanelProvider
                             ...UserResource::getNavigationItems(),
                             ...RoleResource::getNavigationItems(),
                             ...ActivitylogResource::getNavigationItems(),
-                            ...\App\Filament\Admin\Resources\MediaResource::getNavigationItems(),
+                            ...MediaResource::getNavigationItems(),
+                            ...QueueMonitorResource::getNavigationItems(),
                             ...Backup::getNavigationItems(),
                             ...ViewLog::getNavigationItems(),
                         ]),
@@ -162,9 +174,9 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationIcon(fn() => null)
                     ->navigationGroup('Pengaturan')
                     ->navigationCountBadge()
-                    ->resource(\App\Filament\Admin\Resources\MediaResource::class)
+                    ->resource(MediaResource::class)
                     ->defaultListView('grid'),
-                PhosphorIconReplacement::make(),
+                PhosphorIcons::make(),
                 GlobalSearchModalPlugin::make()
                     ->closeByEscaping(false)
                     ->localStorageMaxItemsAllowed(20)
@@ -175,6 +187,9 @@ class AdminPanelProvider extends PanelProvider
                         Administrasi::class,
                         Laporan::class,
                     ]),
+                FilamentJobsMonitorPlugin::make()
+                    ->navigationGroup('Managemen Pengguna'),
+                ReportsPlugin::make(),
                 ActivityLogPlugin::make()
                     ->label('Aktivitas')
                     ->pluralLabel('Aktivitas')
@@ -190,9 +205,6 @@ class AdminPanelProvider extends PanelProvider
                     ->usingPolingInterval('10s')
                     ->usingPage(Backup::class),
                 FilamentLaravelLogPlugin::make()
-//                    ->authorize(
-//                        fn() => auth()->user()->is_admin
-//                    )
                     ->navigationGroup('Managemen Pengguna')
                     ->navigationLabel('Catatan')
                     ->navigationIcon('')

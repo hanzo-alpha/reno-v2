@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
+use App\Models\Media;
 use App\Models\User;
-use Awcodes\Curator\Models\Media;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MediaPolicy

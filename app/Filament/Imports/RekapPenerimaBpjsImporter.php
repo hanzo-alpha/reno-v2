@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Imports;
 
-use App\Models\Kecamatan;
-use App\Models\Kelurahan;
 use App\Models\RekapPenerimaBpjs;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Laravolt\Indonesia\Models\Kecamatan;
+use Laravolt\Indonesia\Models\Kelurahan;
 
 class RekapPenerimaBpjsImporter extends Importer
 {
@@ -20,17 +20,15 @@ class RekapPenerimaBpjsImporter extends Importer
         return [
             ImportColumn::make('provinsi')
                 ->guess(['PROVINSI', 'PROV', 'NO'])
-                ->requiredMapping()
-                ->fillRecordUsing(fn($record) => $record->provinsi = setting('app.kodeprov', '73')),
+                ->requiredMapping(),
             ImportColumn::make('kabupaten')
                 ->guess(['KABUPATEN', 'KAB', 'NO'])
-                ->requiredMapping()
-                ->fillRecordUsing(fn($record) => $record->kabupaten = setting('app.kodekab', '7312')),
+                ->requiredMapping(),
             ImportColumn::make('kecamatan')
                 ->requiredMapping()
                 ->fillRecordUsing(function ($record, $state): void {
                     $kecamatan = Kecamatan::query()
-                        ->where('kabupaten_code', setting('app.kodekab'))
+                        ->where('city_code', setting('app.kodekab'))
                         ->where('name', 'like', '%' . $state . '%')
                         ->first();
 
@@ -41,12 +39,12 @@ class RekapPenerimaBpjsImporter extends Importer
                 ->requiredMapping()
                 ->fillRecordUsing(function ($record, $state): void {
                     $kecamatanIds = Kecamatan::query()
-                        ->where('kabupaten_code', setting('app.kodekab'))
+                        ->where('city_code', setting('app.kodekab'))
                         ->pluck('code')
                         ->toArray();
 
                     $kelurahan = Kelurahan::query()
-                        ->whereIn('kecamatan_code', $kecamatanIds)
+                        ->whereIn('district_code', $kecamatanIds)
                         ->where('name', 'like', '%' . $state . '%')
                         ->first();
 
@@ -83,7 +81,5 @@ class RekapPenerimaBpjsImporter extends Importer
             'kelurahan' => $this->data['kelurahan'],
             'jumlah' => $this->data['jumlah'],
         ]);
-
-        //        return new RekapPenerimaBpjs();
     }
 }

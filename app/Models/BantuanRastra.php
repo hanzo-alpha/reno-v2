@@ -32,6 +32,32 @@ class BantuanRastra extends Model
         'kec', 'kel', 'penggantiRastra',
     ];
 
+    protected $appends = [
+        'lokasi',
+    ];
+
+    public static function getComputedLocation(): string
+    {
+        return 'lokasi';
+    }
+
+    public function getLocationAttribute(): array
+    {
+        return [
+            'lat' => (float) $this->lat,
+            'lng' => (float) $this->lng,
+        ];
+    }
+
+    public function setLocationAttribute(?array $location): void
+    {
+        if (is_array($location)) {
+            $this->attributes['lat'] = $location['lat'];
+            $this->attributes['lng'] = $location['lng'];
+            unset($this->attributes['lokasi']);
+        }
+    }
+
     protected $casts = [
         'dtks_id' => 'string',
         'foto_ktp_kk' => 'array',
@@ -42,6 +68,7 @@ class BantuanRastra extends Model
         'status_verifikasi' => StatusVerifikasiEnum::class,
         'keterangan' => 'string',
     ];
+
 
     public static function getLatLngAttributes(): array
     {
@@ -79,6 +106,11 @@ class BantuanRastra extends Model
     public function penggantiRastra(): HasOne
     {
         return $this->hasOne(PenggantiRastra::class);
+    }
+
+    public function lokasiBantuan(): BelongsTo
+    {
+        return $this->belongsTo(LokasiBantuan::class, 'id', 'bantuan_rastra_id');
     }
 
     protected static function booted(): void

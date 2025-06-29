@@ -15,6 +15,7 @@ use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Pages;
 use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource\Widgets\BantuanRastraOverview;
 use App\Models\BantuanRastra;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
+use Cheesegrits\FilamentGoogleMaps\Fields\Geocomplete;
 use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -101,7 +102,7 @@ class BantuanRastraResource extends Resource
                     ->sortable()
                     ->toggleable()
                     ->description(function ($record): void {
-                        'Kec. ' . $record->kec->name . ' Kel. ' . $record->kel->name;
+                        'Kec. '.$record->kec->name.' Kel. '.$record->kel->name;
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kec.name')
@@ -277,7 +278,7 @@ class BantuanRastraResource extends Resource
                                                 'app.kodekab',
                                                 config('custom.default.kodekab'),
                                             ));
-                                        if ( ! $kab) {
+                                        if (!$kab) {
                                             return District::where('city_code', setting(
                                                 'app.kodekab',
                                                 config('custom.default.kodekab'),
@@ -505,7 +506,7 @@ class BantuanRastraResource extends Resource
                             TextEntry::make('no_rt')
                                 ->label('RT/RW')
                                 ->placeholder('Belum ada RT/RW')
-                                ->formatStateUsing(fn($record) => $record->no_rt . '/' . $record->no_rw),
+                                ->formatStateUsing(fn($record) => $record->no_rt.'/'.$record->no_rw),
                         ])->columns(2),
                 ])->columnSpan(2),
 
@@ -611,9 +612,100 @@ class BantuanRastraResource extends Resource
         return [
             Grid::make(2)
                 ->schema([
-                    TextInput::make('alamat')
-                        ->required()
+//                    TextInput::make('alamat')
+//                        ->required()
+//                        ->columnSpanFull(),
+//                    Map::make('lokasi')
+//                        ->live()
+//                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+//                            $set('latitude', $state['lat']);
+//                            $set('longitude', $state['lng']);
+//                        })
+//                        ->mapControls([
+//                            'mapTypeControl' => true,
+//                            'scaleControl' => true,
+//                            'streetViewControl' => true,
+//                            'rotateControl' => true,
+//                            'fullscreenControl' => true,
+//                            'searchBoxControl' => false, // creates geocomplete field inside map
+//                            'zoomControl' => false,
+//                        ])
+//                        ->height(fn() => '400px')
+//                        ->defaultZoom(5)
+//                        ->autocomplete('alamat')
+//                        ->autocompleteReverse(true)
+//                        ->reverseGeocode([
+//                            'city' => '%L',
+//                            'zip' => '%z',
+//                            'state' => '%A1',
+//                            'street' => '%n %S',
+//                        ])
+//                        ->reverseGeocode([
+//                            'street' => '%n %S',
+//                            'city' => '%L',
+//                            'state' => '%A1',
+//                            'zip' => '%z',
+//                        ])
+//                        ->defaultLocation([39.526610, -107.727261])
+//                        ->draggable()
+//                        ->clickable()
+//                        ->geolocate()
+//                        ->geolocateLabel('Pilih Lokasi')
+//                        ->geolocateOnLoad()
+//                        ->columnSpanFull(),
+//                    Forms\Components\TextInput::make('latitude')
+//                        ->reactive()
+//                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+//                            $set('location', [
+//                                'lat' => floatVal($state),
+//                                'lng' => floatVal($get('longitude')),
+//                            ]);
+//                        })
+//                        ->lazy(), // important to use lazy, to avoid updates as you type
+//                    Forms\Components\TextInput::make('longitude')
+//                        ->reactive()
+//                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+//                            $set('location', [
+//                                'lat' => floatval($get('latitude')),
+//                                'lng' => floatVal($state),
+//                            ]);
+//                        })
+//                        ->lazy(),
+                    Geocomplete::make('alamat')
+                        ->isLocation()
+                        ->geocodeOnLoad()
+                        ->reverseGeocode([
+                            'city' => '%L',
+                            'zip' => '%z',
+                            'state' => '%A1',
+                            'street' => '%n %S',
+                        ])
+                        ->countries(['id']) // restrict autocomplete results to these countries
+                        ->debug() // output the results of reverse geocoding in the browser console, useful for figuring out symbol formats
+                        ->updateLatLng() // update the lat/lng fields on your form when a Place is selected
+                        ->maxLength(1024)
+                        ->placeholder('Mulai ketikkan alamat ...')
+                        ->geolocate() // add a suffix button which requests and reverse geocodes the device location
+                        ->geolocateIcon('heroicon-o-map') // override the default icon for the geolocate button
                         ->columnSpanFull(),
+                    Forms\Components\TextInput::make('latitude')
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                            $set('location', [
+                                'lat' => floatVal($state),
+                                'lng' => floatVal($get('longitude')),
+                            ]);
+                        })
+                        ->lazy(), // important to use lazy, to avoid updates as you type
+                    Forms\Components\TextInput::make('longitude')
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                            $set('location', [
+                                'lat' => floatval($get('latitude')),
+                                'lng' => floatVal($state),
+                            ]);
+                        })
+                        ->lazy(),
                     Select::make('kecamatan')
                         ->required()
                         ->searchable()
@@ -625,7 +717,7 @@ class BantuanRastraResource extends Resource
                                     'app.kodekab',
                                     config('custom.default.kodekab'),
                                 ));
-                            if ( ! $kab) {
+                            if (!$kab) {
                                 return District::where('city_code', setting(
                                     'app.kodekab',
                                     config('custom.default.kodekab'),

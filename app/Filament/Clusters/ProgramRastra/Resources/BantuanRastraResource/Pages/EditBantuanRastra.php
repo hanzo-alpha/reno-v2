@@ -12,6 +12,7 @@ use App\Enums\StatusVerifikasiEnum;
 use App\Filament\Clusters\ProgramRastra\Resources\BantuanRastraResource;
 use App\Traits\HasInputDateLimit;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
+use Cheesegrits\FilamentGoogleMaps\Concerns\InteractsWithMaps;
 use Filament\Actions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
@@ -25,6 +26,7 @@ use Laravolt\Indonesia\Models\Village;
 class EditBantuanRastra extends EditRecord
 {
     use HasInputDateLimit;
+    use InteractsWithMaps;
 
     protected static string $resource = BantuanRastraResource::class;
 
