@@ -34,7 +34,6 @@ use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 use EightyNine\Reports\ReportsPlugin;
 use Filafly\Icons\Phosphor\PhosphorIcons;
-use Filafly\PhosphorIconReplacement;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;

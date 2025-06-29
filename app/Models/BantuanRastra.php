@@ -36,9 +36,29 @@ class BantuanRastra extends Model
         'lokasi',
     ];
 
+    protected $casts = [
+        'dtks_id' => 'string',
+        'foto_ktp_kk' => 'array',
+        'pengganti_rastra' => 'array',
+        'status_dtks' => StatusDtksEnum::class,
+        'status_rastra' => StatusRastra::class,
+        'status_aktif' => StatusAktif::class,
+        'status_verifikasi' => StatusVerifikasiEnum::class,
+        'keterangan' => 'string',
+    ];
+
     public static function getComputedLocation(): string
     {
         return 'lokasi';
+    }
+
+
+    public static function getLatLngAttributes(): array
+    {
+        return [
+            'lat' => 'latitude',
+            'lng' => 'longitude',
+        ];
     }
 
     public function getLocationAttribute(): array
@@ -56,26 +76,6 @@ class BantuanRastra extends Model
             $this->attributes['lng'] = $location['lng'];
             unset($this->attributes['lokasi']);
         }
-    }
-
-    protected $casts = [
-        'dtks_id' => 'string',
-        'foto_ktp_kk' => 'array',
-        'pengganti_rastra' => 'array',
-        'status_dtks' => StatusDtksEnum::class,
-        'status_rastra' => StatusRastra::class,
-        'status_aktif' => StatusAktif::class,
-        'status_verifikasi' => StatusVerifikasiEnum::class,
-        'keterangan' => 'string',
-    ];
-
-
-    public static function getLatLngAttributes(): array
-    {
-        return [
-            'lat' => 'latitude',
-            'lng' => 'longitude',
-        ];
     }
 
     public function uniqueIds(): array

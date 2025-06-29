@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Clusters\ProgramRastra\Resources;
 
 use App\Filament\Clusters\ProgramRastra;
 use App\Filament\Clusters\ProgramRastra\Resources\LokasiBantuanResource\Pages;
-use App\Filament\Clusters\ProgramRastra\Resources\LokasiBantuanResource\RelationManagers;
 use App\Models\LokasiBantuan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Str;
 
 class LokasiBantuanResource extends Resource
 {
@@ -32,7 +34,7 @@ class LokasiBantuanResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('lokasi_bantuan_uuid')
-                            ->default(\Str::uuid()->toString())
+                            ->default(Str::uuid()->toString())
                             ->maxLength(36),
                         Forms\Components\Select::make('bantuan_rastra_id')
                             ->relationship('bantuanRastra', 'id'),
@@ -52,7 +54,7 @@ class LokasiBantuanResource extends Resource
                             ->clickable()
                             ->draggable()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $get, callable $set): void {
                                 $set('latitude', $state['lat']);
                                 $set('longitude', $state['lng']);
                             })
@@ -72,10 +74,10 @@ class LokasiBantuanResource extends Resource
                             ->label('Latitude')
                             ->readOnly()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $get, callable $set): void {
                                 $set('location', [
-                                    'lat' => floatVal($state),
-                                    'lng' => floatVal($get('longitude')),
+                                    'lat' => (float) $state,
+                                    'lng' => (float) ($get('longitude')),
                                 ]);
                             })
                             ->lazy(),
@@ -83,10 +85,10 @@ class LokasiBantuanResource extends Resource
                             ->label('Longitude')
                             ->readOnly()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $get, callable $set): void {
                                 $set('location', [
-                                    'lat' => floatval($get('latitude')),
-                                    'lng' => floatVal($state),
+                                    'lat' => (float) ($get('latitude')),
+                                    'lng' => (float) $state,
                                 ]);
                             })
                             ->lazy(),
@@ -122,7 +124,7 @@ class LokasiBantuanResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -138,7 +140,7 @@ class LokasiBantuanResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

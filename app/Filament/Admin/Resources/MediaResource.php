@@ -9,6 +9,9 @@ use App\Models\Media;
 use Awcodes\Curator\Components\Forms\CuratorEditor;
 use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
+
+use function Awcodes\Curator\is_media_resizable;
+
 use Awcodes\Curator\Resources\MediaResource as CuratorMediaResource;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -16,7 +19,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use function Awcodes\Curator\is_media_resizable;
 
 class MediaResource extends CuratorMediaResource
 {

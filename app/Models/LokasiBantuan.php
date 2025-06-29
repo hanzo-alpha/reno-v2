@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -18,7 +20,7 @@ class LokasiBantuan extends Model
         'longitude',
         'location',
         'bantuan_rastra_id',
-        'lokasi_bantuan_uuid'
+        'lokasi_bantuan_uuid',
     ];
 
     public static function getLatLngAttributes(): array
@@ -29,7 +31,7 @@ class LokasiBantuan extends Model
         ];
     }
 
-//    protected $appends = ['location'];
+    //    protected $appends = ['location'];
 
     public static function getComputedLocation(): string
     {
@@ -76,19 +78,19 @@ class LokasiBantuan extends Model
     }
 
 
-//    protected function location(): Attribute
-//    {
-//        return Attribute::make(
-//            get: fn(mixed $value, array $attributes) => [
-//                'lokasi' => $attributes['lokasi'],
-//                'latitude' => $attributes['lat'],
-//                'longitude' => $attributes['lng']
-//            ],
-//            set: fn(array $value) => [
-//                'lokasi' => $value['lokasi'],
-//                'latitude' => $value['lat'],
-//                'longitude' => $value['lng']
-//            ],
-//        );
-//    }
+    //    protected function location(): Attribute
+    //    {
+    //        return Attribute::make(
+    //            get: fn(mixed $value, array $attributes) => [
+    //                'lokasi' => $attributes['lokasi'],
+    //                'latitude' => $attributes['lat'],
+    //                'longitude' => $attributes['lng']
+    //            ],
+    //            set: fn(array $value) => [
+    //                'lokasi' => $value['lokasi'],
+    //                'latitude' => $value['lat'],
+    //                'longitude' => $value['lng']
+    //            ],
+    //        );
+    //    }
 }

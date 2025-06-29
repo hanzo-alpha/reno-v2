@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Reports;
 
 use App\Models\BantuanRastra;
@@ -31,8 +33,8 @@ class BeritaAcara extends Report
                                 Text::make("Berita Acara Penyaluran Bantuan")
                                     ->title()
                                     ->primary(),
-                            ])
-                    ])
+                            ]),
+                    ]),
             ]);
     }
 
@@ -45,20 +47,15 @@ class BeritaAcara extends Report
                     ->schema([
                         Body\Table::make()
                             ->data(
-                                fn(?array $filters) => $this->registrationSummary($filters)
+                                fn(?array $filters) => $this->registrationSummary($filters),
                             ),
                         VerticalSpace::make(),
-//                    Body\Table::make()
-//                        ->data(
-//                            fn(?array $filters) => $this->verificationSummary($filters)
-//                        ),
-                    ])
+                        //                    Body\Table::make()
+                        //                        ->data(
+                        //                            fn(?array $filters) => $this->verificationSummary($filters)
+                        //                        ),
+                    ]),
             ]);
-    }
-
-    private function registrationSummary(?array $filters): Collection
-    {
-        return BantuanRastra::all();
     }
 
     public function footer(Footer $footer): Footer
@@ -77,7 +74,7 @@ class BeritaAcara extends Report
                             ]),
                         Footer\Layout\FooterColumn::make()
                             ->schema([
-                                Text::make('Generated on: '.now()->format('Y-m-d H:i:s')),
+                                Text::make('Generated on: ' . now()->format('Y-m-d H:i:s')),
                             ])
                             ->alignRight(),
                     ]),
@@ -99,6 +96,11 @@ class BeritaAcara extends Report
                         'inactive' => 'Inactive',
                     ]),
             ]);
+    }
+
+    private function registrationSummary(?array $filters): Collection
+    {
+        return BantuanRastra::all();
     }
 
     private function verificationSummary(?array $filters): Collection
